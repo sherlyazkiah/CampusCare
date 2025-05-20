@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        return view('layouts.user');
+    }
     // Menampilkan halaman dashboard
     public function dashboard()
     {
