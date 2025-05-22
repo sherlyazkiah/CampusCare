@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('main')
-
+<div class="px-4 py-8 mt-14 sm:ml-64 text-black dark:text-white bg-gray-50 dark:bg-gray-900">
 <div class="grid w-full grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-4">
     <!-- Card 1 -->
     <div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
@@ -431,5 +431,6 @@ if (document.getElementById("rating-donut-chart") && typeof ApexCharts !== 'unde
           </a>
       </div>
     </div>
+</div>
 </div>
 @endsection
