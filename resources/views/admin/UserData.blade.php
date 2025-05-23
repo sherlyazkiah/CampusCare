@@ -52,6 +52,8 @@
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->username }}</td>
                     <td>{{ $user->role->name ?? '-' }}</td>
+                    <td class="actions">
+                        <a href="{{ route('userdata.edit', $user->id) }}">Edit</a>
                 </tr>
             @empty
                 <tr>

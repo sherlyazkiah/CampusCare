@@ -14,5 +14,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/userdata', [UserController::class, 'view'])->name('userdata.index');
      Route::get('/userdata/create', [UserController::class, 'create'])->name('userdata.create');
      Route::post('/userdata', [UserController::class, 'store'])->name('userdata.store');
+     Route::get('/userdata/{id}/edit', [UserController::class, 'edit'])->name('userdata.edit');
+     Route::put('/userdata/{id}', [UserController::class, 'update'])->name('userdata.update');
 });
 
