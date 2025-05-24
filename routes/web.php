@@ -12,7 +12,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/dashboard', function () {return view('admin.dashboard');
 });
     Route::get('/userdata', [UserController::class, 'view'])->name('userdata.index');
-     Route::get('/userdata/create', [UserController::class, 'create'])->name('userdata.create');
-     Route::post('/userdata', [UserController::class, 'store'])->name('userdata.store');
+    Route::get('/userdata/create', [UserController::class, 'create'])->name('userdata.create');
+    Route::post('/userdata', [UserController::class, 'store'])->name('userdata.store');
+    
+    Route::get('/damagereport', function () {return view('admin.DamageReport');});
 });
-

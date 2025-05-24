@@ -54,16 +54,16 @@
                 <tbody class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                     @forelse ($users as $user)
                   <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                       {{ $user->id }}
                     </td>
-                    <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                       {{ $user->username }}
                     </td>
-                    <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                       {{ $user->username }}
                     </td>
-                    <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                       {{ $user->role->name ?? '-' }}
                     </td>
                     <td class="p-4 space-x-2 whitespace-nowrap">
