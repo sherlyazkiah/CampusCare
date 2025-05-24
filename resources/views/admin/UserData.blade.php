@@ -52,10 +52,13 @@
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->username }}</td>
                     <td>{{ $user->role->name ?? '-' }}</td>
+                    <td class="actions">
+                        <a href="{{ route('userdata.edit', $user->id) }}">Edit</a>
                 </tr>
             @empty
                 <tr>
                     <td colspan="3" class="text-center">Tidak ada data user.</td>
+                    
                 </tr>
             @endforelse
         </tbody>
