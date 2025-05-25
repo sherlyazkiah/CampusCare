@@ -147,7 +147,7 @@
                 </div>
             </div>
                 <!-- Modal footer -->
-                <div class="flex items-center p-6 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600">
+                <div class="flex justify-end p-6 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600">
                     <button type="button"
                     data-modal-hide="detail-report-modal"
                     data-modal-target="criteria-modal"
@@ -175,6 +175,17 @@
             </div>
 
             <div class="p-6 space-y-4">
+                <div class="grid grid-cols-6 gap-6">
+                    <div class="col-span-6">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Photo</label>
+                        <img src="your-photo-url.jpg" alt="Reported Facility" class="rounded-lg w-full max-h-64 object-contain border border-gray-300 dark:border-gray-600">
+                    </div>
+                    <div class="col-span-6">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                        <textarea readonly rows="4" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">The projector in Room 201 is not turning on and making a clicking sound when plugged in.</textarea>
+                    </div>
+                </div>
+                
                 <div class="grid grid-cols-1 gap-4">
                 <!-- Repeat for each criterion -->
                 <div>
@@ -231,7 +242,7 @@
             </div>
 
             <div class="flex justify-end p-6 border-t border-gray-200 rounded-b dark:border-gray-600">
-                <button type="submit" class="px-5 py-2.5 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-lg focus:ring-4 focus:ring-green-300 dark:bg-green-700 dark:hover:bg-green-800 dark:focus:ring-green-800">Save</button>
+                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
             </div>
             </form>
         </div>

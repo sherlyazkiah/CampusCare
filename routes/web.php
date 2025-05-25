@@ -16,4 +16,5 @@ Route::prefix('admin')->group(function () {
     Route::post('/userdata', [UserController::class, 'store'])->name('userdata.store');
     
     Route::get('/damagereport', function () {return view('admin.DamageReport');});
+    Route::get('/repair-recommendation', function () {return view('admin.RepairRecommendation');});
 });
