@@ -2,15 +2,29 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Facility extends Model
 {
-    protected $table = 'facility'; // Nama tabel eksplisit jika tidak mengikuti konvensi jamak
-    protected $fillable = ['facility_name', 'facility_description'];
+    use HasFactory;
 
-    public function role()
+    protected $primaryKey = 'facility_id';
+
+    protected $fillable = [
+        'facility_name',
+        'jumlah',
+        'floor_id',
+        'room_id',
+    ];
+
+    public function floor()
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Floor::class, 'floor_id', 'floor_id');
+    }
+
+    public function room()
+    {
+        return $this->belongsTo(Room::class, 'room_id', 'room_id');
     }
 }

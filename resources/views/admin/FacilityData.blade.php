@@ -1,30 +1,55 @@
 @extends('layouts.admin')
 
 @section('main')
-<div class="container" style="padding: 20px;">
-    <h2 style="text-align: center; margin-bottom: 20px;">Facilities List</h2>
+<div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Daftar Fasilitas</h1>
 
-    <div style="overflow-x:auto;">
-        <table style="border-collapse: collapse; width: 100%;">
-            <thead>
-                <tr style="background-color: #f4f4f4;">
-                    <th style="border: 1px solid #333; padding: 8px 12px;">ID</th>
-                    <th style="border: 1px solid #333; padding: 8px 12px;">Facility Name</th>
-                    <th style="border: 1px solid #333; padding: 8px 12px;">Description</th>
-                    <th style="border: 1px solid #333; padding: 8px 12px;">Created At</th>
+    {{-- Tombol Tambah Fasilitas --}}
+    <a href="{{ route('facilitydata.create') }}" class="inline-block mb-4 px-4 py-2 bg-green-600 text-black rounded hover:bg-green-700">
+        + Tambah Fasilitas
+    </a>
+
+    {{-- Tabel Fasilitas --}}
+    <table class="min-w-full border border-gray-300 bg-white shadow-md rounded-md">
+        <thead class="bg-gray-100">
+            <tr>
+                <th class="py-2 px-4 border-b text-left">ID</th>
+                <th class="py-2 px-4 border-b text-left">Nama Fasilitas</th>
+                <th class="py-2 px-4 border-b text-left">Jumlah</th>
+                <th class="py-2 px-4 border-b text-left">Lantai</th>
+                <th class="py-2 px-4 border-b text-left">Ruangan</th>
+                <th class="py-2 px-4 border-b text-left">Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($facilities as $facility)
+                <tr class="hover:bg-gray-50">
+                    <td class="py-2 px-4 border-b">{{ $facility->facility_id }}</td>
+                    <td class="py-2 px-4 border-b">{{ $facility->facility_name }}</td>
+                    <td class="py-2 px-4 border-b">{{ $facility->jumlah }}</td>
+                    <td class="py-2 px-4 border-b">{{ $facility->floor->floor_name ?? '-' }}</td>
+                    <td class="py-2 px-4 border-b">{{ $facility->room->room_name ?? '-' }}</td>
+                    <td class="py-2 px-4 border-b flex space-x-2">
+                        <a href="{{ route('facilitydata.edit', $facility->facility_id) }}"
+                           class="px-3 py-1 bg-yellow-400 text-black rounded hover:bg-yellow-500">
+                            Edit
+                        </a>
+                        <form action="{{ route('facilitydata.destroy', $facility->facility_id) }}" method="POST"
+                              onsubmit="return confirm('Yakin ingin menghapus fasilitas ini?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="px-3 py-1 bg-red-600 text-black rounded hover:bg-red-700">
+                                Hapus
+                            </button>
+                        </form>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach($facilities as $facility)
-                    <tr>
-                        <td style="border: 1px solid #333; padding: 8px 12px;">{{ $facility->id }}</td>
-                        <td style="border: 1px solid #333; padding: 8px 12px;">{{ $facility->facility_name }}</td>
-                        <td style="border: 1px solid #333; padding: 8px 12px;">{{ $facility->facility_description }}</td>
-                        <td style="border: 1px solid #333; padding: 8px 12px;">{{ $facility->created_at->format('Y-m-d H:i') }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+            @empty
+                <tr>
+                    <td colspan="7" class="text-center py-4">Tidak ada fasilitas yang tersedia.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
 </div>
 @endsection
