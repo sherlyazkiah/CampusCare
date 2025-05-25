@@ -17,4 +17,5 @@ Route::prefix('admin')->group(function () {
     
     Route::get('/damagereport', function () {return view('admin.DamageReport');});
     Route::get('/repair-recommendation', function () {return view('admin.RepairRecommendation');});
+    Route::get('/facility-data', function () {return view('admin.FacilityData');});
 });
