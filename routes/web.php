@@ -1,8 +1,5 @@
 <?php
 
-use App\Http\Controllers\FacilityController;
-use App\Http\Controllers\FloorController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;   
@@ -33,3 +30,4 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
 
 //User
 
+require __DIR__.'/auth.php';
