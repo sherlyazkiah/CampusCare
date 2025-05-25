@@ -38,4 +38,26 @@ class UserController extends Controller
         return response()->json(['success' => true]);
         //return redirect('/userdata')->with('success', 'User created successfully');
     }
+
+    public function edit($id)
+{
+    $user = User::findOrFail($id);
+    $roles = Role::all(); // Jika kamu punya relasi role
+    return view('admin.edit', compact('user', 'roles'));
+}
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'username' => 'required|string|max:255',
+        'role_id' => 'required|exists:roles,id',
+    ]);
+
+    $user = User::findOrFail($id);
+    $user->username = $request->username;
+    $user->role_id = $request->role_id;
+    $user->save();
+
+    return redirect()->route('userdata.index')->with('success', 'User berhasil diperbarui.');
+}
+
 }

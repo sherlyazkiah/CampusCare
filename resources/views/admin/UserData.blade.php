@@ -238,6 +238,46 @@
         </div>
     </div>
 
+    .container {
+        max-width: 800px;
+        margin: 40px auto;
+        font-family: Arial, sans-serif;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+    }
+</style>
+<div class="container">
+    <a href="{{ route('userdata.create') }}">Tambah User</a>
+    <h1 class="mb-4">Daftar User</h1>
+    
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($users as $user)
+                <tr>
+                    <td>{{ $user->id }}</td>
+                    <td>{{ $user->username }}</td>
+                    <td>{{ $user->role->name ?? '-' }}</td>
+                    <td class="actions">
+                        <a href="{{ route('userdata.edit', $user->id) }}">Edit</a>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="3" class="text-center">Tidak ada data user.</td>
+                    
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
     <!-- Delete User Modal -->
     <div id="delete-user-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 items-center justify-center hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full h-full max-w-md px-4 md:h-auto">
