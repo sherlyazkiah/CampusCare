@@ -30,4 +30,5 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     Route::get('/repair-recommendation', function () {return view('admin.RepairRecommendation');});
     Route::get('/facility-data', function () {return view('admin.FacilityData');});
     Route::get('/floor-room-data', function () {return view('admin.FloorRoomData');});
+    Route::get('/profile', function () {return view('admin.Profile');});
     });
