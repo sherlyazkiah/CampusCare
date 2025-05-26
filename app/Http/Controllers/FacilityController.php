@@ -9,18 +9,25 @@ use App\Models\Room;
 
 class FacilityController extends Controller
 {
+    public function index()
+    {
+        $facilities = Facility::with(['floor', 'room'])->get();
+        $floors = Floor::all();
+        $rooms = Room::all();
+
+        return view('admin.FacilityData', compact('facilities', 'floors', 'rooms'));
+    }
+
+
     public function view()
     {
         $facilities = Facility::with(['floor', 'room'])->get();
-
-        return view('admin.FacilityData', compact('facilities'));
-    }
-    public function create()
-    {
         $floors = Floor::all();
         $rooms = Room::all();
-        return view('admin.FacilityCreate', compact('floors', 'rooms'));
+
+        return view('admin.FacilityData', compact('facilities', 'floors', 'rooms'));
     }
+
 
     public function store(Request $request)
     {

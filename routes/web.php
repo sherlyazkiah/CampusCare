@@ -6,25 +6,20 @@ use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;   
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
+// === AUTH ===
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-//Admin
+// === ADMIN ROUTES ===
 Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function () {
 
     // Dashboard Admin
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
-=======
-Route::prefix('admin')->group(function () {
-
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    });
 
     // === USER ===
     Route::get('/userdata', [UserController::class, 'view'])->name('userdata.index');
@@ -36,14 +31,14 @@ Route::prefix('admin')->group(function () {
     // === FLOOR + ROOM COMBINED PAGE ===
     Route::get('/floorroomdata', [RoomController::class, 'index'])->name('floorroomdata.index');
 
-    // === FLOOR CRUD (tetap di FloorController) ===
+    // === FLOOR CRUD ===
     Route::get('/floors/create', [FloorController::class, 'create'])->name('floors.create');
     Route::post('/floors', [FloorController::class, 'store'])->name('floors.store');
     Route::get('/floors/{floor}/edit', [FloorController::class, 'edit'])->name('floors.edit');
     Route::put('/floors/{floor}', [FloorController::class, 'update'])->name('floors.update');
     Route::delete('/floors/{floor}', [FloorController::class, 'destroy'])->name('floors.destroy');
 
-    // === ROOM CRUD (dipindah ke RoomController) ===
+    // === ROOM CRUD ===
     Route::get('/rooms/create', [RoomController::class, 'create'])->name('rooms.create');
     Route::post('/rooms', [RoomController::class, 'store'])->name('rooms.store');
     Route::get('/rooms/{room}/edit', [RoomController::class, 'edit'])->name('rooms.edit');
@@ -57,6 +52,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/facilitydata/{facility}/edit', [FacilityController::class, 'edit'])->name('facilitydata.edit');
     Route::put('/facilitydata/{facility}', [FacilityController::class, 'update'])->name('facilitydata.update');
     Route::delete('/facilitydata/{facility}', [FacilityController::class, 'destroy'])->name('facilitydata.destroy');
-});
 
-   
+    Route::get('/facilitydata', [FacilityController::class, 'index'])->name('facilitydata.index');
+    Route::resource('facilitydata', FacilityController::class);
+});
