@@ -7,10 +7,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;   
 
-
-
-
-
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
@@ -29,13 +25,9 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     Route::post('/userdata', [UserController::class, 'store'])->name('userdata.store');
     Route::get('/userdata/{id}/edit', [UserController::class, 'edit'])->name('userdata.edit');
     Route::put('/userdata/{id}', [UserController::class, 'update'])->name('userdata.update');
-    });
-
-//User
-
-    
+    Route::delete('/userdata/{id}', [UserController::class, 'destroy'])->name('userdata.destroy');
     Route::get('/damagereport', function () {return view('admin.DamageReport');});
     Route::get('/repair-recommendation', function () {return view('admin.RepairRecommendation');});
     Route::get('/facility-data', function () {return view('admin.FacilityData');});
     Route::get('/floor-room-data', function () {return view('admin.FloorRoomData');});
-});
+    });
