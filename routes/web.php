@@ -5,11 +5,21 @@ use App\Http\Controllers\FloorController;
 use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;   
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
+//Admin
+Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function () {
+
+    // Dashboard Admin
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+=======
 Route::prefix('admin')->group(function () {
 
     Route::get('/dashboard', function () {
@@ -49,3 +59,4 @@ Route::prefix('admin')->group(function () {
     Route::delete('/facilitydata/{facility}', [FacilityController::class, 'destroy'])->name('facilitydata.destroy');
 });
 
+   

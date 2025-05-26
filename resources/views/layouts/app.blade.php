@@ -18,7 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.46.0/dist/apexcharts.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900">
+<body class="bg-white dark:bg-gray-900">
     @yield('content')
     <script>
         var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');

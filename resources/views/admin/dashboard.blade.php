@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
 @section('main')
-
-<div class="flex gap-4">
+<div class="px-4 py-8 mt-14 sm:ml-64 text-black dark:text-white bg-gray-50 dark:bg-gray-900">
+<div class="grid w-full grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-4">
     <!-- Card 1 -->
-    <div class="w-full sm:w-1/2 lg:w-1/4 bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
+    <div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
         <div class="flex items-center">
         <div class="p-3 rounded-lg bg-red-100 dark:bg-red-700 flex items-center justify-center me-3">
             <svg class="w-6 h-6 text-red-500 dark:text-red-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 19">
@@ -19,7 +19,7 @@
         </div>
     </div>
     <!-- Card 2 -->
-    <div class="w-full sm:w-1/2 lg:w-1/4 bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
+    <div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
         <div class="flex items-center">
         <div class="p-3 rounded-lg bg-yellow-100 dark:bg-yellow-700 flex items-center justify-center me-3">
             <svg class="w-6 h-6 text-yellow-500 dark:text-yellow-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 19">
@@ -34,7 +34,7 @@
         </div>
     </div>
     <!-- Card 3 -->
-    <div class="w-full sm:w-1/2 lg:w-1/4 bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
+    <div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
         <div class="flex items-center">
         <div class="p-3 rounded-lg bg-green-100 dark:bg-green-700 flex items-center justify-center me-3">
             <svg class="w-6 h-6 text-green-500 dark:text-green-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 19">
@@ -49,7 +49,7 @@
         </div>
     </div>
     <!-- Card 4 -->
-    <div class="w-full sm:w-1/2 lg:w-1/4 bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
+    <div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
         <div class="flex items-center">
         <div class="p-3 rounded-lg bg-blue-100 dark:bg-blue-700 flex items-center justify-center me-3">
             <svg class="w-6 h-6 text-blue-500 dark:text-blue-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 19">
@@ -66,8 +66,8 @@
 </div>
 
 <!-- Chart -->
-<div class="flex gap-4">
-  <div class="mt-5 w-full sm:w-4/4 lg:w-3/4 bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
+<div class="flex flex-col lg:flex-row gap-4">
+  <div class="mt-5 w-full lg:w-3/4 bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
     <div class="flex justify-between mb-5">
       <div class="grid gap-4 grid-cols-2">
         <div>
@@ -200,11 +200,13 @@
   }
   </script>
   <!-- Rating -->
-<div class="mt-5 w-full sm:w-1/2 lg:w-1/4 bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
+<div class="mt-5 w-full lg:w-1/4 bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
   <h3 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Rating</h3>
   
   <!-- Donut Chart -->
-  <div id="rating-donut-chart" class="mb-2"></div>
+  <div class="flex justify-center">
+    <div id="rating-donut-chart" class="mb-2 min-h-[200px]"></div>
+  </div>
   <p class="text-center text-md font-medium text-gray-500 dark:text-gray-400">4.80 / 5.00</p>
   <p class="text-center text-sm font-medium text-gray-500 dark:text-gray-400">from 25 user ratings</p>
   <div class="pl-10">
@@ -315,10 +317,7 @@ if (document.getElementById("rating-donut-chart") && typeof ApexCharts !== 'unde
                 <thead class="bg-gray-50 dark:bg-gray-700">
                   <tr>
                     <th scope="col" class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white">
-                      Name
-                    </th>
-                    <th scope="col" class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white">
-                      Date &amp; Time
+                      Reporter
                     </th>
                     <th scope="col" class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white">
                       Facility Name
@@ -332,15 +331,15 @@ if (document.getElementById("rating-donut-chart") && typeof ApexCharts !== 'unde
                     <th scope="col" class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white">
                       Status
                     </th>
+                    <th scope="col" class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white">
+                      Date &amp; Time
+                    </th>
                   </tr>
                 </thead>
                 <tbody class="bg-white dark:bg-gray-800">
-                  <tr>
+                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                     <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                       Alice Johnson
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Apr 23 ,2021
                     </td>
                     <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                       Projector
@@ -354,13 +353,13 @@ if (document.getElementById("rating-donut-chart") && typeof ApexCharts !== 'unde
                     <td class="p-4 whitespace-nowrap">
                       <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-green-400 border border-green-100 dark:border-green-500">Repaired</span>
                     </td>
-                  </tr>
-                  <tr class="bg-gray-50 dark:bg-gray-700">
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Alice Johnson
-                    </td>
                     <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                       Apr 23 ,2021
+                    </td>
+                  </tr>
+                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                      Alice Johnson
                     </td>
                     <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                       Projector
@@ -374,13 +373,13 @@ if (document.getElementById("rating-donut-chart") && typeof ApexCharts !== 'unde
                     <td class="p-4 whitespace-nowrap">
                       <span class="bg-purple-100 text-purple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-purple-100 dark:bg-gray-700 dark:border-purple-500 dark:text-purple-400">In progress</span>
                     </td>
-                  </tr>
-                  <tr>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Alice Johnson
-                    </td>
                     <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                       Apr 23 ,2021
+                    </td>
+                  </tr>
+                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                      Alice Johnson
                     </td>
                     <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                       Projector
@@ -394,13 +393,13 @@ if (document.getElementById("rating-donut-chart") && typeof ApexCharts !== 'unde
                     <td class="p-4 whitespace-nowrap">
                       <span class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-red-100 dark:border-red-400 dark:bg-gray-700 dark:text-red-400">Cancelled</span>
                     </td>
-                  </tr>
-                  <tr class="bg-gray-50 dark:bg-gray-700">
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Alice Johnson
-                    </td>
                     <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                       Apr 23 ,2021
+                    </td>
+                  </tr>
+                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                      Alice Johnson
                     </td>
                     <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                       Projector
@@ -414,6 +413,9 @@ if (document.getElementById("rating-donut-chart") && typeof ApexCharts !== 'unde
                     <td class="p-4 whitespace-nowrap">
                       <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-orange-100 dark:bg-gray-700 dark:border-orange-300 dark:text-orange-300">In review</span>
                     </td>
+                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                      Apr 23 ,2021
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -423,11 +425,12 @@ if (document.getElementById("rating-donut-chart") && typeof ApexCharts !== 'unde
       </div>
       <!-- Card Footer -->
       <div class="flex items-center justify-between pt-3 sm:pt-6">
-          <a href="#" class="inline-flex items-center p-2 text-xs font-medium uppercase rounded-lg text-primary-700 sm:text-sm hover:bg-gray-100 dark:text-primary-500 dark:hover:bg-gray-700">
+          <a href="{{ url('admin/damagereport') }}" class="inline-flex items-center p-2 text-xs font-medium uppercase rounded-lg text-primary-700 sm:text-sm hover:bg-gray-100 dark:text-primary-500 dark:hover:bg-gray-700">
            Show All Report
             <svg class="w-4 h-4 ml-1 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
           </a>
       </div>
     </div>
+</div>
 </div>
 @endsection
