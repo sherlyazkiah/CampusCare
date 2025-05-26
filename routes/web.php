@@ -11,9 +11,8 @@ Route::get('/', function () {
 });
 
 Route::prefix('user')->group(function () {
-    Route::get('/', [UserController::class, 'index'])->name('user');
     // Dashboard
-    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+    Route::get('/', [UserController::class, 'dashboard'])->name('user.dashboard');
 
     // Reports
     Route::get('/reports', [ReportController::class, 'index'])->name('user.reports.index');
@@ -24,13 +23,20 @@ Route::prefix('user')->group(function () {
 });
 
 Route::prefix('technician')->group(function () {
-    Route::get('/', [TechnicianController::class, 'index'])->name('technician');
-    // Dashboard
-    Route::get('/dashboard', [TechnicianController::class, 'dashboard'])->name('technician.dashboard');
 
+    // Technician dashboard
+    Route::get('/', function () {
+        return view('technician.dashboard'); // adjust the view path as needed
+    })->name('technician.dashboard');
 
-    // Logout (logout pakai POST, tapi kalau kamu pakai GET, bisa gini)
-    //Route::get('/logout', [UserController::class, 'logout'])->name('user.logout');
+    // Example logout route using GET (not recommended for real logout)
+    /*
+    Route::get('/logout', function () {
+        // Logic for logging out manually here if needed
+        Auth::logout();
+        return redirect('/login');
+    })->name('user.logout');
+    */
 });
 
 Route::get('/about', function () {
