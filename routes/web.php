@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\FloorController;
 use App\Http\Controllers\RoomController;
@@ -22,13 +23,13 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     })->name('admin.dashboard');
 
     // === USER ===
-    Route::get('/userdata', [UserController::class, 'view'])->name('userdata.index');
-    Route::get('/userdata/create', [UserController::class, 'create'])->name('userdata.create');
-    Route::post('/userdata', [UserController::class, 'store'])->name('userdata.store');
-    Route::get('/userdata/{id}/edit', [UserController::class, 'edit'])->name('userdata.edit');
-    Route::put('/userdata/{id}', [UserController::class, 'update'])->name('userdata.update');
-    Route::delete('/userdata/{id}', [UserController::class, 'destroy'])->name('userdata.destroy');
-    Route::get('/userdata/{id}', [UserController::class, 'show'])->name('userdata.show'); // <-- detail user
+    Route::get('/userdata', [AdminController::class, 'view'])->name('userdata.index');
+    Route::get('/userdata/create', [AdminController::class, 'create'])->name('userdata.create');
+    Route::post('/userdata', [AdminController::class, 'store'])->name('userdata.store');
+    Route::get('/userdata/{id}/edit', [AdminController::class, 'edit'])->name('userdata.edit');
+    Route::put('/userdata/{id}', [AdminController::class, 'update'])->name('userdata.update');
+    Route::delete('/userdata/{id}', [AdminController::class, 'destroy'])->name('userdata.destroy');
+    Route::get('/userdata/{id}', [AdminController::class, 'show'])->name('userdata.show'); // <-- detail user
     Route::get('/floorroomdata', [RoomController::class, 'index'])->name('floorroomdata.index');
 
     // === FLOOR CRUD ===
