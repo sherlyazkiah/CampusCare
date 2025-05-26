@@ -27,8 +27,8 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     Route::post('/userdata', [UserController::class, 'store'])->name('userdata.store');
     Route::get('/userdata/{id}/edit', [UserController::class, 'edit'])->name('userdata.edit');
     Route::put('/userdata/{id}', [UserController::class, 'update'])->name('userdata.update');
-
-    // === FLOOR + ROOM COMBINED PAGE ===
+    Route::delete('/userdata/{id}', [UserController::class, 'destroy'])->name('userdata.destroy');
+    Route::get('/userdata/{id}', [UserController::class, 'show'])->name('userdata.show'); // <-- detail user
     Route::get('/floorroomdata', [RoomController::class, 'index'])->name('floorroomdata.index');
 
     // === FLOOR CRUD ===
@@ -55,4 +55,9 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
 
     Route::get('/facilitydata', [FacilityController::class, 'index'])->name('facilitydata.index');
     Route::resource('facilitydata', FacilityController::class);
-});
+    
+
+    });
+
+
+
