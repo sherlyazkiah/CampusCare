@@ -9,6 +9,8 @@ class Facility extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $primaryKey = 'facility_id';
 
     protected $fillable = [
@@ -20,11 +22,11 @@ class Facility extends Model
 
     public function floor()
     {
-        return $this->belongsTo(Floor::class, 'floor_id', 'floor_id');
+        return $this->belongsTo(Floor::class, 'floor_id');
     }
 
     public function room()
     {
-        return $this->belongsTo(Room::class, 'room_id', 'room_id');
+        return $this->belongsTo(Room::class, 'room_id');
     }
 }
