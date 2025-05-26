@@ -25,11 +25,11 @@
         </div>
         <div class="col-span-6 sm:col-span-3">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-            <input type="text" readonly value="{{ $user->biodata->title }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            <input type="text" readonly value="{{ $user->biodata->title ?? 'User dosent fill yet' }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
         </div>
         <div class="col-span-6 sm:col-span-3">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-            <input type="text" readonly value="{{ $user->biodata->email }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            <input type="text" readonly value="{{ $user->biodata->email ?? 'User dosent fill yet' }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
         </div>
     </div>
 

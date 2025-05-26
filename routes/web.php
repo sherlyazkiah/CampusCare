@@ -55,9 +55,4 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
 
     Route::get('/facilitydata', [FacilityController::class, 'index'])->name('facilitydata.index');
     Route::resource('facilitydata', FacilityController::class);
-    
-
-    });
-
-
-
+});
