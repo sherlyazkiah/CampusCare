@@ -29,13 +29,16 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     Route::post('/userdata', [UserController::class, 'store'])->name('userdata.store');
     Route::get('/userdata/{id}/edit', [UserController::class, 'edit'])->name('userdata.edit');
     Route::put('/userdata/{id}', [UserController::class, 'update'])->name('userdata.update');
-    });
-
-//User
-
+    Route::delete('/userdata/{id}', [UserController::class, 'destroy'])->name('userdata.destroy');
+ Route::get('/userdata/{id}', [UserController::class, 'show'])->name('userdata.show'); // <-- detail user
     
     Route::get('/damagereport', function () {return view('admin.DamageReport');});
     Route::get('/repair-recommendation', function () {return view('admin.RepairRecommendation');});
     Route::get('/facility-data', function () {return view('admin.FacilityData');});
     Route::get('/floor-room-data', function () {return view('admin.FloorRoomData');});
-});
+    });
+
+//User
+
+    
+    

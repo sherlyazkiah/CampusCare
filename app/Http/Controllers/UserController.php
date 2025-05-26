@@ -50,14 +50,37 @@ public function update(Request $request, $id)
     $request->validate([
         'username' => 'required|string|max:255',
         'role_id' => 'required|exists:roles,id',
+        'password' => 'nullable|min:6', // hanya divalidasi jika diisi
     ]);
 
     $user = User::findOrFail($id);
     $user->username = $request->username;
     $user->role_id = $request->role_id;
+
+    // Jika password diisi, hash dan simpan
+    if ($request->filled('password')) {
+        $user->password = Hash::make($request->password);
+    }
+
     $user->save();
 
     return redirect()->route('userdata.index')->with('success', 'User berhasil diperbarui.');
+}
+
+
+public function destroy($id)
+{
+    $user = User::findOrFail($id);
+    $user->delete();
+
+    return redirect()->route('userdata.index')->with('success', 'User berhasil dihapus.');
+}
+
+public function show($id)
+{
+    $user = User::with('biodata', 'role')->findOrFail($id); // Pastikan model User ada
+
+    return view('admin.UserDetail', compact('user'));
 }
 
 }
