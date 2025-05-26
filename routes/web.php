@@ -2,16 +2,18 @@
 
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\FloorController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;   
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
+// === AUTH ===
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-//Admin
+// === ADMIN ROUTES ===
 Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function () {
 
     // Dashboard Admin
@@ -19,7 +21,7 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
         return view('admin.dashboard');
     })->name('admin.dashboard');
 
-    // User Data
+    // === USER ===
     Route::get('/userdata', [UserController::class, 'view'])->name('userdata.index');
     Route::get('/userdata/create', [UserController::class, 'create'])->name('userdata.create');
     Route::post('/userdata', [UserController::class, 'store'])->name('userdata.store');
@@ -30,5 +32,4 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     Route::get('/repair-recommendation', function () {return view('admin.RepairRecommendation');});
     Route::get('/facility-data', function () {return view('admin.FacilityData');});
     Route::get('/floor-room-data', function () {return view('admin.FloorRoomData');});
-    Route::get('/profile', function () {return view('admin.Profile');});
     });

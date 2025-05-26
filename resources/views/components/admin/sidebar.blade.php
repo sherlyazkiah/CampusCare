@@ -41,10 +41,10 @@
             </button>
             <ul id="dropdown-facility" class="hidden py-2 space-y-2">
                   <li>
-                     <a href="{{ url('admin/facility-data') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Facility Data</a>
+                     <a href="{{ url('admin/facilitydata') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Facility Data</a>
                   </li>
                   <li>
-                     <a href="{{ url('admin/floor-room-data') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Floor & Room Data</a>
+                     <a href="{{ url('admin/floorroomdata') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Floor & Room Data</a>
                   </li>
             </ul>
           </li>
