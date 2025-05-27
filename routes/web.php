@@ -60,3 +60,15 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
         return view('admin.DamageReport');
     });
     });
+
+    Route::get('/user/dashboard', function () {
+            return view('user.dashboard');
+    });
+
+    Route::get('/user/report', function () {
+            return view('user.Report');
+    });
+
+    Route::get('/user/create-report', function () {
+            return view('user.CreateReport');
+    });
