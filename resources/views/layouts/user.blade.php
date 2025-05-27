@@ -8,7 +8,7 @@
   @include('components.user.sidebar')
   
   <!-- Main -->
-  <section class="px-4 py-8 mt-14 sm:ml-64 text-black dark:text-white">
+  <section>
     @yield('main')
   </section>
 @endsection

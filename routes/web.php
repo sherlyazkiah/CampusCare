@@ -57,5 +57,19 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     Route::get('/facilitydata', [FacilityController::class, 'index'])->name('facilitydata.index');
     Route::resource('facilitydata', FacilityController::class);
     
+    Route::get('/damagereport', function () {
+        return view('admin.DamageReport');
+    });
+    });
 
+    Route::get('/user/dashboard', function () {
+            return view('user.dashboard');
+    });
+
+    Route::get('/user/report', function () {
+            return view('user.Report');
+    });
+
+    Route::get('/user/create-report', function () {
+            return view('user.CreateReport');
     });
