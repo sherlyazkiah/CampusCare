@@ -23,13 +23,14 @@ class User extends Authenticatable
         'role_id'
     ];
 
-    public function role(){
-        return $this->belongsTo(Role::class);
+    public function role()
+    {
+
+        return $this->belongsTo(Role::class, 'role_id', 'role_id');
     }
 
-     public function biodata()
+    public function biodata()
     {
         return $this->hasOne(Biodata::class, 'id_user');
     }
-   
 }

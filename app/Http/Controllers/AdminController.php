@@ -11,6 +11,7 @@ class AdminController extends Controller
 {
     public function view()
     {
+
         $users = User::with('role')->get();
         return view('admin.UserData', compact('users')); // kirim variabel $users ke view
     }
@@ -18,6 +19,7 @@ class AdminController extends Controller
     public function create()
     {
         $roles = Role::all();
+
         return view('admin.UserCreate', compact('roles'));
     }
 
@@ -26,13 +28,16 @@ class AdminController extends Controller
         $request->validate([
             'username' => 'required',
             'password' => 'required|min:6',
-            'role_id' => 'nullable|exists:roles,id'
+            //'role_id' => 'nullable|exists:roles,id'
+            'role_id' => 'required|exists:roles,role_id',
+
         ]);
 
         User::create([
             'username' => $request->username,
             'password' => Hash::make($request->password),
-            'role_id' => $request->role_id
+            //'role_id' => $request->role_i
+            'role_id' => $request->role_id,
         ]);
 
         return response()->json(['success' => true]);
@@ -40,47 +45,48 @@ class AdminController extends Controller
     }
 
     public function edit($id)
-{
-    $user = User::findOrFail($id);
-    $roles = Role::all(); // Jika kamu punya relasi role
-    return view('admin.edit', compact('user', 'roles'));
-}
-public function update(Request $request, $id)
-{
-    $request->validate([
-        'username' => 'required|string|max:255',
-        'role_id' => 'required|exists:roles,id',
-        'password' => 'nullable|min:6', // hanya divalidasi jika diisi
-    ]);
+    {
+        $user = User::findOrFail($id);
+        $roles = Role::all(); // Jika kamu punya relasi role
+        return view('admin.edit', compact('user', 'roles'));
+    }
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'username' => 'required|string|max:255',
+            'role_id' => 'required|exists:roles,role_id',
 
-    $user = User::findOrFail($id);
-    $user->username = $request->username;
-    $user->role_id = $request->role_id;
+            //'role_id' => 'required|exists:roles,id',
+            'password' => 'nullable|min:6', // hanya divalidasi jika diisi
+        ]);
 
-    // Jika password diisi, hash dan simpan
-    if ($request->filled('password')) {
-        $user->password = Hash::make($request->password);
+        $user = User::findOrFail($id);
+        $user->username = $request->username;
+        $user->role_id = $request->role_id;
+
+        // Jika password diisi, hash dan simpan
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->route('userdata.index')->with('success', 'User berhasil diperbarui.');
     }
 
-    $user->save();
 
-    return redirect()->route('userdata.index')->with('success', 'User berhasil diperbarui.');
-}
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
 
+        return redirect()->route('userdata.index')->with('success', 'User berhasil dihapus.');
+    }
 
-public function destroy($id)
-{
-    $user = User::findOrFail($id);
-    $user->delete();
+    public function show($id)
+    {
+        $user = User::with('biodata', 'role')->findOrFail($id); // Pastikan model User ada
 
-    return redirect()->route('userdata.index')->with('success', 'User berhasil dihapus.');
-}
-
-public function show($id)
-{
-    $user = User::with('biodata', 'role')->findOrFail($id); // Pastikan model User ada
-
-    return view('admin.UserDetail', compact('user'));
-}
-
+        return view('admin.UserDetail', compact('user'));
+    }
 }

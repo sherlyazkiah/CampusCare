@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
             $table->string('name');
-            $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');
+
+            $table->unsignedBigInteger('role_id');
+            $table->foreign('role_id')->references('role_id')->on('roles');
+
             $table->foreignId('username')->constrained('users')->onDelete('cascade');
             $table->string('title');
             $table->string('email')->unique();
