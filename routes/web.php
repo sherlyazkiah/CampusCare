@@ -72,3 +72,7 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     Route::get('/user/create-report', function () {
             return view('user.CreateReport');
     });
+
+    Route::get('/admin/profile', function () {
+            return view('admin.Profile');
+    });

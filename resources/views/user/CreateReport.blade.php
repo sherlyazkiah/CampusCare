@@ -1,9 +1,7 @@
 @extends('layouts.user')
 
 @section('main')
-<div class="px-4 py-8 mt-14 sm:ml-64 text-black dark:text-white bg-gray-50 dark:bg-gray-900">
-<div class="container mx-auto px-4 py-6" x-data="{ showNotification: false }">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+<div class="px-8 py-8 mt-14 sm:ml-64 text-black dark:text-white bg-white dark:bg-gray-900">
         <h2 class="text-2xl font-bold mb-6 text-black dark:text-white">Create New Report</h2>
 
         <form>
@@ -87,7 +85,6 @@
                 </div>
             </div>
         </form>
-    </div>
 </div>
 
 <style>
