@@ -59,6 +59,10 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     Route::resource('facilitydata', FacilityController::class);
 
     Route::resource('damagereport', ReportController::class);
+  
+    Route::get('/profile', function () {
+              return view('admin.Profile');
+      });
 });
 
 Route::middleware(['auth'])->prefix('user')->group(function () {
@@ -67,13 +71,15 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
         return view('user.dashboard');
     });
 
-    Route::get('//reports', [ReportController::class, 'userReports'])->name('user.reports');
+    Route::get('/reports', [ReportController::class, 'userReports'])->name('user.reports');
 
     Route::get('/report', function () {
         return view('user.Report');
     });
 
     Route::get('/create-report', function () {
-        return view('user.CreateReport');
+            return view('user.CreateReport');
     });
+
+    
 });
