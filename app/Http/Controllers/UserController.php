@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DamageReport;
 use Illuminate\Http\Request;
 use \App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -12,4 +14,6 @@ class UserController extends Controller
         $users = User::with('role')->get();
         return view('user.dashboard', compact('users')); // kirim variabel $users ke view
     }
+
+    
 }

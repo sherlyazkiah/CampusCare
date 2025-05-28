@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\ReportController;
 
 // === AUTH ===
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -57,9 +58,7 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     Route::get('/facilitydata', [FacilityController::class, 'index'])->name('facilitydata.index');
     Route::resource('facilitydata', FacilityController::class);
 
-    Route::get('/damagereport', function () {
-        return view('admin.DamageReport');
-    });
+    Route::resource('damagereport', ReportController::class);
 });
 
 Route::middleware(['auth'])->prefix('user')->group(function () {
@@ -68,11 +67,13 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
         return view('user.dashboard');
     });
 
-    Route::get('/user/report', function () {
+    Route::get('//reports', [ReportController::class, 'userReports'])->name('user.reports');
+
+    Route::get('/report', function () {
         return view('user.Report');
     });
 
-    Route::get('/user/create-report', function () {
+    Route::get('/create-report', function () {
         return view('user.CreateReport');
     });
 });

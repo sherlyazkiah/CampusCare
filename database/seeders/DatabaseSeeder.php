@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             FloorSeeder::class,
             RoomSeeder::class,
             FacilitiessSeeder::class,
+            ReportSeeder::class,
         ]);
     }
 }
