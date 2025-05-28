@@ -56,40 +56,44 @@
                   </tr>
                 </thead>
                 <tbody class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                  <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      1
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Alice Johnson
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Projector
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Room 201, Building A
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Student
-                    </td>
-                    <td class="p-4 whitespace-nowrap">
-                      <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-orange-100 dark:bg-gray-700 dark:border-orange-300 dark:text-orange-300">In review</span>
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Apr 23 ,2021
-                    </td>
-                    <td class="p-4 space-x-2 whitespace-nowrap">
-                        <!-- Modal toggle -->
-                        <button type="button" data-modal-target="detail-report-modal" data-modal-show="detail-report-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-green-600 hover:bg-green-800 focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            Detail
-                        </button>
-                        <button type="button" data-modal-target="delete-report-modal" data-modal-toggle="delete-report-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
-                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                            Delete
-                        </button>    
-                    </td>
-                </tbody>
+                    @forelse ($reports as $report)
+                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                            {{ $report->damage_report_id }}
+                        </td>
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                            {{ $report->user->username ?? '-' }}
+                        </td>
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                            {{ $report->report_name }}
+                        </td>
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                            {{ $report->room->room_name ?? '-' }}, {{ $report->floor->floor_name ?? '-' }}
+                        </td>
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                            {{ $report->role->name ?? '-' }}
+                        </td>
+                        <td class="p-4 whitespace-nowrap">
+                            <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-orange-100 dark:bg-gray-700 dark:border-orange-300 dark:text-orange-300">In review</span>
+                        </td>
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                            {{ $report->created_at->format('M d, Y') }}
+                        </td>
+                        <td class="p-4 space-x-2 whitespace-nowrap">
+                            <button type="button" data-modal-target="detail-report-modal" data-modal-show="detail-report-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white rounded-lg bg-green-600 hover:bg-green-800">
+                                Detail
+                            </button>
+                            <button type="button" data-modal-target="delete-report-modal" data-modal-toggle="delete-report-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-800">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="8" class="p-4 text-sm text-center text-gray-500 dark:text-gray-400">No reports found.</td>
+                    </tr>
+                    @endforelse
+                </tbody>                
               </table>
             </div>
           </div>

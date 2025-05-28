@@ -4,7 +4,7 @@
 <div class="px-4 py-8 mt-14 sm:ml-64 text-black dark:text-white bg-white dark:bg-gray-900">
     <div class="w-full mb-1">
             <div class="mb-4">
-                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Report</h1>
+                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Damage Report</h1>
             </div>
             <div class="sm:flex mt-8">
                 <div class="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
@@ -16,12 +16,9 @@
                     </form>
                 </div>
                 <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
-                    <a href="/user/create-report" 
-                        class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm sm:w-auto font-medium text-center text-white rounded-lg bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
-                        </svg>
-                        New report
+                    <a href="#" class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                        <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clip-rule="evenodd"></path></svg>
+                        Export
                     </a>
                 </div>
             </div>
@@ -36,7 +33,7 @@
                     <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                       ID
                     </th><th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                      Name
+                      Reporter
                     </th>
                     <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                       Facility Name
@@ -45,7 +42,7 @@
                       Location
                     </th>
                     <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                      Damage Severity
+                      Role
                     </th>
                     <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                       Status
@@ -54,45 +51,49 @@
                       Date &amp; Time
                     </th>
                     <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                      Feedback
+                      Action
                     </th>
                   </tr>
                 </thead>
                 <tbody class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                  <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      1
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Alice Johnson
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Projector
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Room 201, Building A
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      2
-                    </td>
-                    <td class="p-4 whitespace-nowrap">
-                      <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-orange-100 dark:bg-gray-700 dark:border-orange-300 dark:text-orange-300">In review</span>
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Apr 23 ,2021
-                    </td>
-                    <td class="p-4 space-x-2 whitespace-nowrap">
-                        <!-- Modal toggle -->
-                        <button type="button" data-modal-target="detail-report-modal" data-modal-show="detail-report-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-green-600 hover:bg-green-800 focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            Detail
-                        </button>
-                        <button type="button" data-modal-target="delete-report-modal" data-modal-toggle="delete-report-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
-                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                            Delete
-                        </button>    
-                    </td>
-                </tbody>
+                    @forelse ($reports as $report)
+                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                            {{ $report->damage_report_id }}
+                        </td>
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                            {{ $report->user->username ?? '-' }}
+                        </td>
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                            {{ $report->report_name }}
+                        </td>
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                            {{ $report->room->room_name ?? '-' }}, {{ $report->floor->floor_name ?? '-' }}
+                        </td>
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                            {{ $report->role->name ?? '-' }}
+                        </td>
+                        <td class="p-4 whitespace-nowrap">
+                            <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-orange-100 dark:bg-gray-700 dark:border-orange-300 dark:text-orange-300">In review</span>
+                        </td>
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                            {{ $report->created_at->format('M d, Y') }}
+                        </td>
+                        <td class="p-4 space-x-2 whitespace-nowrap">
+                            <button type="button" data-modal-target="detail-report-modal" data-modal-show="detail-report-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white rounded-lg bg-green-600 hover:bg-green-800">
+                                Detail
+                            </button>
+                            <button type="button" data-modal-target="delete-report-modal" data-modal-toggle="delete-report-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-800">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="8" class="p-4 text-sm text-center text-gray-500 dark:text-gray-400">No reports found.</td>
+                    </tr>
+                    @endforelse
+                </tbody>                
               </table>
             </div>
           </div>

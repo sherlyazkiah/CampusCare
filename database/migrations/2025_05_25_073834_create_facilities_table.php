@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('facilities', function (Blueprint $table) {
             $table->id('facility_id');
-            $table->string('facility_name', 100)->unique(); // Nama fasilitas, misalnya: Proyektor
+            $table->string('facility_name', 100); 
             $table->integer('jumlah')->nullable();
-    
+
             // Relasi ke room dan floor
             $table->unsignedBigInteger('room_id');
             $table->unsignedBigInteger('floor_id');

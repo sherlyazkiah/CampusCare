@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('username');
             $table->string('password');
-            $table->foreignId('role_id')->constrained('roles');
+            $table->unsignedBigInteger('role_id');
+            $table->foreign('role_id')->references('role_id')->on('roles');
+
             $table->timestamps();
         });
     }

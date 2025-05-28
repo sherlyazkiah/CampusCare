@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\FloorController;
 use App\Http\Controllers\RoomController;
@@ -7,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\ReportController;
 
 // === AUTH ===
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -22,13 +24,13 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     })->name('admin.dashboard');
 
     // === USER ===
-    Route::get('/userdata', [UserController::class, 'view'])->name('userdata.index');
-    Route::get('/userdata/create', [UserController::class, 'create'])->name('userdata.create');
-    Route::post('/userdata', [UserController::class, 'store'])->name('userdata.store');
-    Route::get('/userdata/{id}/edit', [UserController::class, 'edit'])->name('userdata.edit');
-    Route::put('/userdata/{id}', [UserController::class, 'update'])->name('userdata.update');
-    Route::delete('/userdata/{id}', [UserController::class, 'destroy'])->name('userdata.destroy');
-    Route::get('/userdata/{id}', [UserController::class, 'show'])->name('userdata.show'); // <-- detail user
+    Route::get('/userdata', [AdminController::class, 'view'])->name('userdata.index');
+    Route::get('/userdata/create', [AdminController::class, 'create'])->name('userdata.create');
+    Route::post('/userdata', [AdminController::class, 'store'])->name('userdata.store');
+    Route::get('/userdata/{id}/edit', [AdminController::class, 'edit'])->name('userdata.edit');
+    Route::put('/userdata/{id}', [AdminController::class, 'update'])->name('userdata.update');
+    Route::delete('/userdata/{id}', [AdminController::class, 'destroy'])->name('userdata.destroy');
+    Route::get('/userdata/{id}', [AdminController::class, 'show'])->name('userdata.show'); // <-- detail user
     Route::get('/floorroomdata', [RoomController::class, 'index'])->name('floorroomdata.index');
 
     // === FLOOR CRUD ===
@@ -55,24 +57,29 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
 
     Route::get('/facilitydata', [FacilityController::class, 'index'])->name('facilitydata.index');
     Route::resource('facilitydata', FacilityController::class);
-    
-    Route::get('/damagereport', function () {
-        return view('admin.DamageReport');
-    });
+
+    Route::resource('damagereport', ReportController::class);
+  
+    Route::get('/profile', function () {
+              return view('admin.Profile');
+      });
+});
+
+Route::middleware(['auth'])->prefix('user')->group(function () {
+
+    Route::get('/dashboard', function () {
+        return view('user.dashboard');
     });
 
-    Route::get('/user/dashboard', function () {
-            return view('user.dashboard');
+    Route::get('/reports', [ReportController::class, 'userReports'])->name('user.reports');
+
+    Route::get('/report', function () {
+        return view('user.Report');
     });
 
-    Route::get('/user/report', function () {
-            return view('user.Report');
-    });
-
-    Route::get('/user/create-report', function () {
+    Route::get('/create-report', function () {
             return view('user.CreateReport');
     });
 
-    Route::get('/admin/profile', function () {
-            return view('admin.Profile');
-    });
+    
+});
