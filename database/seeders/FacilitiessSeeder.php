@@ -55,12 +55,7 @@ class FacilitiessSeeder extends Seeder
                 'room_id' => 3,
                 'jumlah' => 8,
             ],
-            [
-                'facility_name' => 'Lamp',
-                'floor_id' => 3,
-                'room_id' => 2,
-                'jumlah' => 8,
-            ],
+            
 
 
 
