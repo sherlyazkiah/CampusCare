@@ -63,6 +63,10 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     Route::get('/profile', function () {
               return view('admin.Profile');
     });
+
+    Route::get('/repair-recommendation', function () {
+              return view('admin.RepairRecommendation');
+    });
 });
 
 Route::middleware(['auth'])->prefix('user')->group(function () {
