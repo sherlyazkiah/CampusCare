@@ -81,5 +81,7 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
             return view('user.CreateReport');
     });
 
-    
+    Route::get('/profile', function () {
+              return view('user.Profile');
+      });
 });
