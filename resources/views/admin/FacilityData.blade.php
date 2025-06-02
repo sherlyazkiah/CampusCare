@@ -3,19 +3,11 @@
 @section('main')
 <div class="px-4 py-8 mt-14 sm:ml-64 text-black dark:text-white bg-white dark:bg-gray-900">
     <div class="w-full mb-1">
-        <div class="mb-4">
-            <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Facility Data</h1>
-        </div>
 
-        {{-- Search + Action Buttons --}}
-        <div class="sm:flex mt-8">
-            <div class="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
-                <form class="lg:pr-3" action="#" method="GET">
-                    <label for="facility-search" class="sr-only">Search</label>
-                    <div class="relative mt-1 lg:w-64 xl:w-96">
-                        <input type="text" name="search" id="facility-search" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Search for facility">
-                    </div>
-                </form>
+        {{-- Action Buttons --}}
+        <div class="sm:flex">
+            <div class="mb-4">
+                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Facility Data</h1>
             </div>
             <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
                 <button type="button" data-modal-target="add-facility-modal" data-modal-toggle="add-facility-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white rounded-lg bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -31,7 +23,7 @@
         <div class="overflow-x-auto rounded-lg">
             <div class="inline-block min-w-full align-middle">
                 <div class="overflow-hidden shadow sm:rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
+                    <table id="selection-table" class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
                         <thead class="bg-gray-100 dark:bg-gray-700">
                             <tr>
                                 <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">ID</th>
@@ -88,6 +80,73 @@
             </div>
         </div>
     </div>
+
+    <script>        
+        if (document.getElementById("selection-table") && typeof simpleDatatables.DataTable !== 'undefined') {
+
+            let multiSelect = true;
+            let rowNavigation = false;
+            let table = null;
+
+            const resetTable = function() {
+                if (table) {
+                    table.destroy();
+                }
+
+                const options = {
+                    rowRender: (row, tr, _index) => {
+                        if (!tr.attributes) {
+                            tr.attributes = {};
+                        }
+                        if (!tr.attributes.class) {
+                            tr.attributes.class = "";
+                        }
+                        if (row.selected) {
+                            tr.attributes.class += " selected";
+                        } else {
+                            tr.attributes.class = tr.attributes.class.replace(" selected", "");
+                        }
+                        return tr;
+                    }
+                };
+                if (rowNavigation) {
+                    options.rowNavigation = true;
+                    options.tabIndex = 1;
+                }
+
+                table = new simpleDatatables.DataTable("#selection-table", options);
+
+                // Mark all rows as unselected
+                table.data.data.forEach(data => {
+                    data.selected = false;
+                });
+
+                table.on("datatable.selectrow", (rowIndex, event) => {
+                    event.preventDefault();
+                    const row = table.data.data[rowIndex];
+                    if (row.selected) {
+                        row.selected = false;
+                    } else {
+                        if (!multiSelect) {
+                            table.data.data.forEach(data => {
+                                data.selected = false;
+                            });
+                        }
+                        row.selected = true;
+                    }
+                    table.update();
+                });
+            };
+
+            // Row navigation makes no sense on mobile, so we deactivate it and hide the checkbox.
+            const isMobile = window.matchMedia("(any-pointer:coarse)").matches;
+            if (isMobile) {
+                rowNavigation = false;
+            }
+
+            resetTable();
+        }
+    </script>
 
     {{-- Modal Add Facility --}}
     <div id="add-facility-modal" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 left-0 right-0 z-50 flex justify-center items-center w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
