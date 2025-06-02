@@ -37,7 +37,7 @@ class ReportSeeder extends Seeder
                 'report_name' => 'error wifi',
                 'description' => 'wifi lemot',
                 'status' => 'In Progress',
-                'user_id' => 2,
+                'user_id' => 1,
                 'role_id' => 2,
                 'floor_id' => 1,
                 'room_id' => 1,
