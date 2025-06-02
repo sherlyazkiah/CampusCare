@@ -62,7 +62,7 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
   
     Route::get('/profile', function () {
               return view('admin.Profile');
-      });
+    });
 });
 
 Route::middleware(['auth'])->prefix('user')->group(function () {

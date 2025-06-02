@@ -53,13 +53,15 @@
                 <!-- Damage Criteria -->
                 <div class="mt-6">
                     <div class="flex flex-col space-y-2">
-                        <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Damage Level</label>
-                        <select name="damage_scale" class="block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                            <option value="1">1 - Very Minor (Minimal Damage)</option>
-                            <option value="2">2 - Minor (Still Functions Well)</option>
-                            <option value="3">3 - Moderate (Function Disrupted)</option>
-                            <option value="4">4 - Major (Hardly Functions)</option>
-                            <option value="5">5 - Severe (Not Usable)</option>
+                        <label for="c1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            Damage Level
+                        </label>
+                        <select id="c1" name="c1" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                            <option value="1">1 - Very minor damage</option>
+                            <option value="2">2 - Minor damage, still fully usable</option>
+                            <option value="3">3 - Moderate damage, partially usable</option>
+                            <option value="4">4 - Severe damage, limited usability</option>
+                            <option value="5">5 - Completely unusable or broken</option>
                         </select>
                     </div>
                 </div>

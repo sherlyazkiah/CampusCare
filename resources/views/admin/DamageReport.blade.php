@@ -228,8 +228,8 @@
                         <input type="text" readonly value="Apr 23, 2021" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                     </div>
                     <div class="col-span-6 sm:col-span-3">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Urgency Level</label>
-                        <input type="text" readonly value="3 - Moderate urgency" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Damage Severity</label>
+                        <input type="text" readonly value="3 - Moderate damage, partially usable" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                     </div>
                     <div class="col-span-6">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
@@ -282,151 +282,84 @@
                 </div>
                 
                 <div class="grid grid-cols-2 gap-6">
-                <!-- Repeat for each criterion -->
-                <!-- 1. Urgency Level -->
+                <!-- 1. Damage Severity -->
                 <div>
-                <label for="c1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C1 - Urgency Level</label>
-                <select id="c1" name="c1" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <option value="1">1 - Not urgent – can wait indefinitely</option>
-                    <option value="2">2 - Low urgency – minor inconvenience</option>
-                    <option value="3">3 - Moderate urgency – needs fixing soon</option>
-                    <option value="4">4 - High urgency – disrupts normal activity</option>
-                    <option value="5">5 - Critical – requires immediate action</option>
-                </select>
+                    <label for="c1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        C1 - Damage Severity
+                    </label>
+                    <input type="text" readonly value="3 - Moderate damage, partially usable" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 </div>
 
-                <!-- 2. Impact on Academic Activities -->
+                <!-- 2. Usage Importance -->
                 <div>
-                <label for="c2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C2 - Impact on Academic Activities</label>
-                <select id="c2" name="c2" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <option value="1">1 - No impact on any academic activity</option>
-                    <option value="2">2 - Slightly affects secondary activities</option>
-                    <option value="3">3 - Affects non-core learning functions</option>
-                    <option value="4">4 - Interferes with core teaching or learning</option>
-                    <option value="5">5 - Severely disrupts classes, exams, or research</option>
-                </select>
+                    <label for="c2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        C2 - Usage Importance
+                    </label>
+                    <select id="c2" name="c2" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <option value="1">1 - Rarely used</option>
+                        <option value="2">2 - Occasionally used</option>
+                        <option value="3">3 - Moderately important</option>
+                        <option value="4">4 - Frequently used</option>
+                        <option value="5">5 - Used all the time</option>
+                    </select>
                 </div>
 
-                <!-- 3. Usage Frequency -->
+                <!-- 3. Safety Concern -->
                 <div>
-                <label for="c3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C3 - Usage Frequency</label>
-                <select id="c3" name="c3" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <option value="1">1 - Rarely used (few times per semester)</option>
-                    <option value="2">2 - Occasionally used</option>
-                    <option value="3">3 - Used weekly</option>
-                    <option value="4">4 - Used daily</option>
-                    <option value="5">5 - Used heavily multiple times a day</option>
-                </select>
+                    <label for="c3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        C3 - Safety Concern
+                    </label>
+                    <select id="c3" name="c3" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <option value="1">1 - No safety risk</option>
+                        <option value="2">2 - Very low risk</option>
+                        <option value="3">3 - Moderate risk</option>
+                        <option value="4">4 - High risk of minor injury</option>
+                        <option value="5">5 - High risk of serious injury</option>
+                    </select>
                 </div>
 
-                <!-- 4. Type of Facility -->
+                <!-- 4. Repair Urgency -->
                 <div>
-                <label for="c4" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C4 - Type of Facility</label>
-                <select id="c4" name="c4" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <option value="1">1 - Non-essential (e.g., decorations)</option>
-                    <option value="2">2 - Convenience-based (e.g., notice boards)</option>
-                    <option value="3">3 - Supportive (e.g., furniture, lights)</option>
-                    <option value="4">4 - Important (e.g., computers, projectors)</option>
-                    <option value="5">5 - Essential infrastructure (e.g., internet, labs)</option>
-                </select>
+                    <label for="c4" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        C4 - Repair Urgency
+                    </label>
+                    <select id="c4" name="c4" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <option value="1">1 - Can wait, not urgent</option>
+                        <option value="2">2 - Low urgency</option>
+                        <option value="3">3 - Needs repair soon</option>
+                        <option value="4">4 - High urgency</option>
+                        <option value="5">5 - Needs immediate action</option>
+                    </select>
                 </div>
 
-                <!-- 5. Safety Risk -->
+                <!-- 5. Impact on Many People -->
                 <div>
-                <label for="c5" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C5 - Safety Risk</label>
-                <select id="c5" name="c5" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <option value="1">1 - Completely safe</option>
-                    <option value="2">2 - Minor discomfort or inconvenience</option>
-                    <option value="3">3 - Moderate risk of injury</option>
-                    <option value="4">4 - High risk if left unfixed</option>
-                    <option value="5">5 - Dangerous – poses immediate threat to safety</option>
-                </select>
+                    <label for="c5" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        C5 - Impact on Many People
+                    </label>
+                    <select id="c5" name="c5" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <option value="1">1 - Affects very few (1–2 people)</option>
+                        <option value="2">2 - Affects a small group (3–5 people)</option>
+                        <option value="3">3 - Affects a moderate group (6–15 people)</option>
+                        <option value="4">4 - Affects a large group (16–30 people)</option>
+                        <option value="5">5 - Affects very many (31+ people)</option>
+                    </select>
                 </div>
 
-                <!-- 6. Level of Damage -->
+                <!-- 6. Time to Repair -->
                 <div>
-                <label for="c6" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C6 - Level of Damage</label>
-                <select id="c6" name="c6" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <option value="1">1 - Cosmetic damage only</option>
-                    <option value="2">2 - Minor functionality issue</option>
-                    <option value="3">3 - Partial functionality loss</option>
-                    <option value="4">4 - Mostly unusable</option>
-                    <option value="5">5 - Completely broken or destroyed</option>
-                </select>
+                    <label for="c6" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        C6 - Time to Repair
+                    </label>
+                    <select id="c6" name="c6" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <option value="1">1 - More than 1 month</option>
+                        <option value="2">2 - Several weeks</option>
+                        <option value="3">3 - 1–2 weeks</option>
+                        <option value="4">4 - Few days</option>
+                        <option value="5">5 - Can be fixed within a day</option>
+                    </select>
                 </div>
-
-                <!-- 7. Facility Condition History -->
-                <div>
-                <label for="c7" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C7 - Facility Condition History</label>
-                <select id="c7" name="c7" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <option value="1">1 - No prior issues</option>
-                    <option value="2">2 - One minor issue in the past</option>
-                    <option value="3">3 - Occasional repairs needed</option>
-                    <option value="4">4 - Frequently damaged</option>
-                    <option value="5">5 - Repeatedly damaged despite past repairs</option>
-                </select>
-                </div>
-
-                <!-- 8. Availability of Replacement -->
-                <div>
-                <label for="c8" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C8 - Availability of Replacement</label>
-                <select id="c8" name="c8" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <option value="1">1 - Many alternatives available</option>
-                    <option value="2">2 - Several alternatives</option>
-                    <option value="3">3 - Limited alternatives</option>
-                    <option value="4">4 - Only one alternative</option>
-                    <option value="5">5 - No replacement or backup available</option>
-                </select>
-                </div>
-
-                <!-- 9. Budget Availability -->
-                <div>
-                <label for="c9" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C9 - Budget Availability</label>
-                <select id="c9" name="c9" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <option value="1">1 - Not budgeted at all</option>
-                    <option value="2">2 - Low priority in current budget</option>
-                    <option value="3">3 - Moderate budget availability</option>
-                    <option value="4">4 - Allocated but limited</option>
-                    <option value="5">5 - Fully budgeted for immediate repair</option>
-                </select>
-                </div>
-
-                <!-- 10. Time to Repair -->
-                <div>
-                <label for="c10" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C10 - Time to Repair</label>
-                <select id="c10" name="c10" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <option value="1">1 - More than 1 month</option>
-                    <option value="2">2 - Several weeks</option>
-                    <option value="3">3 - 1–2 weeks</option>
-                    <option value="4">4 - Few days</option>
-                    <option value="5">5 - Can be fixed within a day</option>
-                </select>
-                </div>
-
-                <!-- 11. Technician Availability -->
-                <div>
-                <label for="c11" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C11 - Technician Availability</label>
-                <select id="c11" name="c11" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <option value="1">1 - No technician available</option>
-                    <option value="2">2 - Technician available but not skilled</option>
-                    <option value="3">3 - Technician available within 1–2 weeks</option>
-                    <option value="4">4 - Technician scheduled soon</option>
-                    <option value="5">5 - Technician available immediately</option>
-                </select>
-                </div>
-
-                <!-- 12. Facility Location -->
-                <div>
-                <label for="c12" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C12 - Facility Location</label>
-                <select id="c12" name="c12" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <option value="1">1 - Isolated or rarely visited area</option>
-                    <option value="2">2 - Secondary area</option>
-                    <option value="3">3 - Moderate-traffic area</option>
-                    <option value="4">4 - High-traffic area</option>
-                    <option value="5">5 - Central or critical campus area</option>
-                </select>
-                </div>
-                </div>
+            </div>
             </div>
 
             <div class="flex justify-end p-6 border-t border-gray-200 rounded-b dark:border-gray-600">
