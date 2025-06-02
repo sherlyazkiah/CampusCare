@@ -23,21 +23,11 @@ Route::prefix('user')->group(function () {
 });
 
 Route::prefix('technician')->group(function () {
-
-    // Technician dashboard
-    Route::get('/', function () {
-        return view('technician.dashboard'); // adjust the view path as needed
-    })->name('technician.dashboard');
-
-    // Example logout route using GET (not recommended for real logout)
-    /*
-    Route::get('/logout', function () {
-        // Logic for logging out manually here if needed
-        Auth::logout();
-        return redirect('/login');
-    })->name('user.logout');
-    */
+    Route::view('/', 'technician.dashboard')->name('technician.dashboard');
+    Route::view('/tasks', 'technician.tasks')->name('technician.tasks');
+    Route::view('/history', 'technician.history')->name('technician.history');
 });
+
 
 Route::get('/about', function () {
     return view('about');
