@@ -35,8 +35,8 @@ class AuthenticatedSessionController extends Controller
          if ($user->biodata === null) {
         if ($user->role_id == 1) {
             return redirect()->route('biodata.edit');
-        } elseif ($user->role_id == 2) {
-            return redirect()->route('user.biodata.edit');
+        //} elseif ($user->role_id == 2) {
+            //return redirect()->route('user.biodata.edit');
         } elseif ($user->role_id == 3) {
             return redirect()->route('technician.biodata.edit');
         }
