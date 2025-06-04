@@ -94,3 +94,27 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
     Route::get('/create-report', [ReportController::class, 'create']);
     Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');
 });
+
+
+Route::middleware(['auth'])->prefix('technician')->group(function () {
+
+    Route::get('/dashboard', function () {
+        return view('technician.dashboard');
+    });
+
+    Route::get('/profile', [UserController::class, 'edit'])->name('user.profile.edit');
+    Route::post('/profile', [UserController::class, 'update'])->name('user.profile.update');
+
+    Route::get('/reports', [ReportController::class, 'userReports'])->name('user.reports');
+
+    Route::get('/report', function () {
+        return view('user.Report');
+    });
+
+    Route::get('/rooms-by-floor/{floor_id}', [ReportController::class, 'getRoomsByFloor']);
+    Route::get('/get-rooms/{floor_id}', [App\Http\Controllers\ReportController::class, 'getRooms']);
+
+
+    Route::get('/create-report', [ReportController::class, 'create']);
+    Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');
+});

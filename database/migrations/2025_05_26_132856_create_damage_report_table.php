@@ -28,11 +28,16 @@ return new class extends Migration
             $table->unsignedBigInteger('room_id');
             $table->unsignedBigInteger('floor_id');
 
+            $table->unsignedBigInteger('facility_id');
+
+
             // Foreign keys
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('role_id')->references('role_id')->on('roles')->onDelete('cascade');
             $table->foreign('room_id')->references('room_id')->on('rooms')->onDelete('cascade');
             $table->foreign('floor_id')->references('floor_id')->on('floors')->onDelete('cascade');
+            $table->foreign('facility_id')->references('facility_id')->on('facilities')->onDelete('cascade');
+            
         });
     }
 

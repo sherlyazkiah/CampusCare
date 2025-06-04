@@ -13,7 +13,8 @@ class ReportController extends Controller
 {
     public function index()
     {
-        $reports = DamageReport::with(['user', 'role', 'room', 'floor'])->get();
+        //$reports = DamageReport::with(['user', 'role', 'room', 'floor'])->get();
+         $reports = DamageReport::with(['user', 'role', 'room', 'floor', 'facility'])->get();
         return view('admin.DamageReport', compact('reports'));
     }
 
@@ -21,9 +22,12 @@ class ReportController extends Controller
     {
         $userId = Auth::id(); // Ambil ID user yang sedang login
 
-        $reports = DamageReport::with(['user', 'role', 'room', 'floor'])
-            ->where('user_id', $userId)
-            ->get();
+        //$reports = DamageReport::with(['user', 'role', 'room', 'floor'])
+            //->where('user_id', $userId)
+            //->get();
+           $reports = DamageReport::with(['user', 'role', 'room', 'floor', 'facility'])
+    ->where('user_id', $userId)
+    ->get();
 
         return view('user.Report', compact('reports'));
     }
@@ -39,10 +43,12 @@ class ReportController extends Controller
     }
     public function store(Request $request)
     {
+
+        //dd($request->all());
         $request->validate([
             'name' => 'required|string|max:255',
             'title' => 'required|string|max:255',
-            'facility' => 'required|string',
+            'facility' => 'required|integer',
             'floor' => 'required|integer',
             'room' => 'required|integer',
             'damage_level' => 'required|string',
@@ -68,6 +74,7 @@ class ReportController extends Controller
             'status' => 'pending',
             'user_id' => $user->id,
             'role_id' => $user->role_id ?? 2,
+            'facility_id' => $request->facility,
             'room_id' => $request->room,
             'floor_id' => $request->floor,
             'image_path' => $imagePath,

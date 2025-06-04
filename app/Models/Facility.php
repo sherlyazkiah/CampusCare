@@ -31,4 +31,9 @@ class Facility extends Model
     {
         return $this->belongsTo(Room::class, 'room_id');
     }
+
+    public function DamageReport()
+    {
+        return $this->hasMany(Facility::class, 'facility_id');
+    }
 }

@@ -1,3 +1,5 @@
+
+
 @extends('layouts.user')
 
 @section('main')
@@ -40,6 +42,9 @@
                       Facility Name
                     </th>
                     <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                      Facility
+                    </th>
+                    <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                       Location
                     </th>
                     <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
@@ -64,6 +69,9 @@
                         </td>
                         <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                             {{ $report->report_name }}
+                        </td>
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                            {{ $report->facility->facility_name ?? '-' }}
                         </td>
                         <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                             {{ $report->room->room_name ?? '-' }}, {{ $report->floor->floor_name ?? '-' }}
