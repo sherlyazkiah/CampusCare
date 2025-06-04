@@ -81,9 +81,12 @@
                         </td>
                         <td class="p-4 space-x-2 whitespace-nowrap">
                             <button type="button" data-modal-target="detail-report-modal" data-modal-show="detail-report-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white rounded-lg bg-green-600 hover:bg-green-800">
-                                Detail
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>Detail
                             </button>
                             <button type="button" data-modal-target="delete-report-modal" data-modal-toggle="delete-report-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-800">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
                                 Delete
                             </button>
                         </td>
@@ -122,27 +125,31 @@
                 <div class="grid grid-cols-6 gap-6">
                     <div class="col-span-6 sm:col-span-3">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Reporter</label>
-                        <input type="text" readonly value="Alice Johnson" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <input type="text" readonly value="Alice Johnson" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                     </div>
                     <div class="col-span-6 sm:col-span-3">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
-                        <input type="text" readonly value="Student" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                        <input type="text" readonly value="Student" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                     </div>
                     <div class="col-span-6 sm:col-span-3">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Facility Name</label>
-                        <input type="text" readonly value="Projector" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <input type="text" readonly value="Projector" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                     </div>
                     <div class="col-span-6 sm:col-span-3">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Location</label>
-                        <input type="text" readonly value="Room 201, Building A" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <input type="text" readonly value="Room 201, Building A" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                     </div>
                     <div class="col-span-6 sm:col-span-3">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date & Time</label>
-                        <input type="text" readonly value="Apr 23, 2021" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <input type="text" readonly value="Apr 23, 2021" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    </div>
+                    <div class="col-span-6 sm:col-span-3">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Urgency Level</label>
+                        <input type="text" readonly value="3 - Moderate urgency" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                     </div>
                     <div class="col-span-6">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                        <textarea readonly rows="4" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">The projector in Room 201 is not turning on and making a clicking sound when plugged in.</textarea>
+                        <textarea readonly rows="4" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">The projector in Room 201 is not turning on and making a clicking sound when plugged in.</textarea>
                     </div>
                     <div class="col-span-6">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Photo</label>
@@ -186,61 +193,154 @@
                     </div>
                     <div class="col-span-6">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                        <textarea readonly rows="4" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">The projector in Room 201 is not turning on and making a clicking sound when plugged in.</textarea>
+                        <textarea readonly rows="4" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">The projector in Room 201 is not turning on and making a clicking sound when plugged in.</textarea>
                     </div>
                 </div>
                 
-                <div class="grid grid-cols-1 gap-4">
+                <div class="grid grid-cols-2 gap-6">
                 <!-- Repeat for each criterion -->
+                <!-- 1. Urgency Level -->
                 <div>
-                    <label for="c1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C1 - Damage Severity</label>
-                    <select id="c1" name="c1" class="bg-gray-100 border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <option value="1">1 - Very Minor</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5 - Completely Unusable</option>
-                    </select>
+                <label for="c1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C1 - Urgency Level</label>
+                <select id="c1" name="c1" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <option value="1">1 - Not urgent – can wait indefinitely</option>
+                    <option value="2">2 - Low urgency – minor inconvenience</option>
+                    <option value="3">3 - Moderate urgency – needs fixing soon</option>
+                    <option value="4">4 - High urgency – disrupts normal activity</option>
+                    <option value="5">5 - Critical – requires immediate action</option>
+                </select>
                 </div>
+
+                <!-- 2. Impact on Academic Activities -->
                 <div>
-                    <label for="c2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C2 - Usage Importance</label>
-                    <select id="c2" name="c2" class="bg-gray-100 border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <option value="1">1 - Rarely Used</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5 - Used All The Time</option>
-                    </select>
+                <label for="c2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C2 - Impact on Academic Activities</label>
+                <select id="c2" name="c2" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <option value="1">1 - No impact on any academic activity</option>
+                    <option value="2">2 - Slightly affects secondary activities</option>
+                    <option value="3">3 - Affects non-core learning functions</option>
+                    <option value="4">4 - Interferes with core teaching or learning</option>
+                    <option value="5">5 - Severely disrupts classes, exams, or research</option>
+                </select>
                 </div>
+
+                <!-- 3. Usage Frequency -->
                 <div>
-                    <label for="c3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C3 - Safety Concern</label>
-                    <select id="c3" name="c3" class="bg-gray-100 border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <option value="1">1 - No Risk</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5 - High Risk of Injury</option>
-                    </select>
+                <label for="c3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C3 - Usage Frequency</label>
+                <select id="c3" name="c3" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <option value="1">1 - Rarely used (few times per semester)</option>
+                    <option value="2">2 - Occasionally used</option>
+                    <option value="3">3 - Used weekly</option>
+                    <option value="4">4 - Used daily</option>
+                    <option value="5">5 - Used heavily multiple times a day</option>
+                </select>
                 </div>
+
+                <!-- 4. Type of Facility -->
                 <div>
-                    <label for="c4" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C4 - Repair Urgency</label>
-                    <select id="c4" name="c4" class="bg-gray-100 border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <option value="1">1 - Can Wait</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5 - Needs Immediate Action</option>
-                    </select>
+                <label for="c4" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C4 - Type of Facility</label>
+                <select id="c4" name="c4" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <option value="1">1 - Non-essential (e.g., decorations)</option>
+                    <option value="2">2 - Convenience-based (e.g., notice boards)</option>
+                    <option value="3">3 - Supportive (e.g., furniture, lights)</option>
+                    <option value="4">4 - Important (e.g., computers, projectors)</option>
+                    <option value="5">5 - Essential infrastructure (e.g., internet, labs)</option>
+                </select>
                 </div>
+
+                <!-- 5. Safety Risk -->
                 <div>
-                    <label for="c5" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C5 - Impact on Many People</label>
-                    <select id="c5" name="c5" class="bg-gray-100 border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <option value="1">1 - Few</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5 - Very Many</option>
-                    </select>
+                <label for="c5" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C5 - Safety Risk</label>
+                <select id="c5" name="c5" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <option value="1">1 - Completely safe</option>
+                    <option value="2">2 - Minor discomfort or inconvenience</option>
+                    <option value="3">3 - Moderate risk of injury</option>
+                    <option value="4">4 - High risk if left unfixed</option>
+                    <option value="5">5 - Dangerous – poses immediate threat to safety</option>
+                </select>
+                </div>
+
+                <!-- 6. Level of Damage -->
+                <div>
+                <label for="c6" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C6 - Level of Damage</label>
+                <select id="c6" name="c6" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <option value="1">1 - Cosmetic damage only</option>
+                    <option value="2">2 - Minor functionality issue</option>
+                    <option value="3">3 - Partial functionality loss</option>
+                    <option value="4">4 - Mostly unusable</option>
+                    <option value="5">5 - Completely broken or destroyed</option>
+                </select>
+                </div>
+
+                <!-- 7. Facility Condition History -->
+                <div>
+                <label for="c7" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C7 - Facility Condition History</label>
+                <select id="c7" name="c7" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <option value="1">1 - No prior issues</option>
+                    <option value="2">2 - One minor issue in the past</option>
+                    <option value="3">3 - Occasional repairs needed</option>
+                    <option value="4">4 - Frequently damaged</option>
+                    <option value="5">5 - Repeatedly damaged despite past repairs</option>
+                </select>
+                </div>
+
+                <!-- 8. Availability of Replacement -->
+                <div>
+                <label for="c8" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C8 - Availability of Replacement</label>
+                <select id="c8" name="c8" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <option value="1">1 - Many alternatives available</option>
+                    <option value="2">2 - Several alternatives</option>
+                    <option value="3">3 - Limited alternatives</option>
+                    <option value="4">4 - Only one alternative</option>
+                    <option value="5">5 - No replacement or backup available</option>
+                </select>
+                </div>
+
+                <!-- 9. Budget Availability -->
+                <div>
+                <label for="c9" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C9 - Budget Availability</label>
+                <select id="c9" name="c9" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <option value="1">1 - Not budgeted at all</option>
+                    <option value="2">2 - Low priority in current budget</option>
+                    <option value="3">3 - Moderate budget availability</option>
+                    <option value="4">4 - Allocated but limited</option>
+                    <option value="5">5 - Fully budgeted for immediate repair</option>
+                </select>
+                </div>
+
+                <!-- 10. Time to Repair -->
+                <div>
+                <label for="c10" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C10 - Time to Repair</label>
+                <select id="c10" name="c10" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <option value="1">1 - More than 1 month</option>
+                    <option value="2">2 - Several weeks</option>
+                    <option value="3">3 - 1–2 weeks</option>
+                    <option value="4">4 - Few days</option>
+                    <option value="5">5 - Can be fixed within a day</option>
+                </select>
+                </div>
+
+                <!-- 11. Technician Availability -->
+                <div>
+                <label for="c11" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C11 - Technician Availability</label>
+                <select id="c11" name="c11" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <option value="1">1 - No technician available</option>
+                    <option value="2">2 - Technician available but not skilled</option>
+                    <option value="3">3 - Technician available within 1–2 weeks</option>
+                    <option value="4">4 - Technician scheduled soon</option>
+                    <option value="5">5 - Technician available immediately</option>
+                </select>
+                </div>
+
+                <!-- 12. Facility Location -->
+                <div>
+                <label for="c12" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C12 - Facility Location</label>
+                <select id="c12" name="c12" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <option value="1">1 - Isolated or rarely visited area</option>
+                    <option value="2">2 - Secondary area</option>
+                    <option value="3">3 - Moderate-traffic area</option>
+                    <option value="4">4 - High-traffic area</option>
+                    <option value="5">5 - Central or critical campus area</option>
+                </select>
                 </div>
                 </div>
             </div>

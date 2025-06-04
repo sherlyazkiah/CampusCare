@@ -3,9 +3,17 @@
 @section('main')
 <div class="px-4 py-8 mt-14 sm:ml-64 text-black dark:text-white bg-white dark:bg-gray-900">
     <div class="w-full mb-1">
-            <div class="sm:flex">
-                <div class="mb-4">
-                    <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Report</h1>
+            <div class="mb-4">
+                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Report</h1>
+            </div>
+            <div class="sm:flex mt-8">
+                <div class="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
+                    <form class="lg:pr-3" action="#" method="GET">
+                    <label for="reports-search" class="sr-only">Search</label>
+                    <div class="relative mt-1 lg:w-64 xl:w-96">
+                        <input type="text" name="email" id="reports-search" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search for reports">
+                    </div>
+                    </form>
                 </div>
                 <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
                     <a href="/user/create-report" 
@@ -205,8 +213,8 @@
                         <input type="text" readonly value="Apr 23, 2021" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                     </div>
                     <div class="col-span-6 sm:col-span-3">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Damage Level</label>
-                        <input type="text" readonly value="3 - Moderate damage" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Urgency Level</label>
+                        <input type="text" readonly value="3 - Moderate urgency" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                     </div>
                     <div class="col-span-6">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>

@@ -62,9 +62,8 @@
                                         <form action="{{ route('facilitydata.destroy', $facility->facility_id) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus fasilitas ini?');">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
-                                              <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                                              Delete
+                                            <button type="submit" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700">
+                                                Delete
                                             </button>
                                         </form>
                                     </td>
@@ -81,74 +80,7 @@
         </div>
     </div>
 
-    <script>        
-        if (document.getElementById("selection-table") && typeof simpleDatatables.DataTable !== 'undefined') {
-
-            let multiSelect = true;
-            let rowNavigation = false;
-            let table = null;
-
-            const resetTable = function() {
-                if (table) {
-                    table.destroy();
-                }
-
-                const options = {
-                    rowRender: (row, tr, _index) => {
-                        if (!tr.attributes) {
-                            tr.attributes = {};
-                        }
-                        if (!tr.attributes.class) {
-                            tr.attributes.class = "";
-                        }
-                        if (row.selected) {
-                            tr.attributes.class += " selected";
-                        } else {
-                            tr.attributes.class = tr.attributes.class.replace(" selected", "");
-                        }
-                        return tr;
-                    }
-                };
-                if (rowNavigation) {
-                    options.rowNavigation = true;
-                    options.tabIndex = 1;
-                }
-
-                table = new simpleDatatables.DataTable("#selection-table", options);
-
-                // Mark all rows as unselected
-                table.data.data.forEach(data => {
-                    data.selected = false;
-                });
-
-                table.on("datatable.selectrow", (rowIndex, event) => {
-                    event.preventDefault();
-                    const row = table.data.data[rowIndex];
-                    if (row.selected) {
-                        row.selected = false;
-                    } else {
-                        if (!multiSelect) {
-                            table.data.data.forEach(data => {
-                                data.selected = false;
-                            });
-                        }
-                        row.selected = true;
-                    }
-                    table.update();
-                });
-            };
-
-            // Row navigation makes no sense on mobile, so we deactivate it and hide the checkbox.
-            const isMobile = window.matchMedia("(any-pointer:coarse)").matches;
-            if (isMobile) {
-                rowNavigation = false;
-            }
-
-            resetTable();
-        }
-    </script>
-
-    {{-- Modal Add Facility --}}
+    {{-- Modal Add Facility (Dummy Static for Now) --}}
     <div id="add-facility-modal" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 left-0 right-0 z-50 flex justify-center items-center w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full max-w-2xl max-h-full">
           <form action="{{ route('facilitydata.store') }}" method="POST" class="bg-white rounded-lg shadow dark:bg-gray-700">
