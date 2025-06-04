@@ -19,7 +19,9 @@ return new class extends Migration
             $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('role_id')->on('roles');
 
-            $table->foreignId('username')->constrained('users')->onDelete('cascade');
+            //$table->foreignId('username')->constrained('users')->onDelete('cascade');
+            $table->string('username'); // hanya string, tanpa foreign key
+        
             $table->string('title');
             $table->string('email')->unique();
             $table->timestamps();

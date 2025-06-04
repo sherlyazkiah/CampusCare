@@ -117,10 +117,16 @@
                       Impact on Many People (C5)
                     </th>
                     <th class="p-4 text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
+                      Time to Repair (C6)
+                    </th>
+                    <th class="p-4 text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
                       Vikor Score
                     </th>
                     <th class="p-4 text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
                       Priority
+                    </th>
+                    <th class="p-4 text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
+                      Action
                     </th>
                   </tr>
                 </thead>
@@ -145,10 +151,18 @@
                       2
                     </td>
                     <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                      4
+                    </td>
+                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                       0.65
                     </td>
                     <td class="p-4 whitespace-nowrap">
                       <span class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-red-100 dark:border-red-400 dark:bg-gray-700 dark:text-red-400">High</span>
+                    </td>
+                    <td class="p-4 whitespace-nowrap">
+                      <button type="button" data-modal-target="add-room-modal" data-modal-toggle="add-room-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white rounded-lg bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                      Assign
+                      </button>
                     </td>
                   </tr>
                   <tr>
@@ -169,6 +183,9 @@
                     </td>
                     <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                       2
+                    </td>
+                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                      3
                     </td>
                     <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                       0.82
@@ -195,6 +212,9 @@
                     </td>
                     <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                       3
+                    </td>
+                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                      2
                     </td>
                     <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                       0.94
