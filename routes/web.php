@@ -22,7 +22,7 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
-
+    
     // === USER ===
     Route::get('/userdata', [AdminController::class, 'view'])->name('userdata.index');
     Route::get('/userdata/create', [AdminController::class, 'create'])->name('userdata.create');
@@ -32,7 +32,16 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     Route::delete('/userdata/{id}', [AdminController::class, 'destroy'])->name('userdata.destroy');
     Route::get('/userdata/{id}', [AdminController::class, 'show'])->name('userdata.show'); // <-- detail user
     Route::get('/floorroomdata', [RoomController::class, 'index'])->name('floorroomdata.index');
+    //Route::put('/profile/update', [AdminController::class, 'update_profile'])->name('profile.update');
+    Route::put('/profile/update', [AdminController::class, 'update_profile'])->name('profile.update')->middleware('auth');
+    Route::get('admin/profile', function () {
+              return view('admin.Profile');
+      });
+      Route::put('/profile/password', [AdminController::class, 'updatePassword'])->name('profile.password.update');
 
+      
+      Route::get('/biodata', [AdminController::class, 'biodata'])->name('biodata.edit')->middleware('auth');
+    Route::post('/biodata/store', [AdminController::class, 'storebiodata'])->name('biodata.store')->middleware('auth');
     // === FLOOR CRUD ===
     Route::get('/floors/create', [FloorController::class, 'create'])->name('floors.create');
     Route::post('/floors', [FloorController::class, 'store'])->name('floors.store');
@@ -59,10 +68,8 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     Route::resource('facilitydata', FacilityController::class);
 
     Route::resource('damagereport', ReportController::class);
-
-    Route::get('/profile', function () {
-        return view('admin.Profile');
-    });
+  
+    
 });
 
 Route::middleware(['auth'])->prefix('user')->group(function () {

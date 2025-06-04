@@ -17,6 +17,13 @@ class UserController extends Controller
         return view('user.dashboard', compact('users')); // kirim variabel $users ke view
     }
 
+    public function biodata()
+    {
+
+        $users = User::with('role')->get();
+        return view('user.FillBiodata', compact('users')); // kirim variabel $users ke view
+    }
+
     public function edit()
     {
         $user = Auth::user();

@@ -26,17 +26,30 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+        
         $request->authenticate();
 
         $request->session()->regenerate();
 
         $user = Auth::user();
+         if ($user->biodata === null) {
+        if ($user->role_id == 1) {
+            return redirect()->route('biodata.edit');
+        //} elseif ($user->role_id == 2) {
+            //return redirect()->route('user.biodata.edit');
+        } elseif ($user->role_id == 3) {
+            return redirect()->route('technician.biodata.edit');
+        }
+    }
 
         // Redirect berdasarkan role
         if ($user->role_id == 1) {
             return redirect()->intended('/admin/dashboard');
         } elseif ($user->role_id == 2) {
             return redirect()->intended('/user/dashboard');
+        }
+        elseif ($user->role_id == 3) {
+            return redirect()->intended('/technician/dashboard');
         }
     }
 
