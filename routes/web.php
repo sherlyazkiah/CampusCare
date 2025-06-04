@@ -59,10 +59,10 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     Route::resource('facilitydata', FacilityController::class);
 
     Route::resource('damagereport', ReportController::class);
-  
+
     Route::get('/profile', function () {
-              return view('admin.Profile');
-      });
+        return view('admin.Profile');
+    });
 });
 
 Route::middleware(['auth'])->prefix('user')->group(function () {
@@ -71,17 +71,19 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
         return view('user.dashboard');
     });
 
+    Route::get('/profile', [UserController::class, 'edit'])->name('user.profile.edit');
+    Route::post('/profile', [UserController::class, 'update'])->name('user.profile.update');
+
     Route::get('/reports', [ReportController::class, 'userReports'])->name('user.reports');
 
     Route::get('/report', function () {
         return view('user.Report');
     });
 
-    Route::get('/create-report', function () {
-            return view('user.CreateReport');
-    });
+    Route::get('/rooms-by-floor/{floor_id}', [ReportController::class, 'getRoomsByFloor']);
+    Route::get('/get-rooms/{floor_id}', [App\Http\Controllers\ReportController::class, 'getRooms']);
 
-    Route::get('/profile', function () {
-              return view('user.Profile');
-      });
+
+    Route::get('/create-report', [ReportController::class, 'create']);
+    Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');
 });

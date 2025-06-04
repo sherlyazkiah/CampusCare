@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id('damage_report_id');
             $table->string('report_name', 100)->unique();
             $table->text('description');
-            $table->enum('status', ['Repaired', 'In Progress', 'Cancelled', 'In review']);
+            $table->enum('damage_level', ['Very Minor (Minimal Damage)', 'Minor (Still Functions Well)', 'Moderate (Function Disrupted)', 'Major (Hardly Functions)', 'Severe (Not Usable)']);
+            $table->enum('status', ['Repaired', 'In Progress', 'Cancelled', 'In review', 'pending']);
 
             $table->timestamps();
 

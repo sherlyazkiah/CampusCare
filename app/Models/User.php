@@ -31,6 +31,6 @@ class User extends Authenticatable
 
     public function biodata()
     {
-        return $this->hasOne(Biodata::class, 'id_user');
+        return $this->hasOne(Biodata::class, 'id_user', 'id');
     }
 }

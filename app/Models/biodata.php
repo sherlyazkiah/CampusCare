@@ -11,13 +11,24 @@ class Biodata extends Model
 
     protected $table = 'biodata';
 
+    // Tambahkan ini jika tidak menggunakan kolom "id" sebagai primary key
+    protected $primaryKey = 'id_user';
+
+    // Kalau primary key bukan auto increment
+    public $incrementing = false;
+
+    // Kalau primary key bertipe string, ubah ini juga
+    protected $keyType = 'string';
+
     protected $fillable = [
         'id_user',
+        'id_number',
         'name',
         'role_id',
         'username',
         'title',
         'email',
+        'photo',
     ];
 
     /**

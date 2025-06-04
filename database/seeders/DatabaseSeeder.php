@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             RoomSeeder::class,
             FacilitiessSeeder::class,
             ReportSeeder::class,
+            BiodataSeeder::class,
         ]);
     }
 }

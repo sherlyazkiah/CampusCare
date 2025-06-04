@@ -11,6 +11,8 @@ class Facility extends Model
 
     public $timestamps = false;
 
+    protected $table = 'facilities';
+
     protected $primaryKey = 'facility_id';
 
     protected $fillable = [

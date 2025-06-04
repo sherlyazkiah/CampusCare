@@ -14,7 +14,7 @@ protected $primaryKey = 'damage_report_id';
 protected $table = 'damage_report';
 
 protected $fillable = [
-'report_name', 'description', 'user_id', 'role_id', 'room_id', 'floor_id',
+'report_name', 'description', 'damage_level', 'status', 'user_id', 'role_id', 'room_id', 'floor_id', 'image_path'
 ];
 
 public function user()
@@ -36,4 +36,11 @@ public function floor()
 {
 return $this->belongsTo(Floor::class, 'floor_id', 'floor_id');
 }
+    public const DAMAGE_LEVELS = [
+        1 => 'Very Minor (Minimal Damage)',
+        2 => 'Minor (Still Functions Well)',
+        3 => 'Moderate (Function Disrupted)',
+        4 => 'Major (Hardly Functions)',
+        5 => 'Severe (Not Usable)',
+    ];
 }

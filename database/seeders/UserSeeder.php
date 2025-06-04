@@ -27,5 +27,14 @@ class UserSeeder extends Seeder
 
 
         ]);
+
+        User::create([
+
+            'username' => 'Tegar',
+            'password' => Hash::make('123456'),
+            'role_id' => 2,
+
+
+        ]);
     }
 }
