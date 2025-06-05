@@ -1,10 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
-@section('content')
-<div class="max-w-4xl mx-auto my-8 bg-white rounded-lg shadow-sm dark:bg-gray-700 p-6">
-    <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
+@section('main')
+<div class="mt-14 sm:ml-64 px-6 py-10 min-h-screen bg-gray-100 dark:bg-gray-900 text-black dark:text-white">
+    <div class="max-w-5xl mx-auto bg-white dark:bg-gray-800 shadow-md rounded-xl p-8 border border-gray-200 dark:border-gray-700">
+    <h2 class="text-3xl font-bold mb-8 text-gray-900 dark:text-white">
         User Detail
-    </h3>
+    </h2>
 
     <div class="grid grid-cols-6 gap-6">
         <div class="col-span-6 sm:col-span-3">

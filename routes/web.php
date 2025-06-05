@@ -67,6 +67,10 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     Route::get('/repair-recommendation', function () {
               return view('admin.RepairRecommendation');
     });
+
+    Route::get('/biodata', function () {
+              return view('admin.Biodata');
+    });
 });
 
 Route::middleware(['auth'])->prefix('user')->group(function () {
@@ -88,4 +92,14 @@ Route::middleware(['auth'])->prefix('user')->group(function () {
     Route::get('/profile', function () {
               return view('user.Profile');
       });
+
+    Route::get('/biodata', function () {
+              return view('user.Biodata');
+    });
+});
+
+Route::prefix('technician')->group(function () {
+    Route::view('/', 'technician.dashboard')->name('technician.dashboard');
+    Route::view('/tasks', 'technician.tasks')->name('technician.tasks');
+    Route::view('/history', 'technician.history')->name('technician.history');
 });
