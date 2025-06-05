@@ -104,7 +104,7 @@
                     </div>
                     <div class="col-span-6">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                        <textarea readonly rows="4" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">The projector in Room 201 is not turning on and making a clicking sound when plugged in.</textarea>
+                        <textarea name="complete-task-description" rows="4" class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
                     </div>
                 </div>
             </div>
@@ -128,7 +128,7 @@
         // Replace with new button
         actionArea.innerHTML = `
           <button id="markCompletedBtn"
-            class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-800">
+            class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-800">
             Mark Completed
           </button>
         `;
