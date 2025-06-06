@@ -71,6 +71,10 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     Route::get('/biodata', function () {
               return view('admin.Biodata');
     });
+
+    Route::get('/calculation-step', function () {
+              return view('admin.CalculationStep');
+    });
 });
 
 Route::middleware(['auth'])->prefix('user')->group(function () {
