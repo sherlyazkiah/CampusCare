@@ -352,11 +352,11 @@
                         C6 - Time to Repair
                     </label>
                     <select id="c6" name="c6" class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                        <option value="1">1 - More than 1 month</option>
-                        <option value="2">2 - Several weeks</option>
+                        <option value="1">1 - Can be fixed within a day</option>
+                        <option value="2">2 - Few days</option>
                         <option value="3">3 - 1–2 weeks</option>
-                        <option value="4">4 - Few days</option>
-                        <option value="5">5 - Can be fixed within a day</option>
+                        <option value="4">4 - Several weeks</option>
+                        <option value="5">5 - More than 1 month</option>
                     </select>
                 </div>
             </div>

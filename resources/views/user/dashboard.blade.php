@@ -18,6 +18,10 @@
         Your Campus Care.
       </p>
     </div>
+      <img
+      src="{{ asset('Maintenance.svg') }}"
+      alt="Campus Care Logo"
+      class="w-1/2 h-40 object-contain object-center hidden md:block" />
   </div>
 
   <div class="grid w-full grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-3">

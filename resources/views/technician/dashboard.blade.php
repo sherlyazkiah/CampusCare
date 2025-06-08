@@ -3,10 +3,27 @@
 @section('main')
 <div class="px-4 py-8 pb-70 mt-14 sm:ml-64 text-black dark:text-white bg-gray-50 dark:bg-gray-900">
 
-    <!-- Greeting -->
-    <div class="mb-6">
-        <h1 class="text-2xl font-bold">Hi Technician</h1>
-        <p class="text-gray-600">Welcome Back</p>
+    <!-- Greeting & Notification -->
+    <div class="flex items-start justify-between gap-4">
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold">Hi Technician</h1>
+            <p class="text-gray-600">Welcome Back</p>
+        </div>
+        <div id="toast-notif" class="flex items-center w-full max-w-xs p-4 text-gray-500 bg-red-100 rounded-lg shadow-sm dark:text-gray-400 dark:bg-gray-800" role="alert">
+            <div class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-gray-800 dark:text-red-400">
+                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z"/>
+                </svg>
+                <span class="sr-only">Warning icon</span>
+            </div>
+            <div class="ms-3 text-sm font-normal dark:text-red-200">You have new task.</div>
+            <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-red-100 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700" data-dismiss-target="#toast-notif" aria-label="Close">
+                <span class="sr-only">Close</span>
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+            </button>
+        </div>
     </div>
 
     <!-- Banner -->
@@ -18,6 +35,10 @@
             Your Campus Care.
         </p>
         </div>
+        <img
+        src="{{ asset('1.svg') }}"
+        alt="Campus Care Logo"
+        class="w-1/2 h-40 object-contain object-center hidden md:block" />
     </div>
 
     <div class="grid w-full grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-3">

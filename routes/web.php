@@ -10,6 +10,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ReportController;
 
+Route::get('/', function () {
+        return view('auth.LandingPage');
+    });
+
 // === AUTH ===
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
