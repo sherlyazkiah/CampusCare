@@ -19,7 +19,7 @@
       </p>
     </div>
       <img
-      src="{{ asset('Maintenance.svg') }}"
+      src="{{ asset('user.svg') }}"
       alt="Campus Care Logo"
       class="w-1/2 h-40 object-contain object-center hidden md:block" />
   </div>

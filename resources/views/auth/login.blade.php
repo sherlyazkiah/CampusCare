@@ -9,7 +9,7 @@
     <div class="flex flex-col md:flex-row items-center justify-center min-h-screen px-4">
     <!-- Image -->
     <div class="md:w-1/2 flex justify-center mb-8 md:mb-0">
-        <img src="{{ asset('construction.svg') }}" alt="Illustration" class="">
+        <img src="{{ asset('login.svg') }}" alt="Illustration" class="h-[35rem]">
     </div>
     <!-- Login Form -->
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:w-1/2 md:h-screen">

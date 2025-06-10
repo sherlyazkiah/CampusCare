@@ -9,20 +9,20 @@
 <body class="font-sans text-gray-800 scroll-smooth">
 
   <!-- Hero Section -->
-  <section class="bg-blue-600 text-white py-20 px-6" id="home">
+  <section class="bg-blue-100 text-blue-800 py-20 px-6" id="home">
     <div class="max-w-7xl mx-auto text-center">
-        <img src="" alt="" class="flex items-center w-1/2 h-50">
+        <img src="{{ asset('lp.svg') }}" alt="" class="mx-auto h-[26rem] mb-4">
       <h1 class="text-4xl md:text-6xl font-bold">CampusCare</h1>
       <p class="mt-4 text-xl">Smart Campus Facility Reporting & Management System</p>
       <div class="mt-6 space-x-4">
         <a href="#about" class="bg-white text-blue-600 px-6 py-2 rounded-xl font-semibold hover:bg-gray-100">Learn More</a>
-        <a href="/login" class="bg-blue-800 px-6 py-2 rounded-xl font-semibold hover:bg-blue-700">Report a Problem</a>
+        <a href="/login" class="bg-blue-800 text-white px-6 py-2 rounded-xl font-semibold hover:bg-blue-700">Report a Problem</a>
       </div>
     </div>
   </section>
 
   <!-- About Section -->
-  <section class="py-16 px-6 bg-blue-50" id="about">
+  <section class="py-16 px-6 bg-white" id="about">
     <div class="max-w-5xl mx-auto text-center">
       <h2 class="text-3xl font-bold mb-4">About CampusCare</h2>
       <p class="text-lg">CampusCare helps students, lecturers, and staff report and monitor facility issues. It streamlines communication between users and technicians, ensuring a safer and more functional campus environment.</p>
@@ -63,17 +63,20 @@
   </section>
 
   <!-- How It Works -->
-  <section class="py-16 px-6 bg-blue-50" id="how-it-works">
+  <section class="py-16 px-6 bg-white" id="how-it-works">
     <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-3xl font-bold mb-8">How It Works</h2>
-      <ol class="space-y-4 text-left text-lg">
-        <li><strong>1.</strong> Sign up or log in to the system</li>
-        <li><strong>2.</strong> Report a facility issue with description and photo</li>
-        <li><strong>3.</strong> Admin processes and prioritizes the report</li>
-        <li><strong>4.</strong> Technician is assigned to repair</li>
-        <li><strong>5.</strong> Technician updates status upon completion</li>
-        <li><strong>6.</strong> User provides feedback</li>
-      </ol>
+      <h2 class="text-3xl font-bold mb-12">How It Works</h2>
+      <div class="flex flex-col md:flex-row items-center">
+        <img src="{{ asset('HIW.svg') }}" alt="" class="mx-auto h-[15rem]">
+        <ol class="space-y-4 text-left text-lg">
+          <li><strong>1.</strong> Sign up or log in to the system</li>
+          <li><strong>2.</strong> Report a facility issue with description and photo</li>
+          <li><strong>3.</strong> Admin processes and prioritizes the report</li>
+          <li><strong>4.</strong> Technician is assigned to repair</li>
+          <li><strong>5.</strong> Technician updates status upon completion</li>
+          <li><strong>6.</strong> User provides feedback</li>
+        </ol>
+      </div>
     </div>
   </section>
 
@@ -95,7 +98,7 @@
   </section>
 
   <!-- Call to Action -->
-  <section class="py-16 px-6 bg-blue-600 text-white text-center" id="get-started">
+  <section class="py-16 px-6 bg-blue-100 text-blue-800 text-center" id="get-started">
     <h2 class="text-3xl font-bold mb-4">Ready to Improve Our Campus?</h2>
     <p class="text-lg mb-6">Join CampusCare and start making a difference today.</p>
     <a href="/login" class="bg-white text-blue-600 px-6 py-2 rounded-xl font-semibold hover:bg-gray-100">Get Started</a>

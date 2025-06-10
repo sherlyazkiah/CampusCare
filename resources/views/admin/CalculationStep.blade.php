@@ -90,19 +90,19 @@
 
     const alternatives = [
       { name: "Air Conditioner", values: [4, 4, 3, 4, 4, 3] },
-      { name: "Projector", values: [3, 4, 2, 3, 3, 2] },
-      { name: "Classroom Chair", values: [2, 5, 4, 4, 5, 2] },
-      { name: "Whiteboard", values: [2, 4, 1, 2, 4, 2] },
-      { name: "Computer (Lab)", values: [5, 5, 3, 5, 5, 4] },
+      { name: "Projector", values: [3, 4, 2, 3, 3, 4] },
+      { name: "Classroom Chair", values: [2, 5, 4, 4, 5, 4] },
+      { name: "Whiteboard", values: [2, 4, 1, 2, 4, 4] },
+      { name: "Computer (Lab)", values: [5, 5, 3, 5, 5, 2] },
       { name: "Wi-Fi", values: [3, 5, 2, 5, 5, 3] },
       { name: "Water Dispenser", values: [3, 4, 4, 4, 3, 3] },
-      { name: "Printer", values: [2, 3, 1, 2, 2, 2] },
-      { name: "CCTV", values: [4, 4, 5, 4, 4, 4] },
+      { name: "Printer", values: [2, 3, 1, 2, 2, 4] },
+      { name: "CCTV", values: [4, 4, 5, 4, 4, 2] },
       { name: "Room Light", values: [3, 4, 2, 3, 4, 3] },
       { name: "Toilet", values: [4, 5, 5, 5, 5, 3] },
-      { name: "Classroom Table", values: [2, 4, 1, 3, 4, 2] },
+      { name: "Classroom Table", values: [2, 4, 1, 3, 4, 4] },
       { name: "Ceiling Fan", values: [2, 3, 1, 3, 3, 3] },
-      { name: "Electrical Outlet", values: [3, 5, 4, 5, 5, 4] },
+      { name: "Electrical Outlet", values: [3, 5, 4, 5, 5, 2] },
       { name: "Sink", values: [3, 4, 4, 4, 4, 3] }
     ];
 

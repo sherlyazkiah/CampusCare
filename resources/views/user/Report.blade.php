@@ -251,5 +251,75 @@
             </div>
         </div>
     </div>
+
+
+    <button type="button" data-modal-target="feedback-report-modal" data-modal-toggle="feedback-report-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-600 rounded-lg hover:bg-gray-800">
+        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/></svg>
+            Feedback
+    </button>
+    <!-- Feedback Modal -->
+    <div id="feedback-report-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 items-center justify-center hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-md max-h-full">
+        <form class="relative bg-white rounded-lg shadow dark:bg-gray-700 p-6">
+        <!-- Header -->
+        <div class="flex items-start justify-between mb-4">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Feedback</h3>
+            <button type="button" class="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="feedback-report-modal">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 14 14">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7L1 13" />
+            </svg>
+            <span class="sr-only">Close modal</span>
+            </button>
+        </div>
+
+        <!-- Rating (Stars) -->
+        <div class="mb-4">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Rating</label>
+            <div class="flex space-x-1 text-yellow-400">
+            @for ($i = 1; $i <= 5; $i++)
+            <button type="button" class="star focus:outline-none" data-star="{{ $i }}">
+                <svg class="w-6 h-6 fill-gray-300 hover:fill-yellow-400 transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.951h4.15c.969 0 1.371 1.24.588 1.81l-3.36 2.444 1.286 3.95c.3.922-.755 1.688-1.54 1.118L10 13.011l-3.36 2.444c-.784.57-1.838-.196-1.539-1.118l1.285-3.95-3.36-2.444c-.783-.57-.38-1.81.588-1.81h4.15L9.05 2.927z"/>
+                </svg>
+            </button>
+            @endfor
+            </div>
+            <input type="hidden" name="rating" id="rating-value" value="0">
+        </div>
+
+        <!-- Description -->
+        <div class="mb-4">
+            <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+            <textarea id="description" name="description" rows="4" class="block w-full text-sm border border-gray-300 rounded-lg p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Write your feedback here..."></textarea>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-700">
+            Submit Feedback
+        </button>
+        </form>
+    </div>
+    </div>
+
+    <script>
+    document.querySelectorAll('#feedback-report-modal .star').forEach((btn, index, stars) => {
+        btn.addEventListener('click', () => {
+        const rating = index + 1;
+        document.getElementById('rating-value').value = rating;
+
+        stars.forEach((star, i) => {
+            const svg = star.querySelector('svg');
+            if (i < rating) {
+            svg.classList.remove('fill-gray-300');
+            svg.classList.add('fill-yellow-400');
+            } else {
+            svg.classList.add('fill-gray-300');
+            svg.classList.remove('fill-yellow-400');
+            }
+        });
+        });
+    });
+    </script>
+
 </div>
 @endsection

@@ -134,19 +134,19 @@
   <script>
   const alternatives = [
     { name: "Air Conditioner", values: [4, 4, 3, 4, 4, 3], vikor: 0.3112 },
-    { name: "Projector", values: [3, 4, 2, 3, 3, 2], vikor: 0.6157 },
-    { name: "Classroom Chair", values: [2, 5, 4, 4, 5, 2], vikor: 0.6277 },
-    { name: "Whiteboard", values: [2, 4, 1, 2, 4, 2], vikor: 0.8883 },
-    { name: "Computer (Lab)", values: [5, 5, 3, 5, 5, 4], vikor: 0.1782 },
+    { name: "Projector", values: [3, 4, 2, 3, 3, 4], vikor: 0.6157 },
+    { name: "Classroom Chair", values: [2, 5, 4, 4, 5, 4], vikor: 0.6277 },
+    { name: "Whiteboard", values: [2, 4, 1, 2, 4, 4], vikor: 0.8883 },
+    { name: "Computer (Lab)", values: [5, 5, 3, 5, 5, 2], vikor: 0.1782 },
     { name: "Wi-Fi", values: [3, 5, 2, 5, 5, 3], vikor: 0.4508 },
     { name: "Water Dispenser", values: [3, 4, 4, 4, 3, 3], vikor: 0.4787 },
-    { name: "Printer", values: [2, 3, 1, 2, 2, 2], vikor: 1.0000 },
-    { name: "CCTV", values: [4, 4, 5, 4, 4, 4], vikor: 0.2793 },
+    { name: "Printer", values: [2, 3, 1, 2, 2, 4], vikor: 1.0000 },
+    { name: "CCTV", values: [4, 4, 5, 4, 4, 2], vikor: 0.2793 },
     { name: "Room Light", values: [3, 4, 2, 3, 4, 3], vikor: 0.6157 },
     { name: "Toilet", values: [4, 5, 5, 5, 5, 3], vikor: 0.0000 },
     { name: "Classroom Table", values: [2, 4, 1, 3, 4, 2], vikor: 0.8457 },
     { name: "Ceiling Fan", values: [2, 3, 1, 3, 3, 3], vikor: 0.9574 },
-    { name: "Electrical Outlet", values: [3, 5, 4, 5, 5, 4], vikor: 0.3564 },
+    { name: "Electrical Outlet", values: [3, 5, 4, 5, 5, 2], vikor: 0.3564 },
     { name: "Sink", values: [3, 4, 4, 4, 4, 3], vikor: 0.4468 }
   ];
 
