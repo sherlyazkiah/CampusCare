@@ -6,18 +6,33 @@
         <!-- Greeting & Notification -->
         <div class="flex items-start justify-between gap-4">
             <div class="mb-6">
-                <h1 class="text-2xl font-bold">Hi Technician</h1>
+                <h1 class="text-3xl font-bold text-blue-600">
+                    Hi {{ Auth::user()->username }} Technician
+                </h1>
                 <p class="text-gray-600">Welcome Back</p>
             </div>
-                        @if(session('show_toast'))
-                <div id="toast-notif" class="fixed bottom-5 right-5 z-50 flex items-center w-full max-w-xs p-4 text-gray-500 bg-red-100 rounded-lg shadow-sm dark:text-gray-400 dark:bg-gray-800" role="alert">
-                    <div class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-gray-800 dark:text-red-400">
-                        <!-- Warning Icon -->
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 .5a9.5 9.5..."/></svg>
+            @if(session('show_toast'))
+                <div id="toast-notif"
+                    class="fixed top-20 right-5 z-50 flex items-center w-full max-w-xs p-4 text-gray-500 bg-red-100 rounded-lg shadow-sm dark:text-gray-400 dark:bg-gray-800"
+                    role="alert">
+                    <div
+                        class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-gray-800 dark:text-red-400">
+                        <!-- Icon -->
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-9-4a1 1 0 112 0v4a1 1 0 11-2 0V6zm1 8a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+                        </svg>
                     </div>
-                    <div class="ms-3 text-sm font-normal dark:text-red-200">Ada laporan baru dengan status <strong>in progress</strong>.</div>
-                    <button type="button" class="ms-auto -mx-1.5 -my-1.5 p-1.5 bg-red-100 text-red-500 rounded-lg hover:bg-red-200 dark:bg-gray-800 dark:hover:bg-gray-700" onclick="document.getElementById('toast-notif').remove();">
-                        <svg class="w-3 h-3" fill="none" viewBox="0 0 14 14"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/></svg>
+                    <div class="ms-3 text-sm font-normal dark:text-red-200">
+                        You have new <strong>task</strong>.
+                    </div>
+                    <button type="button"
+                        class="ms-auto -mx-1.5 -my-1.5 p-1.5 bg-red-100 text-red-500 rounded-lg hover:bg-red-200 dark:bg-gray-800 dark:hover:bg-gray-700"
+                        onclick="document.getElementById('toast-notif').remove();">
+                        <svg class="w-3 h-3" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
                     </button>
                 </div>
             @endif
@@ -33,6 +48,8 @@
                     Your Campus Care.
                 </p>
             </div>
+            <img src="{{ asset('1.svg') }}" alt="Campus Care Logo"
+                class="w-1/2 h-40 object-contain object-center hidden md:block" />
         </div>
 
         <div class="grid w-full grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-3">
@@ -80,7 +97,7 @@
                                     <tr>
                                         <th
                                             class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                            ID
+                                            NO
                                         </th>
                                         <th
                                             class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
@@ -96,19 +113,20 @@
                                         </th>
                                         <th
                                             class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                            Date & Time
+                                            Status
                                         </th>
                                         <th
                                             class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                            Status
+                                            Date &amp; Time
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                                     @foreach ($reports as $report)
                                         <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                                            <td class="p-4 text-sm text-gray-500 dark:text-gray-400">
-                                                {{ $report->damage_report_id }}
+                                            <td
+                                                class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400 border-b dark:border-gray-700 border-gray-200">
+                                                {{ $loop->iteration }}
                                             </td>
                                             <td class="p-4 text-sm text-gray-500 dark:text-gray-400">
                                                 {{ $report->user->username ?? '-' }}
@@ -119,22 +137,12 @@
                                             <td class="p-4 text-sm text-gray-500 dark:text-gray-400">
                                                 {{ $report->floor->floor_name ?? '' }}, {{ $report->room->room_name ?? '' }}
                                             </td>
+                                            <td class="p-4 whitespace-nowrap">
+                                                <span
+                                                    class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-orange-100 dark:bg-gray-700 dark:border-orange-300 dark:text-orange-300">{{ $report->status ?? '-' }}</span>
+                                            </td>
                                             <td class="p-4 text-sm text-gray-500 dark:text-gray-400">
                                                 {{ $report->created_at->format('M d, Y') }}
-                                            </td>
-                                            <td class="p-4">
-                                                @php
-    $statusClass = match ($report->status) {
-        'new' => 'bg-red-100 text-red-800 dark:border-red-400 dark:bg-gray-700 dark:text-red-400',
-        'in_progress' => 'bg-yellow-100 text-yellow-800 dark:border-yellow-400 dark:bg-gray-700 dark:text-yellow-400',
-        'completed' => 'bg-green-100 text-green-800 dark:border-green-400 dark:bg-gray-700 dark:text-green-400',
-        default => 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-white'
-    };
-                                                  @endphp
-                                                <span
-                                                    class="text-xs font-medium px-2.5 py-0.5 rounded-md border {{ $statusClass }}">
-                                                    {{ ucfirst(str_replace('_', ' ', $report->status)) }}
-                                                </span>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -11,6 +11,7 @@ use App\Models\DamageReport;
 use App\Models\Criteria;
 use App\Models\CriterionScale;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReportController extends Controller
 {
@@ -19,6 +20,10 @@ class ReportController extends Controller
         //$reports = DamageReport::with(['user', 'role', 'room', 'floor'])->get();
         //$reports = DamageReport::with(['user', 'role', 'room', 'floor', 'facility'])->get();
         $reports = DamageReport::with(['user', 'role', 'room', 'floor', 'facility', 'biodata'])->get();
+        $loggedInUserId = Auth::id();
+        $c1_scales = Criteria::with('scales')->find(1)?->scales ?? collect();
+
+
         $c1_scales = Criteria::with('scales')->find(1)?->scales ?? collect();
         $c2_scales = Criteria::with('scales')->find(2)?->scales ?? collect();
         $c3_scales = Criteria::with('scales')->find(3)?->scales ?? collect();
@@ -51,10 +56,10 @@ class ReportController extends Controller
         $rooms = Room::all();
         //$damageLevels = DamageReport::DAMAGE_LEVELS;
         $c1_scales = Criteria::with('scales')->find(1)?->scales ?? collect();
-        $c2_scales = CriterionScale::with('scales')->find(2)?->scales ?? collect();
-        $c3_scales = CriterionScale::with('scales')->find(3)?->scales ?? collect();
-        $c4_scales = CriterionScale::with('scales')->find(4)?->scales ?? collect();
-        $c5_scales = CriterionScale::with('scales')->find(5)?->scales ?? collect();
+        $c2_scales = Criteria::with('scales')->find(2)?->scales ?? collect();
+        $c3_scales = Criteria::with('scales')->find(3)?->scales ?? collect();
+        $c4_scales = Criteria::with('scales')->find(4)?->scales ?? collect();
+        $c5_scales = Criteria::with('scales')->find(5)?->scales ?? collect();
 
         return view('user.CreateReport', compact(
             'facilities',
@@ -189,7 +194,8 @@ class ReportController extends Controller
             ->get();
 
         // Proses VIKOR
-        $vikorResults = $this->calculateVikor($reports);
+        $vikorResults = $this->calculateVikor($reports, $fPlus, $fMinus, $normalized);
+        $rankedResults = collect($vikorResults)->sortBy('Q')->values();
         $criteriaLabels = [
             'c1' => 'Damage Severity',
             'c2' => 'Usage Importance',
@@ -200,13 +206,19 @@ class ReportController extends Controller
         ];
 
         // Tampilkan ke view
+        $technicians = User::where('role_id', 4)->get();
         return view('admin.RepairRecommendation', [
+            'technicians' => $technicians,
             'results' => $vikorResults,
+            'rankedResults' => $rankedResults,
             'reports' => $reports,
-            'criteriaLabels' => $criteriaLabels
+            'criteriaLabels' => $criteriaLabels,
+            'fPlus' => $fPlus,
+            'fMinus' => $fMinus,
+            'normalized' => $normalized,
         ]);
     }
-    private function calculateVikor($reports)
+    private function calculateVikor($reports, &$fPlus, &$fMinus, &$normalized = [])
     {
         $criteria = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6'];
         $weights = [0.2, 0.15, 0.2, 0.2, 0.15, 0.1]; // contoh bobot
@@ -221,26 +233,38 @@ class ReportController extends Controller
         $fPlus = [];
         $fMinus = [];
         foreach ($criteria as $c) {
-            $fPlus[$c] = $matrix->max($c);
-            $fMinus[$c] = $matrix->min($c);
+            if (in_array($c, $costCriteria)) {
+                $fPlus[$c] = $matrix->min($c); // untuk cost, f+ adalah minimum
+                $fMinus[$c] = $matrix->max($c); // untuk cost, f- adalah maksimum
+            } else {
+                $fPlus[$c] = $matrix->max($c); // untuk benefit, f+ adalah maksimum
+                $fMinus[$c] = $matrix->min($c); // untuk benefit, f- adalah minimum
+            }
         }
 
         $results = [];
+        $normalized = [];
+
         foreach ($reports as $i => $report) {
             $S = 0;
             $R = 0;
+            $row = ['name' => $report->facility->facility_name];
+            $normalizedRow = [];
+            
             foreach ($criteria as $index => $c) {
                 $weight = $weights[$index];
                 $fi = $report->$c;
 
-                // Perbedaan cost vs benefit
-                $di = in_array($c, $costCriteria)
-                    ? ($fi - $fMinus[$c]) / (($fPlus[$c] - $fMinus[$c]) ?: 1) // cost
-                    : ($fPlus[$c] - $fi) / (($fPlus[$c] - $fMinus[$c]) ?: 1); // benefit
+                $di = ($fPlus[$c] - $fi) / (($fPlus[$c] - $fMinus[$c]) ?: 1);
+
+                $normalizedRow[$c] = $di * $weight;
 
                 $S += $weight * $di;
                 $R = max($R, $weight * $di);
             }
+
+            $normalized[] = $normalizedRow;
+
             $results[] = [
                 'report' => $report,
                 'S' => $S,
@@ -261,8 +285,7 @@ class ReportController extends Controller
             $res['Q'] = $v * (($res['S'] - $Smin) / (($Smax - $Smin) ?: 1)) +
                 (1 - $v) * (($res['R'] - $Rmin) / (($Rmax - $Rmin) ?: 1));
         }
-
-        return collect($results)->sortBy('Q')->values();
+        return $results;
     }
 
     public function showRepairRecommendation()
@@ -275,12 +298,113 @@ class ReportController extends Controller
             ->whereNotNull('c6')
             ->get();
 
-        $results = $this->calculateVikor($reports);
+        $results = $this->calculateVikor($reports, $fPlus, $fMinus, $normalized);
+        $rankedResults = collect($results)->sortBy('Q')->values();
 
 
-        $technicians = User::whereHas('role', function ($query) {
-            $query->where('name', 'technician');
-        })->get();
+        $technicianIdsWithInProgress = DamageReport::where('status', 'In Progress')
+            ->whereNotNull('technician_id')
+            ->pluck('technician_id')
+            ->unique();
+
+        $allTechnicianIdsWithReports = DamageReport::whereNotNull('technician_id')
+            ->pluck('technician_id')
+            ->unique();
+
+        // Teknisi yang tidak punya relasi sama sekali
+        $neverAssignedTechnicians = User::with('biodata')
+            ->where('role_id', 4)
+            ->whereNotIn('id', $allTechnicianIdsWithReports);
+
+        // Teknisi yang hanya punya report dengan status BUKAN "In Progress"
+        $techniciansWithOnlyNonInProgress = User::with('biodata')
+            ->where('role_id', 4)
+            ->whereNotIn('id', $technicianIdsWithInProgress)
+            ->whereIn('id', function ($query) {
+                $query->select('technician_id')
+                    ->from('damage_report')
+                    ->whereNotNull('technician_id')
+                    ->groupBy('technician_id')
+                    ->havingRaw("SUM(status = 'In Progress') = 0"); // Tidak ada status In Progress
+            });
+
+        // Gabungkan keduanya
+        $technicians = $neverAssignedTechnicians
+            ->union($techniciansWithOnlyNonInProgress)
+            ->get();
+
+
+        $criteriaLabels = [
+            'c1' => 'Damage Severity',
+            'c2' => 'Usage Importance',
+            'c3' => 'Safety Concern',
+            'c4' => 'Repair Urgency',
+            'c5' => 'Impact on Many People',
+            'c6' => 'Time to Repair',
+        ];
+        //$technicians = User::with('biodata')->where('role_id', 4)->get();
+        //dd($technicians);
+
+        return view('admin.RepairRecommendation', compact('results', 'reports', 'criteriaLabels', 'technicians', 'rankedResults', 'fPlus', 'fMinus', 'normalized'));
+    }
+
+    public function assignTechnician(Request $request)
+    {
+        $request->validate([
+            'damage_report_id' => 'required|exists:damage_report,damage_report_id',
+            'technician_id' => 'required|exists:users,id',
+        ]);
+
+        $technician = User::find($request->technician_id);
+        if ($technician->role_id != 4) {
+            return back()->withErrors('Selected user is not a technician.');
+        }
+
+        $hasActiveTask = DamageReport::where('technician_id', $technician->id)
+            ->whereIn('status', ['pending', 'in_progress', 'assigned'])
+            ->exists();
+
+        if ($hasActiveTask) {
+            return back()->withErrors('Teknisi ini sudah memiliki tugas yang sedang berlangsung.');
+        }
+
+
+        $report = DamageReport::find($request->damage_report_id); // ✅ ini return satu model, bukan collection
+        $report->technician_id = $technician->id;
+        $report->status = 'In Progress';
+        $report->save();
+
+
+        return redirect()->route('repair-recommendation')->with('success', 'Technician assigned successfully.');
+    }
+
+    public function technicianProgress()
+    {
+
+        $c1_scales = Criteria::with('scales')->find(1)?->scales ?? collect();
+        $reports = DamageReport::with([
+            'user',       // reporter
+            'role',       // reporter role (e.g. Student/Technician)
+            'facility',
+            'floor',
+            'room'
+        ])
+            ->whereNotNull('technician_id')
+            ->where('status', 'In Progress')
+            ->orderBy('damage_report_id', 'asc')
+            ->get();
+        return view('admin.TechnicianProgress', compact('reports', 'c1_scales'));
+    }
+
+    public function exportPDF()
+    {
+        $reports = DamageReport::whereNotNull('c1')
+            ->whereNotNull('c2')
+            ->whereNotNull('c3')
+            ->whereNotNull('c4')
+            ->whereNotNull('c5')
+            ->whereNotNull('c6')
+            ->get();
 
         $criteriaLabels = [
             'c1' => 'Damage Severity',
@@ -291,8 +415,27 @@ class ReportController extends Controller
             'c6' => 'Time to Repair',
         ];
 
-        return view('admin.RepairRecommendation', compact('results', 'reports', 'criteriaLabels', 'technicians'));
+        $results = $this->calculateVikor($reports, $fPlus, $fMinus, $normalized);
+        $rankedResults = collect($results)
+            ->map(function ($res, $index) use ($reports) {
+                return [
+                    'nama' => $reports[$index]->facility->facility_name,
+                    'Q' => $res['Q'],
+                ];
+            })
+            ->sortBy('Q')
+            ->values();
 
+        $pdf = Pdf::loadView('admin.export_pdf', [
+            'results' => $results,
+            'criteriaLabels' => $criteriaLabels,
+            'reports' => $reports,
+            'fPlus' => $fPlus,
+            'fMinus' => $fMinus,
+            'normalized' => $normalized,
+            'rankedResults' => $rankedResults,
+        ]);
+
+        return $pdf->stream('Repair_Recommendation.pdf');
     }
-
 }

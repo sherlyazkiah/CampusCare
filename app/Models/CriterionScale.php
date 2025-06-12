@@ -18,7 +18,7 @@ class CriterionScale extends Model
     ];
 
     // Relasi ke tabel criteria
-     public function criterion()
+    public function criterion()
     {
         return $this->belongsTo(Criteria::class, 'criterion_id', 'criterion_id');
         // foreign key di CriteriaScale, primary key di Criteria

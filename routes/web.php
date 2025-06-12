@@ -22,9 +22,9 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
 
     // Dashboard Admin
     //Route::get('/dashboard', function () {
-        //return view('admin.dashboard');
+    //return view('admin.dashboard');
     //})->name('admin.dashboard');
-     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.index');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.index');
     // === USER ===
     Route::get('/userdata', [AdminController::class, 'view'])->name('userdata.index');
     Route::get('/userdata/create', [AdminController::class, 'create'])->name('userdata.create');
@@ -37,9 +37,9 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     //Route::put('/profile/update', [AdminController::class, 'update_profile'])->name('profile.update');
     Route::put('/profile/update', [AdminController::class, 'update_profile'])->name('profile.update')->middleware('auth');
     Route::get('admin/profile', function () {
-              return view('admin.Profile');
-      });
-      Route::put('/profile/password', [AdminController::class, 'updatePassword'])->name('profile.password.update');
+        return view('admin.Profile');
+    });
+    Route::put('/profile/password', [AdminController::class, 'updatePassword'])->name('profile.password.update');
 
     //Admin Biodata  
     Route::get('/biodata', [AdminController::class, 'biodata'])->name('biodata.edit')->middleware('auth');
@@ -73,15 +73,16 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     //Route::patch('/damage-report/{id}/criteria', [ReportController::class, 'updateCriteria'])->name('damage-report.updateCriteria');
 
     //Route::get('/calculation-step', function () {
-        //return view('admin.CalculationStep');
+    //return view('admin.CalculationStep');
     //});
     //Route::get('/repair-recommendation', [ReportController::class, 'storeAndCalculateVikor'])->name('damage-report.updateCriteria');
-   Route::get('/repair-recommendation', [ReportController::class, 'showRepairRecommendation'])->name('repair-recommendation');
+    Route::get('/repair-recommendation', [ReportController::class, 'showRepairRecommendation'])->name('repair-recommendation');
     Route::patch('/damage-report/{id}/criteria-calculate', [ReportController::class, 'storeAndCalculateVikor'])->name('damage-report.storeAndCalculateVikor');
-    Route::post('/assign-technician', [DamageReportController::class, 'assignTechnician'])->name('assign.technician');
+    Route::post('/assign-technician', [ReportController::class, 'assignTechnician'])->name('assign.technician');
 
-  
-    
+    Route::get('/Technician-Progress', [ReportController::class, 'technicianProgress'])->name('Technician-Progress');
+    Route::get('/repair/pdf', [ReportController::class, 'exportPDF'])->name('repair.pdf');
+    Route::get('/repair/excel', [ReportController::class, 'exportExcel'])->name('repair.excel');
 });
 
 Route::middleware(['auth', 'authorize:lecture,student'])->prefix('user')->group(function () {
@@ -89,16 +90,16 @@ Route::middleware(['auth', 'authorize:lecture,student'])->prefix('user')->group(
     Route::get('/dashboard', [UserController::class, 'view'])->name('user.dashboard');
 
     //profile
-    
-    
+
+
     //Student Biodata
     Route::get('/biodata', [UserController::class, 'StudentBiodata'])->name('student.biodata.edit')->middleware('auth');
     Route::post('/biodata/store', [UserController::class, 'StudentStorebiodata'])->name('student.biodata.store')->middleware('auth');
-    
+
     //Lecture Biodata
     Route::get('/biodata/lecture', [UserController::class, 'LectureBiodata'])->name('lecture.biodata.edit')->middleware('auth');
     Route::post('/biodata/lecture/store', [UserController::class, 'LectureStorebiodata'])->name('lecture.biodata.store')->middleware('auth');
-    
+
     Route::put('/profile/password', [UserController::class, 'updatePassword'])->name('user.profile.password.update');
     Route::get('/profile', [UserController::class, 'edit'])->name('user.profile.edit');
     Route::put('/profile', [UserController::class, 'update'])->name('user.profile.update');
@@ -115,8 +116,6 @@ Route::middleware(['auth', 'authorize:lecture,student'])->prefix('user')->group(
 
     Route::get('/create-report', [ReportController::class, 'create']);
     Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');
-
-    
 });
 
 
@@ -128,8 +127,7 @@ Route::middleware(['auth'])->prefix('technician')->group(function () {
     Route::get('/dashboard', [TaskController::class, 'indexdashboard'])->name('technician.dashboard');
     Route::get('/task', [TaskController::class, 'index'])->name('technician.task');
     Route::get('/history', [TaskController::class, 'history'])->name('technician.history');
-    Route::post('/technician/tasks/{id}/mark-in-progress', [TaskController::class, 'markInProgress'])->name('technician.tasks.markInProgress');
-    Route::post('/technician/tasks/{id}/mark-completed', [TaskController::class, 'markCompleted'])->name('technician.tasks.markCompleted');
+    Route::post('/tasks/{id}/mark-in-progress', [TaskController::class, 'markInProgress'])->name('technician.tasks.markInProgress');
+    Route::post('/tasks/{id}/mark-completed', [TaskController::class, 'markCompleted'])->name('technician.tasks.markCompleted');
+    Route::post('/task/{id}/complete', [TaskController::class, 'markCompleted'])->name('technician.task.complete');
 });
-
-    

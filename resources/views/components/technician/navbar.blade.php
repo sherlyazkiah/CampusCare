@@ -14,7 +14,7 @@
           </svg>
         </button>
         <a href="https://flowbite.com" class="flex ms-2 md:me-14">
-          <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 me-3" alt="FlowBite Logo" />
+          <img src="{{ asset('\logo.png') }}" class="h-8 me-3" alt="FlowBite Logo" />
           <span
             class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">CampusCare</span>
         </a>
@@ -60,24 +60,20 @@
             </div>
             <ul class="py-1" role="none">
               <li>
-                <a href="#"
+                <a href="{{ route('technician.dashboard') }}"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                   role="menuitem">Dashboard</a>
               </li>
               <li>
-                <a href="#"
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                  role="menuitem">Settings</a>
-              </li>
-              <li>
-                <a href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                  role="menuitem">Earnings</a>
-              </li>
-              <li>
-                <a href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                  role="menuitem">Sign out</a>
+                  role="menuitem">
+                  Sign out
+                </a>
+              
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                  @csrf
+                </form>
               </li>
             </ul>
           </div>
