@@ -18,6 +18,31 @@ class AdminController extends Controller
     
     public function dashboard()
     {
+        //chart
+       $dailyReports = DamageReport::selectRaw("
+        DATE(damage_date) as date,
+        SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as damage,
+        SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) as repaired
+    ")
+    ->groupBy('date')
+    ->orderBy('date', 'asc') // Pakai alias 'date' hasil dari DATE(damage_date)
+    ->limit(14)
+    ->get();
+
+                $chartCategories = [];
+                $chartDamage = [];
+                $chartRepaired = [];
+
+                foreach ($dailyReports as $r) {
+                    $chartCategories[] = \Carbon\Carbon::parse($r->date)->format('M d');
+                    $chartDamage[] = $r->damage;
+                    $chartRepaired[] = $r->repaired;
+                }
+
+
+
+
+        //report
        $reports = DamageReport::with(['user', 'role', 'room', 'floor', 'facility', 'biodata'])
             ->orderBy('created_at', 'desc')
             ->limit(5)
@@ -26,11 +51,12 @@ class AdminController extends Controller
         $biodata = Biodata::with(['user.role', 'role', 'class'])->get();
         $pendingCount = DamageReport::where('status', 'Pending')->count();
         $inqueueCount = DamageReport::where('status', 'In_queue')->count();
-        $inProgressCount = DamageReport::where('status', 'in_progress')->count();
+        $inProgressCount = DamageReport::where('status', 'In Progress')->count();
         $doneCount = DamageReport::where('status', 'done')->count();
         $c1_scales = Criteria::with('scales')->find(1)?->scales ?? collect();
+        $total = DamageReport::count();
         
-        return view('admin.dashboard', compact('users', 'biodata', 'pendingCount', 'inqueueCount', 'inProgressCount','doneCount','reports','c1_scales')); // kirim variabel $users ke view
+        return view('admin.dashboard', compact('users', 'biodata', 'pendingCount', 'inqueueCount', 'inProgressCount','doneCount','reports','c1_scales', 'chartCategories', 'chartDamage', 'chartRepaired', 'total')); // kirim variabel $users ke view
     }
     
     
@@ -39,10 +65,11 @@ class AdminController extends Controller
     {
 
         $users = User::with('role')->get();
+        $roles = Role::all();
         
         $biodata = Biodata::with(['user.role', 'role', 'class'])->get();
         $pendingCount = DamageReport::where('status', 'Pending')->where('user_id', Auth::id())->count();
-        return view('admin.UserData', compact('users', 'biodata', 'pendingCount')); // kirim variabel $users ke view
+        return view('admin.UserData', compact('users', 'biodata', 'pendingCount','roles')); // kirim variabel $users ke view
     }
 
     public function create()

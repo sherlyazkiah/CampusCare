@@ -76,6 +76,12 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     Route::resource('facilitydata', FacilityController::class);
 
     Route::resource('damagereport', ReportController::class);
+    //Route::delete('/reports/{id}', [ReportController::class, 'destroy'])->name('reports.destroy');
+    Route::delete('/reports/{id}', [ReportController::class, 'destroy'])->name('reports.destroy');
+    
+    
+
+
     //Route::patch('/damage-report/{id}/criteria', [ReportController::class, 'updateCriteria'])->name('damage-report.updateCriteria');
 
     //Route::get('/calculation-step', function () {
@@ -91,6 +97,8 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     Route::get('/Technician-Progress', [ReportController::class, 'technicianProgress'])->name('Technician-Progress');
     Route::get('/repair/pdf', [ReportController::class, 'exportPDF'])->name('repair.pdf');
     Route::get('/repair/excel', [ReportController::class, 'exportExcel'])->name('repair.excel');
+
+       Route::get('/rooms-by-floor/{floor_id}', [ReportController::class, 'getRoomsByFloor'])->name('rooms.by.floorAdmin');
 });
 
 Route::middleware(['auth', 'authorize:lecture,student'])->prefix('user')->group(function () {
@@ -117,6 +125,7 @@ Route::middleware(['auth', 'authorize:lecture,student'])->prefix('user')->group(
     Route::get('/report', function () {
         return view('user.Report');
     });
+    Route::post('/user/submit-feedback', [ReportController::class, 'storeFeedback'])->name(name: 'user.feedback.submit');
 
     //Route::get('/rooms-by-floor/{floor_id}', [ReportController::class, 'getRoomsByFloor']);
     //Route::get('/get-rooms/{floor_id}', [App\Http\Controllers\ReportController::class, 'getRooms']);
@@ -126,6 +135,7 @@ Route::middleware(['auth', 'authorize:lecture,student'])->prefix('user')->group(
     Route::get('/rooms-by-floor/{floor_id}', [ReportController::class, 'getRoomsByFloor'])->name('rooms.by.floor');
     
     Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');
+    Route::post('/user/submit-feedback', [ReportController::class, 'storeFeedback'])->name('user.feedback.submit');
 });
 
 

@@ -174,24 +174,32 @@
                 </div>
                 <div class="col-span-6 sm:col-span-3">
                   <label for="floor" class="block text-sm font-medium text-gray-900 dark:text-white">Floor</label>
-                  <select id="floor" name="floor_id" class="mt-1 w-full border-gray-300 rounded-lg shadow-sm dark:bg-gray-600 dark:border-gray-500 dark:text-white">
-                    <option selected>Pilih Lantai</option>
-                    @foreach($floors as $floor)
-                      <option value="{{ $floor->floor_id }}">{{ $floor->floor_name }}</option>
-                    @endforeach
-                  </select>
+                        <select name="floor_id" id="floor-select" required
+                            class="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                            <option value="">-- Select Floor --</option>
+                            @foreach ($floors as $floor)
+                                <option value="{{ $floor->floor_id }}" {{ old('floor') == $floor->floor_id ? 'selected' : '' }}>
+                                    {{ $floor->floor_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                     </div>
+
+                     <!-- Room -->
+                    <div class="col-span-6 sm:col-span-3">
+                      <label for="room-select" class="block text-sm font-medium text-gray-900 dark:text-white">Room</label>
+                      <select name="room_id" id="room-select" required
+                        class="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <option value="">-- Select Room --</option>
+                        <!-- Akan diisi dinamis dengan JavaScript -->
+                      </select>
+                      @error('room')
+                        <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                      @enderror
+                    </div>
+
+                  </div>
                 </div>
-                <div class="col-span-6 sm:col-span-3">
-                  <label for="room" class="block text-sm font-medium text-gray-900 dark:text-white">Room</label>
-                  <select id="room" name="room_id" class="mt-1 w-full border-gray-300 rounded-lg shadow-sm dark:bg-gray-600 dark:border-gray-500 dark:text-white">
-                    <option selected>Pilih Ruangan</option>
-                    @foreach($rooms as $room)
-                      <option value="{{ $room->room_id }}">{{ $room->room_name }}</option>
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-            </div>
       
             <!-- Modal Footer -->
             <div class="flex items-center p-6 space-x-3 border-t border-gray-200 rounded-b dark:border-gray-600">
@@ -225,19 +233,20 @@
                 </div>
                 <div class="col-span-6 sm:col-span-3">
                   <label class="block text-sm font-medium text-gray-900 dark:text-white">Floor</label>
-                  <select id="edit-floor" name="floor_id" class="mt-1 w-full border-gray-300 rounded-lg shadow-sm dark:bg-gray-600 dark:border-gray-500 dark:text-white" required>
-                    @foreach($floors as $floor)
-                      <option value="{{ $floor->floor_id }}">{{ $floor->floor_name }}</option>
-                    @endforeach
-                  </select>
+                  <select id="create-floor" name="floor_id"
+                  class="mt-1 w-full border-gray-300 rounded-lg shadow-sm dark:bg-gray-600 dark:border-gray-500 dark:text-white" required>
+                  <option value="">-- Select Floor --</option>
+                  @foreach($floors as $floor)
+                    <option value="{{ $floor->floor_id }}">{{ $floor->floor_name }}</option>
+                  @endforeach
+                </select>
                 </div>
                 <div class="col-span-6 sm:col-span-3">
                   <label class="block text-sm font-medium text-gray-900 dark:text-white">Room</label>
-                  <select id="edit-room" name="room_id" class="mt-1 w-full border-gray-300 rounded-lg shadow-sm dark:bg-gray-600 dark:border-gray-500 dark:text-white" required>
-                    @foreach($rooms as $room)
-                      <option value="{{ $room->room_id }}">{{ $room->room_name }}</option>
-                    @endforeach
-                  </select>
+                  <select id="create-room" name="room_id"
+                  class="mt-1 w-full border-gray-300 rounded-lg shadow-sm dark:bg-gray-600 dark:border-gray-500 dark:text-white" required>
+                  <option value="">-- Select Room --</option>
+                </select>
                 </div>
               </div>
             </div>
@@ -287,6 +296,48 @@
             });
         });
     </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    function setupFloorRoomSelector(floorId, roomId) {
+        const floorSelect = document.getElementById(floorId);
+        const roomSelect = document.getElementById(roomId);
+
+        if (floorSelect && roomSelect) {
+            floorSelect.addEventListener('change', function () {
+                const floorValue = this.value;
+                roomSelect.innerHTML = '<option value="">Loading...</option>';
+
+                if (floorValue) {
+                    const url = `{{ route('rooms.by.floorAdmin', ':id') }}`.replace(':id', floorValue);
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            let options = '<option value="">-- Select Room --</option>';
+                            data.forEach(room => {
+                                options += `<option value="${room.room_id}">${room.room_name}</option>`;
+                            });
+                            roomSelect.innerHTML = options;
+                        })
+                        .catch(error => {
+                            console.error('Error fetching rooms:', error);
+                            roomSelect.innerHTML = '<option value="">-- Select Room --</option>';
+                        });
+                } else {
+                    roomSelect.innerHTML = '<option value="">-- Select Room --</option>';
+                }
+            });
+        }
+    }
+
+    // Setup untuk form tambah & edit
+    setupFloorRoomSelector('floor-select', 'room-select');
+    
+    setupFloorRoomSelector('edit-floor', 'edit-room');
+});
+</script>
+
+
+    
 </div>      
 
 @endsection

@@ -78,7 +78,7 @@
                 <td class="p-4 whitespace-nowrap">
                   <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-orange-100 dark:bg-gray-700 dark:border-orange-300 dark:text-orange-300">{{ $report->status }}</span>
                 </td>
-                <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">{{ $report->created_at->format('M d, Y') }}</td>
+                <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">{{ \Carbon\Carbon::parse($report->damage_date)->format('M d, Y') }}</td>
                 <td class="p-4 space-x-2 whitespace-nowrap">
                   
                     

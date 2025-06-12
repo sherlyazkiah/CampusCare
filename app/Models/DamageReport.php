@@ -32,6 +32,7 @@ class DamageReport extends Model
         'technician_id',
         'image_technician',
         'completion_description',
+        'damage_date'
     ];
 
     public function user()

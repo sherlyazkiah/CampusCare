@@ -1,30 +1,27 @@
+
+
 @extends('layouts.user')
 
 @section('main')
-    <div class="px-4 py-8 mt-14 sm:ml-64 text-black dark:text-white bg-white dark:bg-gray-900">
-        <div class="w-full mb-1">
+<div class="px-4 py-8 mt-14 sm:ml-64 text-black dark:text-white bg-white dark:bg-gray-900">
+    <div class="w-full mb-1">
             <div class="mb-4">
                 <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Report</h1>
             </div>
             <div class="sm:flex mt-8">
                 <div class="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
                     <form class="lg:pr-3" action="#" method="GET">
-                        <label for="reports-search" class="sr-only">Search</label>
-                        <div class="relative mt-1 lg:w-64 xl:w-96">
-                            <input type="text" name="email" id="reports-search"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="Search for reports">
-                        </div>
+                    <label for="reports-search" class="sr-only">Search</label>
+                    <div class="relative mt-1 lg:w-64 xl:w-96">
+                        <input type="text" name="email" id="reports-search" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search for reports">
+                    </div>
                     </form>
                 </div>
                 <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
-                    <a href="/user/create-report"
+                    <a href="/user/create-report" 
                         class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm sm:w-auto font-medium text-center text-white rounded-lg bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                clip-rule="evenodd"></path>
+                        <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
                         </svg>
                         Create report
                     </a>
@@ -87,7 +84,7 @@
                             <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-orange-100 dark:bg-gray-700 dark:border-orange-300 dark:text-orange-300">{{$report->status}}</span>
                         </td>
                         <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                            {{ $report->created_at->format('M d, Y') }}
+                            {{ \Carbon\Carbon::parse($report->damage_date)->format('M d, Y') }}
                         </td>
                         <td class="p-4 space-x-2 whitespace-nowrap">
                             <button type="button" data-modal-target="detail-report-modal-{{ $report->damage_report_id }}" data-modal-show="detail-report-modal-{{ $report->damage_report_id }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white rounded-lg bg-green-600 hover:bg-green-800">
@@ -173,7 +170,7 @@
                     </div>
                     <div class="col-span-6 sm:col-span-3">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date & Time</label>
-                        <input type="text" readonly value="{{ $report->created_at->format('M d, Y H:i') }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <input type="text" readonly value="{{ \Carbon\Carbon::parse($report->damage_date)->format('M d, Y') }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                     </div>
                     <div class="col-span-6 sm:col-span-3">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Damage Level</label>
@@ -200,68 +197,68 @@
     <p></p>
     @endforelse
 
-        <script>
-            if (document.getElementById("selection-table") && typeof simpleDatatables.DataTable !== 'undefined') {
+    <script>
+        if (document.getElementById("selection-table") && typeof simpleDatatables.DataTable !== 'undefined') {
 
-                let multiSelect = true;
-                let rowNavigation = false;
-                let table = null;
+            let multiSelect = true;
+            let rowNavigation = false;
+            let table = null;
 
-                const resetTable = function () {
-                    if (table) {
-                        table.destroy();
-                    }
-
-                    const options = {
-                        rowRender: (row, tr, _index) => {
-                            if (!tr.attributes) {
-                                tr.attributes = {};
-                            }
-                            if (!tr.attributes.class) {
-                                tr.attributes.class = "";
-                            }
-                            if (row.selected) {
-                                tr.attributes.class += " selected";
-                            } else {
-                                tr.attributes.class = tr.attributes.class.replace(" selected", "");
-                            }
-                            return tr;
-                        }
-                    };
-                    if (rowNavigation) {
-                        options.rowNavigation = true;
-                        options.tabIndex = 1;
-                    }
-
-                    table = new simpleDatatables.DataTable("#selection-table", options);
-
-                    // Mark all rows as unselected
-                    table.data.data.forEach(data => {
-                        data.selected = false;
-                    });
-
-                    table.on("datatable.selectrow", (rowIndex, event) => {
-                        event.preventDefault();
-                        const row = table.data.data[rowIndex];
-                        if (row.selected) {
-                            row.selected = false;
-                        } else {
-                            if (!multiSelect) {
-                                table.data.data.forEach(data => {
-                                    data.selected = false;
-                                });
-                            }
-                            row.selected = true;
-                        }
-                        table.update();
-                    });
-                };
-
-                // Row navigation makes no sense on mobile, so we deactivate it and hide the checkbox.
-                const isMobile = window.matchMedia("(any-pointer:coarse)").matches;
-                if (isMobile) {
-                    rowNavigation = false;
+            const resetTable = function() {
+                if (table) {
+                    table.destroy();
                 }
+
+                const options = {
+                    rowRender: (row, tr, _index) => {
+                        if (!tr.attributes) {
+                            tr.attributes = {};
+                        }
+                        if (!tr.attributes.class) {
+                            tr.attributes.class = "";
+                        }
+                        if (row.selected) {
+                            tr.attributes.class += " selected";
+                        } else {
+                            tr.attributes.class = tr.attributes.class.replace(" selected", "");
+                        }
+                        return tr;
+                    }
+                };
+                if (rowNavigation) {
+                    options.rowNavigation = true;
+                    options.tabIndex = 1;
+                }
+
+                table = new simpleDatatables.DataTable("#selection-table", options);
+
+                // Mark all rows as unselected
+                table.data.data.forEach(data => {
+                    data.selected = false;
+                });
+
+                table.on("datatable.selectrow", (rowIndex, event) => {
+                    event.preventDefault();
+                    const row = table.data.data[rowIndex];
+                    if (row.selected) {
+                        row.selected = false;
+                    } else {
+                        if (!multiSelect) {
+                            table.data.data.forEach(data => {
+                                data.selected = false;
+                            });
+                        }
+                        row.selected = true;
+                    }
+                    table.update();
+                });
+            };
+
+            // Row navigation makes no sense on mobile, so we deactivate it and hide the checkbox.
+            const isMobile = window.matchMedia("(any-pointer:coarse)").matches;
+            if (isMobile) {
+                rowNavigation = false;
+            }
 
             resetTable();
         }

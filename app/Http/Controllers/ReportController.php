@@ -36,6 +36,7 @@ class ReportController extends Controller
         $c1_scales = Criteria::with('scales')->find(1)?->scales ?? collect();
 
 
+
         $c1_scales = Criteria::with('scales')->find(1)?->scales ?? collect();
         $c2_scales = Criteria::with('scales')->find(2)?->scales ?? collect();
         $c3_scales = Criteria::with('scales')->find(3)?->scales ?? collect();
@@ -105,7 +106,7 @@ class ReportController extends Controller
             'floor' => 'required|exists:floors,floor_id',
             'room' => 'required|exists:rooms,room_id',
             'description' => 'required|string',
-            'date' => 'required|date',
+            'damage_date' => 'required|date',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -138,6 +139,7 @@ class ReportController extends Controller
             'facility_id' => $request->facility,
             'room_id' => $request->room,
             'floor_id' => $request->floor,
+            'damage_date' => $request->damage_date,
             'image_path' => $imagePath,
         ]);
 
@@ -469,5 +471,26 @@ class ReportController extends Controller
         ]);
 
         return $pdf->stream('Repair_Recommendation.pdf');
+    }
+
+public function destroy($id)
+{
+    $report = DamageReport::findOrFail($id);
+    $report->delete();
+
+    return redirect()->back()->with('success', 'Report deleted successfully.');
+}
+public function storeFeedback(Request $request)
+    {
+        $request->validate([
+            'report_id' => 'required|exists:damage_report,damage_report_id',
+            'rating' => 'required|integer|min:1|max:5',
+        ]);
+
+        $report = DamageReport::findOrFail($request->report_id);
+        $report->rating = $request->rating; // Pastikan kolom 'rating' ada di tabel 'damage_reports'
+        $report->save();
+
+        return redirect()->back()->with('success', 'Feedback berhasil dikirim.');
     }
 }

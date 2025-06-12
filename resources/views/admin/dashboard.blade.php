@@ -72,107 +72,45 @@
       <div class="grid gap-4 grid-cols-2">
         <div>
           <h5 class="inline-flex items-center text-gray-500 dark:text-gray-400 leading-none font-normal mb-2">Damage</h5>
-          <p class="text-gray-900 dark:text-white text-2xl leading-none font-bold">10</p>
+          <p class="text-gray-900 dark:text-white text-2xl leading-none font-bold">{{ $total }}</p>
         </div>
         <div>
           <h5 class="inline-flex items-center text-gray-500 dark:text-gray-400 leading-none font-normal mb-2">Repaired</h5>
-          <p class="text-gray-900 dark:text-white text-2xl leading-none font-bold">20</p>
+          <p class="text-gray-900 dark:text-white text-2xl leading-none font-bold">{{ $doneCount }}</p>
         </div>
       </div>
     </div>
     <div id="line-chart"></div>
-    <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-2.5">
-      <div class="pt-5">      
-        <a href="#" class="px-5 py-2.5 text-sm font-medium text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          <svg class="w-3.5 h-3.5 text-white me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
-            <path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2Zm-3 15H4.828a1 1 0 0 1 0-2h6.238a1 1 0 0 1 0 2Zm0-4H4.828a1 1 0 0 1 0-2h6.238a1 1 0 1 1 0 2Z"/>
-            <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z"/>
-          </svg>
-          View full report
-        </a>
-      </div>
-    </div>
   </div>
 
   <script>
-  const options = {
-    chart: {
-      height: "100%",
-      maxWidth: "100%",
-      type: "line",
-      fontFamily: "Inter, sans-serif",
-      dropShadow: {
-        enabled: false,
-      },
-      toolbar: {
-        show: false,
-      },
-    },
-    tooltip: {
-      enabled: true,
-      x: {
-        show: false,
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      width: 6,
-    },
-    grid: {
-      show: true,
-      strokeDashArray: 4,
-      padding: {
-        left: 2,
-        right: 2,
-        top: -26
-      },
-    },
-    series: [
-      {
-        name: "Damage",
-        data: [3, 4, 2, 5, 1, 3, 4, 2, 5, 3, 2, 4],
-        color: "#1A56DB",
-      },
-      {
-        name: "Repaired",
-        data: [2, 3, 4, 1, 5, 2, 3, 5, 1, 4, 3, 2],
-        color: "#7E3AF2",
-      },
-    ],
-    legend: {
-      show: false
-    },
-    stroke: {
-      curve: 'smooth'
-    },
-    xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      labels: {
-        show: true,
-        style: {
-          fontFamily: "Inter, sans-serif",
-          cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
-        }
-      },
-      axisBorder: {
-        show: false,
-      },
-      axisTicks: {
-        show: false,
-      },
-    },
-    yaxis: {
-      show: false,
-    },
-  }
+const options = {
+  chart: { type: "line", fontFamily: "Inter, sans-serif", toolbar: { show: false } },
+  stroke: { curve: 'smooth', width: 4 },
+  grid: { strokeDashArray: 4 },
+  tooltip: { enabled: true },
+  dataLabels: { enabled: false },
+  series: [
+    { name: "Damage", data: @json($chartDamage), color: "#1A56DB" },
+    { name: "Repaired", data: @json($chartRepaired), color: "#7E3AF2" }
+  ],
+  xaxis: {
+    categories: @json($chartCategories),
+    labels: {
+      style: {
+        fontFamily: "Inter, sans-serif",
+        cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+      }
+    }
+  },
+  yaxis: { show: false },
+};
 
-  if (document.getElementById("line-chart") && typeof ApexCharts !== 'undefined') {
-    const chart = new ApexCharts(document.getElementById("line-chart"), options);
-    chart.render();
-  }
-  </script>
+if (document.getElementById("line-chart") && typeof ApexCharts !== 'undefined') {
+  const chart = new ApexCharts(document.getElementById("line-chart"), options);
+  chart.render();
+}
+</script>
   
   <!-- Rating -->
 <div class="mt-5 w-full lg:w-1/4 bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
@@ -343,7 +281,7 @@ if (document.getElementById("rating-donut-chart") && typeof ApexCharts !== 'unde
                             <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-orange-100 dark:bg-gray-700 dark:border-orange-300 dark:text-orange-300">{{ $report->status?? '-' }}</span>
                         </td>
                         <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400 border-b dark:border-gray-700 border-gray-200">
-                            {{ $report->created_at->format('M d, Y') }}
+                            {{ \Carbon\Carbon::parse($report->damage_date)->format('M d, Y') }}
                         </td>
                        
                     </tr>
