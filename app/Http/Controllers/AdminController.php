@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Criteria;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
@@ -17,12 +18,19 @@ class AdminController extends Controller
     
     public function dashboard()
     {
-
+       $reports = DamageReport::with(['user', 'role', 'room', 'floor', 'facility', 'biodata'])
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
         $users = User::with('role')->get();
         $biodata = Biodata::with(['user.role', 'role', 'class'])->get();
         $pendingCount = DamageReport::where('status', 'Pending')->count();
+        $inqueueCount = DamageReport::where('status', 'In_queue')->count();
+        $inProgressCount = DamageReport::where('status', 'in_progress')->count();
+        $doneCount = DamageReport::where('status', 'done')->count();
+        $c1_scales = Criteria::with('scales')->find(1)?->scales ?? collect();
         
-        return view('admin.dashboard', compact('users', 'biodata', 'pendingCount')); // kirim variabel $users ke view
+        return view('admin.dashboard', compact('users', 'biodata', 'pendingCount', 'inqueueCount', 'inProgressCount','doneCount','reports','c1_scales')); // kirim variabel $users ke view
     }
     
     
@@ -31,6 +39,7 @@ class AdminController extends Controller
     {
 
         $users = User::with('role')->get();
+        
         $biodata = Biodata::with(['user.role', 'role', 'class'])->get();
         $pendingCount = DamageReport::where('status', 'Pending')->where('user_id', Auth::id())->count();
         return view('admin.UserData', compact('users', 'biodata', 'pendingCount')); // kirim variabel $users ke view
@@ -106,6 +115,7 @@ class AdminController extends Controller
     public function show($id)
     {
         $user = User::with('biodata', 'role')->findOrFail($id); // Pastikan model User ada
+        
 
         return view('admin.UserDetail', compact('user'));
     }
@@ -184,6 +194,7 @@ class AdminController extends Controller
     {
 
         $users = User::with('role')->get();
+        
         return view('admin.FillBiodata', compact('users')); // kirim variabel $users ke view
     }
 

@@ -210,27 +210,20 @@
         </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          // Tangkap semua tombol edit
-          const editButtons = document.querySelectorAll('.edit-room-btn');
-      
-          editButtons.forEach(button => {
-            button.addEventListener('click', function() {
-              // Ambil data dari atribut
-              const roomId = this.getAttribute('data-id');
-              const roomName = this.getAttribute('data-name');
-              const floorId = this.getAttribute('data-floor');
-      
-              // Set data ke form di modal
-              document.getElementById('edit-room-name').value = roomName;
-              document.getElementById('edit-floor').value = floorId;
-      
-              // Ubah action form sesuai ID ruangan
-              const editForm = document.getElementById('edit-room-form');
-              editForm.action = /admin/rooms/${roomId}; // sesuaikan route resourceful di Laravel (PUT /rooms/{id})
-            });
-          });
+    document.querySelectorAll('.edit-room-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const id = this.getAttribute('data-id');
+            const name = this.getAttribute('data-name');
+            const floorId = this.getAttribute('data-floor');
+
+            document.getElementById('edit-room-name').value = name;
+            document.getElementById('edit-floor').value = floorId;
+
+            const form = document.getElementById('edit-room-form');
+            form.action = /rooms/${id}; // adjust this based on your route
         });
-    </script>
+    });
+</script>
+
 </div>
 @endsection

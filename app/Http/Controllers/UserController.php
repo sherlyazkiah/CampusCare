@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Criteria;
 use App\Models\DamageReport;
 use Illuminate\Http\Request;
 use \App\Models\User;
@@ -17,12 +18,13 @@ class UserController extends Controller
     public function view()
     {
         $users = User::with('role')->get();
-        $reports = DamageReport::with(['user', 'facility', 'room', 'floor'])->where('user_id', Auth::id())->get();
+        $reports = DamageReport::with(['user', 'facility', 'room', 'floor'])->where('user_id', Auth::id())->latest()->limit(5)->get();;
         $pendingCount = DamageReport::where('status', 'Pending')->where('user_id', Auth::id())->count();
-        $processCount = DamageReport::where('status', 'In Progress')->where('user_id', Auth::id())->count();
-        $doneCount = DamageReport::where('status', 'Repaired')->where('user_id', Auth::id())->count();
+        $processCount = DamageReport::where('status', 'in_progress')->where('user_id', Auth::id())->count();
+        $doneCount = DamageReport::where('status', 'done')->where('user_id', Auth::id())->count();
+        $c1_scales = Criteria::with('scales')->find(1)?->scales ?? collect();
         //return view('user.dashboard', compact('users')); // kirim variabel $users ke view
-        return view('user.dashboard', compact('users', 'reports', 'pendingCount', 'processCount', 'doneCount'), );
+        return view('user.dashboard', compact('users', 'reports', 'pendingCount', 'processCount', 'doneCount','c1_scales') );
     }
 
 

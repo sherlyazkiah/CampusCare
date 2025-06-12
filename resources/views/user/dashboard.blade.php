@@ -15,8 +15,15 @@
   <div class="bg-blue-600 text-white rounded-xl p-6 mb-6 flex justify-between items-center shadow-lg transition-shadow duration-300" style="background-position: 70% center">
     <div>
       <h2 class="text-xl font-semibold mb-2">Campus Care</h2>
-      <p class="mb-4">For Help You To make Comfortable<br />Your Campus Care.</p>
+      <p class="mb-4">
+        For Help You To make Comfortable<br />
+        Your Campus Care.
+      </p>
     </div>
+      <img
+      src="{{ asset('\img\user.svg') }}"
+      alt="Campus Care Logo"
+      class="w-1/2 h-40 object-contain object-center hidden md:block" />
   </div>
 
   <!-- Summary Cards -->
@@ -49,7 +56,7 @@
           <table id="selection-table" class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
             <thead class="bg-gray-100 dark:bg-gray-700">
               <tr>
-                <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">ID</th>
+                <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">No</th>
                 <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">Name</th>
                 <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">Facility</th>
                 <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">Location</th>
@@ -61,11 +68,13 @@
             <tbody class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
               @forelse ($reports as $report)
               <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">{{ $report->damage_report_id }}</td>
+                <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400 ">
+                        {{ $loop->iteration }}
+                           </td>
                 <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">{{ $report->user->username ?? '-' }}</td>
                 <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">{{ $report->facility->facility_name ?? '-' }}</td>
                 <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">{{ $report->room->room_name ?? '-' }}, {{ $report->floor->floor_name ?? '-' }}</td>
-                <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">{{ $report->damage_level }}</td>
+                <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">{{ optional($c1_scales->firstWhere('scale_value', old('c1', $report->c1 ?? '')))->scale_description ?? 'N/A' }}</td>
                 <td class="p-4 whitespace-nowrap">
                   <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-orange-100 dark:bg-gray-700 dark:border-orange-300 dark:text-orange-300">{{ $report->status }}</span>
                 </td>

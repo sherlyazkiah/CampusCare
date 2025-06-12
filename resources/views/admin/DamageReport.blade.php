@@ -8,12 +8,8 @@
             </div>
             <div class="sm:flex mt-8">
                 <div class="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
-                    <form class="lg:pr-3" action="#" method="GET">
-                    <label for="reports-search" class="sr-only">Search</label>
-                    <div class="relative mt-1 lg:w-64 xl:w-96">
-                        <input type="text" name="email" id="reports-search" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search for reports">
-                    </div>
-                    </form>
+                    
+                
                 </div>
                 <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
                     <a href="#" class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
@@ -27,11 +23,11 @@
         <div class="overflow-x-auto rounded-lg">
           <div class="inline-block min-w-full align-middle">
             <div class="overflow-hidden shadow sm:rounded-lg">
-              <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
+              <table id="selection-table" class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
                 <thead class="bg-gray-100 dark:bg-gray-700">
                   <tr>
                     <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                      ID
+                      No
                     </th><th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                       Reporter
                     </th>
@@ -59,12 +55,37 @@
                     </th>
                   </tr>
                 </thead>
+                <div class="mb-4 flex justify-end">
+    <form method="GET" action="{{ route('damage-reports.index') }}" class="flex items-center space-x-2 mb-4">
+    <label for="status" class="text-sm font-medium text-gray-700">Filter Status:</label>
+    
+    <select name="status" id="status" class="px-3 py-2 text-sm border rounded text-gray-700">
+        <option value="">-- All Status --</option>
+        <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+        <option value="in_progress" {{ request('status') == 'in_progress' ? 'selected' : '' }}>In Progress</option>
+        <option value="In_Queue" {{ request('status') == 'In_Queue' ? 'selected' : '' }}>In Queue</option>
+    </select>
+
+    <button type="submit" class="px-4 py-2 text-sm text-white bg-blue-600 rounded hover:bg-blue-700">
+        Filter
+    </button>
+    
+</form>
+</div>
+
+                
                 <tbody class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                    
                     @forelse ($reports as $report)
+
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                           {{ ($reports->currentPage() - 1) * $reports->perPage() + $loop->iteration }}
+                                        </td>
+                    <!--<tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
                         <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                             {{ $report->damage_report_id }}
-                        </td>
+                        </td>-->
                         <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                             {{ $report->user->username ?? '-' }}
                         </td>
@@ -72,7 +93,7 @@
                             {{ $report->facility->facility_name ?? '-' }}
                         </td>
                         <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                            {{ $report->damage_level ?? '-' }}
+                            {{ optional($c1_scales->firstWhere('scale_value', old('c1', $report->c1 ?? '')))->scale_description ?? 'N/A' }}
                         </td>
                         <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                             {{ $report->room->room_name ?? '-' }}, {{ $report->floor->floor_name ?? '-' }}
@@ -103,12 +124,19 @@
                         <td colspan="8" class="p-4 text-sm text-center text-gray-500 dark:text-gray-400">No reports found.</td>
                     </tr>
                     @endforelse
-                </tbody>                
-              </table>
+                </tbody>    
+                      
+        </table>
+                    <div class="mt-4">
+    {{ $reports->withQueryString()->links('vendor.pagination.tailwind') }}
+</div>      
+          
             </div>
           </div>
         </div>
     </div>
+
+   
 
     <!-- Detail Report modal -->
     @forelse ($reports as $report)
@@ -160,8 +188,8 @@
                         <input type="text" readonly value="{{ $report->created_at->format('M d, Y H:i') }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                     </div>
                     <div class="col-span-6 sm:col-span-3">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Urgency Level</label>
-                        <input type="text" readonly value="{{ $report->damage_level ?? '-' }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Damage Level</label>
+                        <input type="text" readonly value="{{ optional($c1_scales->firstWhere('scale_value', old('c1', $report->c1 ?? '')))->scale_description ?? 'N/A' }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                     </div>
                     <div class="col-span-6">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
@@ -187,7 +215,7 @@
         </div>
     </div>
     @empty
-    <p>No reports found.</p>
+   
     @endforelse
 
     <!-- Criteria Modal -->
@@ -215,7 +243,7 @@
                 <div class="grid grid-cols-6 gap-6">
                     <div class="col-span-6">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Photo</label>
-                        <img src="your-photo-url.jpg" alt="Reported Facility" class="rounded-lg w-full max-h-64 object-contain border border-gray-300 dark:border-gray-600">
+                        <img src="{{ asset($report->image_path) }}" alt="Reported Facility" class="rounded-lg w-full max-h-64 object-contain border border-gray-300 dark:border-gray-600">
                     </div>
                     <div class="col-span-6">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
@@ -316,7 +344,7 @@
         </div>
     </div>
     @empty
-    <p>No reports found.</p>
+
     @endforelse
 
     <!-- Delete Report Modal -->

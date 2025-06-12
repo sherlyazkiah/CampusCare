@@ -40,7 +40,7 @@
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Floor</label>
-                        <select name="floor" required
+                        <select name="floor" id="floor-select" required
                             class="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                             <option value="">-- Select Floor --</option>
                             @foreach ($floors as $floor)
@@ -53,15 +53,15 @@
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Room</label>
-                        <select name="room" required
+                        <select name="room" id="room-select" required
                             class="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                             <option value="">-- Select Room --</option>
-                            @foreach ($rooms as $room)
-                                <option value="{{ $room->room_id }}" {{ old('room') == $room->room_id ? 'selected' : '' }}>
-                                    {{ $room->room_name }}
-                                </option>
-                            @endforeach
+                             <!-- Akan diisi dinamis dengan JavaScript -->
+                           
                         </select>
+                        @error('room')
+                            <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
 
@@ -110,3 +110,48 @@
         </form>
     </div>
 @endsection
+@push('scripts')
+@if ($errors->has('room'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Duplicate Report',
+            text: '{{ $errors->first('room') }}',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+    </script>
+@endif
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const floorSelect = document.getElementById('floor-select');
+        const roomSelect = document.getElementById('room-select');
+
+        floorSelect.addEventListener('change', function () {
+            const floorId = this.value;
+            roomSelect.innerHTML = '<option value="">Loading...</option>';
+
+            if (floorId) {
+                fetch(`{{ url('/user/rooms-by-floor') }}/${floorId}`)
+                //fetch(`/rooms-by-floor/${floorId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        let options = '<option value="">-- Select Room --</option>';
+                        data.forEach(room => {
+                            options += `<option value="${room.room_id}">${room.room_name}</option>`;
+                        });
+                        roomSelect.innerHTML = options;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching rooms:', error);
+                        roomSelect.innerHTML = '<option value="">-- Select Room --</option>';
+                    });
+            } else {
+                roomSelect.innerHTML = '<option value="">-- Select Room --</option>';
+            }
+        });
+    });
+    
+</script>
+    @stack('scripts')
+@endpush

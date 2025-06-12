@@ -12,10 +12,16 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TaskController;
 
+// === LANDING PAGE ===
+Route::get('/', function () {
+        return view('auth.LandingPage');
+    });
+
 // === AUTH ===
-Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
 
 // === ADMIN ROUTES ===
 Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function () {
@@ -77,6 +83,7 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     //});
     //Route::get('/repair-recommendation', [ReportController::class, 'storeAndCalculateVikor'])->name('damage-report.updateCriteria');
    Route::get('/repair-recommendation', [ReportController::class, 'showRepairRecommendation'])->name('repair-recommendation');
+   Route::get('/damage-reports', [ReportController::class, 'index'])->name('damage-reports.index');
     Route::patch('/damage-report/{id}/criteria-calculate', [ReportController::class, 'storeAndCalculateVikor'])->name('damage-report.storeAndCalculateVikor');
     Route::post('/assign-technician', [DamageReportController::class, 'assignTechnician'])->name('assign.technician');
 
@@ -109,12 +116,17 @@ Route::middleware(['auth', 'authorize:lecture,student'])->prefix('user')->group(
         return view('user.Report');
     });
 
-    Route::get('/rooms-by-floor/{floor_id}', [ReportController::class, 'getRoomsByFloor']);
-    Route::get('/get-rooms/{floor_id}', [App\Http\Controllers\ReportController::class, 'getRooms']);
+    //Route::get('/rooms-by-floor/{floor_id}', [ReportController::class, 'getRoomsByFloor']);
+    //Route::get('/get-rooms/{floor_id}', [App\Http\Controllers\ReportController::class, 'getRooms']);
 
 
     Route::get('/create-report', [ReportController::class, 'create']);
+    Route::get('/rooms-by-floor/{floor_id}', [ReportController::class, 'getRoomsByFloor'])->name('rooms.by.floor');
+    
     Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');
+
+Route::post('/user/submit-feedback', [ReportController::class, 'storeFeedback'])->name('user.feedback.submit');
+
 
     
 });

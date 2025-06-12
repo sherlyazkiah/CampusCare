@@ -14,25 +14,40 @@ use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
-    public function index()
+    public function index(Request $request)
+
+    
     {
+        
+
+        $query = DamageReport::with(['user.role', 'facility', 'room', 'floor']);
+        if ($request->has('status') && $request->status != '') {
+
+
+        $query->where('status', $request->status);
+    }
+    
+    
         //$reports = DamageReport::with(['user', 'role', 'room', 'floor'])->get();
         //$reports = DamageReport::with(['user', 'role', 'room', 'floor', 'facility'])->get();
-        $reports = DamageReport::with(['user', 'role', 'room', 'floor', 'facility', 'biodata'])->get();
+        //$reports = DamageReport::with(['user', 'role', 'room', 'floor', 'facility', 'biodata'])->get();
         $c1_scales = Criteria::with('scales')->find(1)?->scales ?? collect();
         $c2_scales = Criteria::with('scales')->find(2)?->scales ?? collect();
         $c3_scales = Criteria::with('scales')->find(3)?->scales ?? collect();
         $c4_scales = Criteria::with('scales')->find(4)?->scales ?? collect();
         $c5_scales = Criteria::with('scales')->find(5)?->scales ?? collect();
         $c6_scales = Criteria::with('scales')->find(6)?->scales ?? collect();
-
+        
+     //$reports = $query->latest()->get();
         //dd($reports->first());
+        $reports = $query->latest()->paginate(10);
         return view('admin.DamageReport', compact('reports', 'c1_scales', 'c2_scales', 'c3_scales', 'c4_scales', 'c5_scales', 'c6_scales'));
     }
 
     public function userReports()
     {
         $userId = Auth::id(); // Ambil ID user yang sedang login
+        $c1_scales = Criteria::with('scales')->find(1)?->scales ?? collect();
 
         //$reports = DamageReport::with(['user', 'role', 'room', 'floor'])
         //->where('user_id', $userId)
@@ -41,7 +56,7 @@ class ReportController extends Controller
             ->where('user_id', $userId)
             ->get();
 
-        return view('user.Report', compact('reports'));
+        return view('user.Report', compact('reports','c1_scales'));
     }
 
     public function create()
@@ -51,10 +66,10 @@ class ReportController extends Controller
         $rooms = Room::all();
         //$damageLevels = DamageReport::DAMAGE_LEVELS;
         $c1_scales = Criteria::with('scales')->find(1)?->scales ?? collect();
-        $c2_scales = CriterionScale::with('scales')->find(2)?->scales ?? collect();
-        $c3_scales = CriterionScale::with('scales')->find(3)?->scales ?? collect();
-        $c4_scales = CriterionScale::with('scales')->find(4)?->scales ?? collect();
-        $c5_scales = CriterionScale::with('scales')->find(5)?->scales ?? collect();
+        $c2_scales = Criteria::with('scales')->find(2)?->scales ?? collect();
+        $c3_scales = Criteria::with('scales')->find(3)?->scales ?? collect();
+        $c4_scales = Criteria::with('scales')->find(4)?->scales ?? collect();
+        $c5_scales = Criteria::with('scales')->find(5)?->scales ?? collect();
 
         return view('user.CreateReport', compact(
             'facilities',
@@ -67,6 +82,12 @@ class ReportController extends Controller
             'c5_scales'
         ));
     }
+    public function getRoomsByFloor($floor_id)
+    {
+        $rooms = Room::where('floor_id', $floor_id)->get();
+
+        return response()->json($rooms);
+    }
     public function store(Request $request)
     {
 
@@ -75,13 +96,23 @@ class ReportController extends Controller
             'name' => 'required|string|max:255',
             'c1' => 'required|integer|min:1|max:5',
             'title' => 'required|string|max:255',
-            'facility' => 'required|integer',
-            'floor' => 'required|integer',
-            'room' => 'required|integer',
+            'facility' => 'required|exists:facilities,facility_id',
+            'floor' => 'required|exists:floors,floor_id',
+            'room' => 'required|exists:rooms,room_id',
             'description' => 'required|string',
             'date' => 'required|date',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
+
+        $exists = DamageReport::where('facility_id', $request->facility)
+        ->where('floor_id', $request->floor)
+        ->where('room_id', $request->room)
+        ->whereIn('status', ['pending', 'in_progress', 'In_Queue'])
+        ->exists();
+
+        if ($exists) {
+        return back()->withInput()->withErrors(['room' => 'This facility, floor, and room combination has already been reported.']);
+    }
 
         $imagePath = null;
         if ($request->hasFile('image')) {
@@ -138,11 +169,6 @@ class ReportController extends Controller
     }
 
 
-    public function getRoomsByFloor($floor_id)
-    {
-        $rooms = Room::where('floor_id', $floor_id)->get();
-        return response()->json($rooms);
-    }
     public function getRooms($floor_id)
     {
         $rooms = Room::where('floor_id', $floor_id)->get();
@@ -173,6 +199,7 @@ class ReportController extends Controller
             'c4' => 'required|numeric',
             'c5' => 'required|numeric',
             'c6' => 'required|numeric',
+            
         ]);
 
         // Simpan nilai kriteria ke database
@@ -180,6 +207,10 @@ class ReportController extends Controller
         $report->update($validated);
 
         // Ambil semua data laporan dengan kriteria lengkap
+
+        
+        $report->status = 'In_Queue';
+        $report->save();
         $reports = DamageReport::whereNotNull('c1')
             ->whereNotNull('c2')
             ->whereNotNull('c3')
@@ -205,6 +236,7 @@ class ReportController extends Controller
             'reports' => $reports,
             'criteriaLabels' => $criteriaLabels
         ]);
+
     }
     private function calculateVikor($reports)
     {
@@ -293,6 +325,20 @@ class ReportController extends Controller
 
         return view('admin.RepairRecommendation', compact('results', 'reports', 'criteriaLabels', 'technicians'));
 
+    }
+
+    public function storeFeedback(Request $request)
+    {
+        $request->validate([
+            'report_id' => 'required|exists:damage_report,damage_report_id',
+            'rating' => 'required|integer|min:1|max:5',
+        ]);
+
+        $report = DamageReport::findOrFail($request->report_id);
+        $report->rating = $request->rating; // Pastikan kolom 'rating' ada di tabel 'damage_reports'
+        $report->save();
+
+        return redirect()->back()->with('success', 'Feedback berhasil dikirim.');
     }
 
 }

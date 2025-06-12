@@ -43,38 +43,71 @@
                     <!-- Name -->
                     <div class="col-span-6 sm:col-span-3">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                        <input type="text" name="name" id="name"
-                            value="{{ old('name', Auth::user()->biodata->name ?? '') }}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg
-                            focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
-                            dark:bg-gray-700 dark:border-gray-600 dark:text-white
-                            dark:focus:ring-primary-500 dark:focus:border-primary-500" required>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 10a4 4 0 100-8 4 4 0 000 8zm-6 7a6 6 0 0112 0H4z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <input type="text" name="name" id="name"
+                                value="{{ old('name', Auth::user()->biodata->name ?? '') }}"
+                                class="pl-10 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg
+                                focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
+                                dark:bg-gray-700 dark:border-gray-600 dark:text-white
+                                dark:focus:ring-primary-500 dark:focus:border-primary-500" required>
+                        </div>
                     </div>
 
                     <!-- Username -->
                     <div class="col-span-6 sm:col-span-3">
                         <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-                        <input type="text" name="username" id="username"
-                            value="{{ old('username', Auth::user()->username) }}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg
-                            focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
-                            dark:bg-gray-700 dark:border-gray-600 dark:text-white
-                            dark:focus:ring-primary-500 dark:focus:border-primary-500" required>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd" d="M14 4.182A4.136 4.136 0 0 1 16.9 3c1.087 0 2.13.425 2.899 1.182A4.01 4.01 0 0 1 21 7.037c0 1.068-.43 2.092-1.194 2.849L18.5 11.214l-5.8-5.71 1.287-1.31.012-.012Zm-2.717 2.763L6.186 12.13l2.175 2.141 5.063-5.218-2.141-2.108Zm-6.25 6.886-1.98 5.849a.992.992 0 0 0 .245 1.026 1.03 1.03 0 0 0 1.043.242L10.282 19l-5.25-5.168Zm6.954 4.01 5.096-5.186-2.218-2.183-5.063 5.218 2.185 2.15Z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <input type="text" name="username" id="username"
+                                value="{{ old('username', Auth::user()->username) }}"
+                                class="pl-10 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg
+                                focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
+                                dark:bg-gray-700 dark:border-gray-600 dark:text-white
+                                dark:focus:ring-primary-500 dark:focus:border-primary-500 cursor-not-allowed" readonly>
+                        </div>
                     </div>
 
                     <!-- Email -->
                     <div class="col-span-6 sm:col-span-3">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                        <input type="email" name="email" id="email"
-                            value="{{ old('email', Auth::user()->biodata->email ?? '') }}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg
-                            focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
-                            dark:bg-gray-700 dark:border-gray-600 dark:text-white
-                            dark:focus:ring-primary-500 dark:focus:border-primary-500" required>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M2.038 5.61A2.01 2.01 0 0 0 2 6v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6c0-.12-.01-.238-.03-.352l-.866.65-7.89 6.032a2 2 0 0 1-2.429 0L2.884 6.288l-.846-.677Z"/>
+                                    <path d="M20.677 4.117A1.996 1.996 0 0 0 20 4H4c-.225 0-.44.037-.642.105l.758.607L12 10.742 19.9 4.7l.777-.583Z"/>
+                                </svg>
+                            </div>
+                            <input type="email" name="email" id="email"
+                                value="{{ old('email', Auth::user()->biodata->email ?? '') }}"
+                                class="pl-10 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg
+                                focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
+                                dark:bg-gray-700 dark:border-gray-600 dark:text-white
+                                dark:focus:ring-primary-500 dark:focus:border-primary-500 cursor-not-allowed" readonly>
+                        </div>
                     </div>
 
                     <!-- Password (readonly) -->
                     <div class="col-span-6 sm:col-span-3">
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                        <input type="password" id="password" readonly value="********" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg
-                            block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd" d="M8 10V7a4 4 0 1 1 8 0v3h1a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h1Zm2-3a2 2 0 1 1 4 0v3h-4V7Zm2 6a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-3a1 1 0 0 1 1-1Z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <input type="password" id="password" readonly value="*******"
+                                class="pl-10 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg
+                                block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
+                        </div>
                     </div>
                 </div>
 
@@ -121,6 +154,8 @@
                         <div class="col-span-6 sm:col-span-6">
                             <label for="new_password"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New Password</label>
+                                <p id="passwordError" class="mt-1 text-sm text-red-500 hidden">Password must be at least 8 characters.</p>
+
                             <input type="password" name="new_password" id="new_password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg
                                 focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
                                 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
@@ -211,5 +246,15 @@
     function closeModal() {
         document.getElementById('passwordModal').classList.add('hidden');
     }
+    const newPasswordInput = document.getElementById('new_password');
+    const passwordError = document.getElementById('passwordError');
+
+    newPasswordInput.addEventListener('input', () => {
+        if (newPasswordInput.value.length > 0 && newPasswordInput.value.length < 8) {
+            passwordError.classList.remove('hidden');
+        } else {
+            passwordError.classList.add('hidden');
+        }
+    });
 </script>
 @endsection

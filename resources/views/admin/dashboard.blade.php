@@ -28,8 +28,8 @@
             </svg>
         </div>
         <div class="ml-2">
-            <h5 class="mb-1 leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">5</h5>
-            <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Request Received</p>
+            <h5 class="mb-1 leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">{{ $inqueueCount }}</h5>
+            <p class="text-sm font-normal text-gray-500 dark:text-gray-400">In Queue</p>
         </div>
         </div>
     </div>
@@ -43,7 +43,7 @@
             </svg>
         </div>
         <div class="ml-2">
-            <h5 class="mb-1 leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">8</h5>
+            <h5 class="mb-1 leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">{{ $inProgressCount }}</h5>
             <p class="text-sm font-normal text-gray-500 dark:text-gray-400">In Progress</p>
         </div>
         </div>
@@ -58,7 +58,7 @@
             </svg>
         </div>
         <div class="ml-2">
-            <h5 class="mb-1 leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">20</h5>
+            <h5 class="mb-1 leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">{{ $doneCount }}</h5>
             <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Repaired</p>
         </div>
         </div>
@@ -283,121 +283,82 @@ if (document.getElementById("rating-donut-chart") && typeof ApexCharts !== 'unde
           <span class="text-base font-normal text-gray-500 dark:text-gray-400">This is a list of latest report</span>
         </div>
       </div>
-      <!-- Table -->
-      <div class="flex flex-col mt-6">
+
+    <div class="flex flex-col mt-6">
         <div class="overflow-x-auto rounded-lg">
           <div class="inline-block min-w-full align-middle">
             <div class="overflow-hidden shadow sm:rounded-lg">
               <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
-                <thead class="bg-gray-50 dark:bg-gray-700">
+                <thead class="bg-gray-100 dark:bg-gray-700">
                   <tr>
-                    <th scope="col" class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white">
+                    <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                      No
+                    </th><th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                       Reporter
                     </th>
-                    <th scope="col" class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white">
+                    <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                       Facility Name
                     </th>
-                    <th scope="col" class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white">
+                    </th>
+                    <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                      Damage Level
+                    </th>
+                    <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                       Location
                     </th>
-                    <th scope="col" class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white">
+                    <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                       Role
                     </th>
-                    <th scope="col" class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white">
+                    <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                       Status
                     </th>
-                    <th scope="col" class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white">
+                    <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                       Date &amp; Time
                     </th>
+                   
                   </tr>
                 </thead>
-                <tbody class="bg-white dark:bg-gray-800">
-                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Alice Johnson
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Projector
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Room 201, Building A
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Student
-                    </td>
-                    <td class="p-4 whitespace-nowrap">
-                      <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-green-400 border border-green-100 dark:border-green-500">Repaired</span>
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Apr 23 ,2021
-                    </td>
-                  </tr>
-                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Alice Johnson
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Projector
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Room 201, Building A
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Student
-                    </td>
-                    <td class="p-4 whitespace-nowrap">
-                      <span class="bg-purple-100 text-purple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-purple-100 dark:bg-gray-700 dark:border-purple-500 dark:text-purple-400">In progress</span>
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Apr 23 ,2021
-                    </td>
-                  </tr>
-                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Alice Johnson
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Projector
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Room 201, Building A
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Student
-                    </td>
-                    <td class="p-4 whitespace-nowrap">
-                      <span class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-red-100 dark:border-red-400 dark:bg-gray-700 dark:text-red-400">Cancelled</span>
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Apr 23 ,2021
-                    </td>
-                  </tr>
-                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Alice Johnson
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Projector
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Room 201, Building A
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Student
-                    </td>
-                    <td class="p-4 whitespace-nowrap">
-                      <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-orange-100 dark:bg-gray-700 dark:border-orange-300 dark:text-orange-300">In review</span>
-                    </td>
-                    <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                      Apr 23 ,2021
-                    </td>
-                  </tr>
-                </tbody>
+                <tbody class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                    @forelse ($reports as $report)
+                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                      <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400 border-b dark:border-gray-700 border-gray-200">
+                        {{ $loop->iteration }}
+                           </td>
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400 border-b dark:border-gray-700 border-gray-200">
+                            {{ $report->user->username ?? '-' }}
+                        </td>
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400 border-b dark:border-gray-700 border-gray-200">
+                            {{ $report->facility->facility_name ?? '-' }}
+                        </td>
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400 border-b dark:border-gray-700 border-gray-200">
+                            {{ optional($c1_scales->firstWhere('scale_value', old('c1', $report->c1 ?? '')))->scale_description ?? 'N/A' }}
+                        </td>
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400 border-b dark:border-gray-700 border-gray-200">
+                            {{ $report->room->room_name ?? '-' }}, {{ $report->floor->floor_name ?? '-' }}
+                        </td>
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400 border-b dark:border-gray-700 border-gray-200">
+                            {{ $report->user->role->name ?? '-' }}
+                        </td>
+                        <td class="p-4 whitespace-nowrap border-b dark:border-gray-700 border-gray-200">
+                            <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-orange-100 dark:bg-gray-700 dark:border-orange-300 dark:text-orange-300">{{ $report->status?? '-' }}</span>
+                        </td>
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400 border-b dark:border-gray-700 border-gray-200">
+                            {{ $report->created_at->format('M d, Y') }}
+                        </td>
+                       
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="8" class="p-4 text-sm text-center text-gray-500 dark:text-gray-400">No reports found.</td>
+                    </tr>
+                    @endforelse
+                </tbody>                
               </table>
             </div>
           </div>
         </div>
-      </div>
+    </div>
+
       <!-- Card Footer -->
       <div class="flex items-center justify-between pt-3 sm:pt-6">
           <a href="{{ url('admin/damagereport') }}" class="inline-flex items-center p-2 text-xs font-medium uppercase rounded-lg text-primary-700 sm:text-sm hover:bg-gray-100 dark:text-primary-500 dark:hover:bg-gray-700">

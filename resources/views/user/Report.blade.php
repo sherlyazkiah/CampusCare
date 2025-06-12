@@ -36,7 +36,7 @@
                 <thead class="bg-gray-100 dark:bg-gray-700">
                   <tr>
                     <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                      ID
+                      No
                     </th>
                     <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                       Name
@@ -63,10 +63,11 @@
                 </thead>
                 <tbody class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                     @forelse ($reports as $report)
+                    
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                            {{ $report->damage_report_id }}
-                        </td>
+                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400 ">
+                        {{ $loop->iteration }}
+                           </td>
                         <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                             {{ $report->user->username ?? '-' }}
                         </td>
@@ -77,7 +78,7 @@
                             {{ $report->room->room_name ?? '-' }}, {{ $report->floor->floor_name ?? '-' }}
                         </td>
                         <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                            {{ $report->damage_level }}
+                            {{ optional($c1_scales->firstWhere('scale_value', old('c1', $report->c1 ?? '')))->scale_description ?? 'N/A' }}
                         </td>
                         <td class="p-4 whitespace-nowrap">
                             <span class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-orange-100 dark:bg-gray-700 dark:border-orange-300 dark:text-orange-300">{{$report->status}}</span>
@@ -86,12 +87,7 @@
                             {{ $report->created_at->format('M d, Y') }}
                         </td>
                         <td class="p-4 space-x-2 whitespace-nowrap">
-                            <button 
-                            type="button"
-                             onclick="openModal('detailModal{{ $report->damage_report_id }}')"
-                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-white rounded-lg bg-green-600 hover:bg-green-800"
-                            data-report="{{ htmlspecialchars(json_encode($report), ENT_QUOTES, 'UTF-8') }}"
-                        >
+                            <button type="button" data-modal-target="detail-report-modal-{{ $report->damage_report_id }}" data-modal-show="detail-report-modal-{{ $report->damage_report_id }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white rounded-lg bg-green-600 hover:bg-green-800">
                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>Detail
@@ -100,73 +96,23 @@
                                 <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
                                 Delete
                             </button>
-                            <button type="button" data-modal-target="feedback-report-modal" data-modal-toggle="feedback-report-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-600 rounded-lg hover:bg-gray-800">
-                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/></svg>
+                           @if(strtolower($report->status) === 'done')
+                            <button 
+                                type="button"
+                                data-modal-target="feedback-report-modal"
+                                data-modal-toggle="feedback-report-modal"
+                                data-report-id="{{ $report->damage_report_id }}"
+                                class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gray-600 rounded-lg hover:bg-gray-800">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                                </svg>
                                 Feedback
                             </button>
+                            @endif
+
+
                         </td>
                     </tr>
-<!-- Detail Report Modal -->
-<div id="detailModal{{ $report->damage_report_id }}" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
-    <div class="bg-white rounded-lg shadow-lg max-w-4xl w-full p-6 relative dark:bg-gray-800">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-2xl font-semibold text-gray-800 dark:text-white">Report Detail</h2>
-            <button onclick="closeModal('detailModal{{ $report->damage_report_id }}')" class="text-gray-500 hover:text-gray-700 dark:text-gray-300">
-                ✕
-            </button>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Reporter</label>
-                <input type="text" readonly value="{{ $report->user->username ?? '-' }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 text-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Title</label>
-                <input type="text" readonly value="{{ $report->reporter->title ?? 'N/A' }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 text-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Facility Name</label>
-                <input type="text" readonly value="{{ $report->facility->facility_name ?? 'N/A' }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Location</label>
-                <input type="text" readonly value="{{ $report->room->room_name ?? 'N/A' }}, {{ $report->floor->floor_name ?? '' }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Date & Time</label>
-                <input type="text" readonly value="{{ $report->created_at->format('M d, Y H:i') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Damage Level</label>
-                <input type="text" readonly value="{{ $report->c1 }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
-            </div>
-        </div>
-
-        <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
-            <textarea readonly rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:text-white">{{ $report->description }}</textarea>
-        </div>
-
-        @if($report->image_path)
-        <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Photo</label>
-            <img src="{{ asset('storage/' . $report->image_path) }}" alt="Reported Facility" class="mt-2 rounded border max-h-64 object-contain shadow" />
-        </div>
-        @endif
-
-        <div class="text-right">
-            <button onclick="closeModal('detailModal{{ $report->damage_report_id }}')" class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">
-                Return
-            </button>
-            
-        </div>
-    </div>
-</div>
-
-
                     @empty
                     <tr>
                         <td colspan="8" class="p-4 text-sm text-center text-gray-500 dark:text-gray-400">No reports found.</td>
@@ -178,6 +124,78 @@
           </div>
         </div>
     </div>
+
+    
+<!-- Detail Report Modal -->
+    @forelse ($reports as $report)
+    <div id="detail-report-modal-{{ $report->damage_report_id }}" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 items-center justify-center hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        {{-- @dd($report->damage_report_id); --}}
+        <div class="relative w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <form class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600 border-gray-200">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                        Report Detail
+                    </h3>
+                   <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="detail-report-modal-{{ $report->damage_report_id }}">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                </div>
+                <!-- Modal body -->
+                <div class="p-6 space-y-6">
+                <div class="grid grid-cols-6 gap-6">
+                    <div class="col-span-6 sm:col-span-3">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Report ID</label>
+                        <input type="text" readonly value="{{  $report->damage_report_id ?? '-' }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    </div>
+                    <div class="col-span-6 sm:col-span-3">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Reporter</label>
+                        <input type="text" readonly value="{{  $report->user->username ?? '-' }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    </div>
+                    <div class="col-span-6 sm:col-span-3">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                        <input type="text" readonly value="{{  $report->user->role->name ?? '-' }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    </div>
+                    <div class="col-span-6 sm:col-span-3">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Facility Name</label>
+                        <input type="text" readonly value="{{  $report->facility->facility_name ?? '-' }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    </div>
+                    <div class="col-span-6 sm:col-span-3">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Location</label>
+                        <input type="text" readonly value="{{ $report->room->room_name ?? 'N/A' }}, {{ $report->floor->floor_name ?? '' }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    </div>
+                    <div class="col-span-6 sm:col-span-3">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date & Time</label>
+                        <input type="text" readonly value="{{ $report->created_at->format('M d, Y H:i') }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    </div>
+                    <div class="col-span-6 sm:col-span-3">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Damage Level</label>
+                        <input type="text" readonly value="{{ optional($c1_scales->firstWhere('scale_value', old('c1', $report->c1 ?? '')))->scale_description ?? 'N/A' }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    </div>
+                    <div class="col-span-6">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                        <textarea readonly rows="4" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">{{ $report->description }}</textarea>
+                    </div>
+                    <div class="col-span-6">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Photo</label>
+                        <img src="{{ asset($report->image_path) }}" alt="Reported Facility" class="rounded-lg w-full max-h-64 object-contain border border-gray-300 dark:border-gray-600">
+                    </div>
+                </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="flex justify-end p-6 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600">
+                    <button data-modal-hide="detail-report-modal-{{ $report->damage_report_id }}" type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Return</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    @empty
+    <p></p>
+    @endforelse
 
     <script>
         if (document.getElementById("selection-table") && typeof simpleDatatables.DataTable !== 'undefined') {
@@ -244,17 +262,7 @@
 
             resetTable();
         }
-
-        function openModal(id) {
-        document.getElementById(id).classList.remove('hidden');
-    }
-
-    function closeModal(id) {
-        document.getElementById(id).classList.add('hidden');
-    }
     </script>
-
-    
 
     <!-- Delete Report Modal -->
     <div id="delete-report-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 items-center justify-center hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -281,5 +289,116 @@
             </div>
         </div>
     </div>
+
+    <!-- Feedback Modal -->
+<!-- Feedback Modal -->
+<div id="feedback-report-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 items-center justify-center hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-md max-h-full">
+        <form action="{{ route('user.feedback.submit') }}" method="POST" class="relative bg-white rounded-lg shadow dark:bg-gray-700 p-6">
+            @csrf
+            
+            <input type="hidden" name="report_id" id="feedback-report-id" value="">
+            <input type="hidden" name="rating" id="rating-value" value="0">
+
+            <!-- Header -->
+            <div class="flex items-start justify-between mb-4">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Feedback</h3>
+                <button type="button" class="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="feedback-report-modal">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 14 14">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7L1 13" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+
+            <!-- Rating Stars -->
+            <div class="mb-4">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Rating</label>
+                <div class="flex space-x-1 text-yellow-400">
+                    @for ($i = 1; $i <= 5; $i++)
+                        <button type="button" class="star focus:outline-none" data-star="{{ $i }}">
+                            <svg class="w-6 h-6 fill-gray-300 hover:fill-yellow-400 transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.951h4.15c.969 0 1.371 1.24.588 1.81l-3.36 2.444 1.286 3.95c.3.922-.755 1.688-1.54 1.118L10 13.011l-3.36 2.444c-.784.57-1.838-.196-1.539-1.118l1.285-3.95-3.36-2.444c-.783-.57-.38-1.81.588-1.81h4.15L9.05 2.927z"/>
+                            </svg>
+                        </button>
+                    @endfor
+                </div>
+            </div>
+
+            
+
+            <!-- Submit Button -->
+            <button type="submit" class="w-full px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                Submit Feedback
+            </button>
+        </form>
+    </div>
 </div>
+
+       
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const stars = document.querySelectorAll(".star");
+                const ratingInput = document.getElementById("rating-value");
+
+                stars.forEach((star, index) => {
+                    star.addEventListener("click", function () {
+                        const rating = this.getAttribute("data-star");
+                        ratingInput.value = rating;
+
+                        // Reset semua warna bintang ke abu-abu
+                        stars.forEach(s => {
+                            s.querySelector("svg").classList.remove("fill-yellow-400");
+                            s.querySelector("svg").classList.add("fill-gray-300");
+                        });
+
+                        // Warnai semua bintang dari 1 sampai yang diklik
+                        for (let i = 0; i < rating; i++) {
+                            stars[i].querySelector("svg").classList.remove("fill-gray-300");
+                            stars[i].querySelector("svg").classList.add("fill-yellow-400");
+                        }
+                    });
+                });
+            });
+</script>
+
+
+
+
+    <script>
+    document.querySelectorAll('#feedback-report-modal .star').forEach((btn, index, stars) => {
+        btn.addEventListener('click', () => {
+        const rating = index + 1;
+        document.getElementById('rating-value').value = rating;
+
+        stars.forEach((star, i) => {
+            const svg = star.querySelector('svg');
+            if (i < rating) {
+            svg.classList.remove('fill-gray-300');
+            svg.classList.add('fill-yellow-400');
+            } else {
+            svg.classList.add('fill-gray-300');
+            svg.classList.remove('fill-yellow-400');
+            }
+        });
+        });
+    });
+    </script>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const feedbackButtons = document.querySelectorAll('[data-modal-target="feedback-report-modal"]');
+        const reportIdInput = document.getElementById('feedback-report-id');
+
+        feedbackButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const reportId = button.getAttribute('data-report-id');
+                if (reportIdInput) {
+                    reportIdInput.value = reportId;
+                }
+            });
+        });
+    });
+</script>
+
 @endsection

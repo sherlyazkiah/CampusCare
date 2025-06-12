@@ -10,27 +10,27 @@
     <div class="grid grid-cols-6 gap-6">
         <div class="col-span-6 sm:col-span-3">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">NIM/NIDN</label>
-            <input type="text" readonly value="{{ $user->biodata->id ?? 'User doesnt fill yet' }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            <input type="text" readonly value="{{ $user->biodata->identity  ?? '-'}}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
         </div>
         <div class="col-span-6 sm:col-span-3">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-            <input type="text" readonly value="{{ $user->biodata->name ?? 'User doesnt fill yet' }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            <input type="text" readonly value="{{ $user->biodata->name ?? '-' }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+        </div>
+        <div class="col-span-6 sm:col-span-3">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Class</label>
+            <input type="text" readonly value="{{ $user->biodata->class->class_name ?? '-' }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
         </div>
         <div class="col-span-6 sm:col-span-3">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
-            <input type="text" readonly value="{{ $user->role->name  ?? 'User doesnt fill yet'}}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            <input type="text" readonly value="{{ $user->role->name  ?? '-'}}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
         </div>
         <div class="col-span-6 sm:col-span-3">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-            <input type="text" readonly value="{{ $user->username  ?? 'User doesnt fill yet'}}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-        </div>
-        <div class="col-span-6 sm:col-span-3">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-            <input type="text" readonly value="{{ $user->biodata->title  ?? 'User doesnt fill yet' }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            <input type="text" readonly value="{{ $user->username  ?? '-'}}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
         </div>
         <div class="col-span-6 sm:col-span-3">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-            <input type="text" readonly value="{{ $user->biodata->email  ?? 'User doesnt fill yet' }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            <input type="text" readonly value="{{ $user->biodata->email  ?? '-' }}" class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
         </div>
     </div>
 
