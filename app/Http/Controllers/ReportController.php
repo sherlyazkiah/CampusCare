@@ -21,7 +21,8 @@ class ReportController extends Controller
     {
         
 
-        $query = DamageReport::with(['user.role', 'facility', 'room', 'floor']);
+        $query = DamageReport::with(['user.role', 'facility', 'room', 'floor', 'biodata'])
+        ->where('status', '!=', 'done');
         if ($request->has('status') && $request->status != '') {
 
 
@@ -46,8 +47,9 @@ class ReportController extends Controller
         
      //$reports = $query->latest()->get();
         //dd($reports->first());
-        $reports = $query->latest()->paginate(10);
-        return view('admin.DamageReport', compact('reports', 'c1_scales', 'c2_scales', 'c3_scales', 'c4_scales', 'c5_scales', 'c6_scales'));
+        $reports = $query->orderBy('damage_date', 'desc')->paginate(10);
+        return view('admin.DamageReport', compact('reports', 'c1_scales', 'c2_scales', 'c3_scales', 'c4_scales', 'c5_scales', 'c6_scales')
+    );
     }
 
     public function userReports()
@@ -218,7 +220,8 @@ class ReportController extends Controller
         
         $report->status = 'In_Queue';
         $report->save();
-        $reports = DamageReport::whereNotNull('c1')
+        $reports = DamageReport::where('status', 'In_Queue') // ⬅️ Tambah filter status
+            ->whereNotNull('c1')
             ->whereNotNull('c2')
             ->whereNotNull('c3')
             ->whereNotNull('c4')
@@ -324,7 +327,8 @@ class ReportController extends Controller
 
     public function showRepairRecommendation()
     {
-        $reports = DamageReport::whereNotNull('c1')
+        $reports = DamageReport::where('status', 'In_Queue')
+            ->whereNotNull('c1')
             ->whereNotNull('c2')
             ->whereNotNull('c3')
             ->whereNotNull('c4')
@@ -421,7 +425,7 @@ class ReportController extends Controller
             'role',       // reporter role (e.g. Student/Technician)
             'facility',
             'floor',
-            'room'
+            'room',
         ])
             ->whereNotNull('technician_id')
             ->where('status', 'In Progress')
@@ -492,5 +496,31 @@ public function storeFeedback(Request $request)
         $report->save();
 
         return redirect()->back()->with('success', 'Feedback berhasil dikirim.');
+    }
+
+    public function downloadPdf($id)
+    {
+        $report = DamageReport::with(['user.role', 'facility', 'room', 'floor'])->findOrFail($id);
+
+        $pdf = Pdf::loadView('admin.completed_pdf', compact('report'));
+
+        return $pdf->stream('Report.pdf');
+        // return $pdf->download('report-' . $report->damage_report_id . '.pdf');
+    }
+
+    public function CompletedReport(Request $request)
+    {
+       $reports = DamageReport::with(['user', 'role', 'room', 'floor', 'facility', 'biodata'])
+       ->where('status', 'done')
+       ->get();
+        $c1_scales = Criteria::with('scales')->find(1)?->scales ?? collect();
+        $c2_scales = Criteria::with('scales')->find(2)?->scales ?? collect();
+        $c3_scales = Criteria::with('scales')->find(3)?->scales ?? collect();
+        $c4_scales = Criteria::with('scales')->find(4)?->scales ?? collect();
+        $c5_scales = Criteria::with('scales')->find(5)?->scales ?? collect();
+        $c6_scales = Criteria::with('scales')->find(6)?->scales ?? collect();
+
+        //dd($reports->first());
+        return view('admin.CompletedReport', compact('reports', 'c1_scales', 'c2_scales', 'c3_scales', 'c4_scales', 'c5_scales', 'c6_scales'));
     }
 }

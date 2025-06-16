@@ -9,14 +9,6 @@
                 <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Report</h1>
             </div>
             <div class="sm:flex mt-8">
-                <div class="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
-                    <form class="lg:pr-3" action="#" method="GET">
-                    <label for="reports-search" class="sr-only">Search</label>
-                    <div class="relative mt-1 lg:w-64 xl:w-96">
-                        <input type="text" name="email" id="reports-search" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search for reports">
-                    </div>
-                    </form>
-                </div>
                 <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
                     <a href="/user/create-report" 
                         class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm sm:w-auto font-medium text-center text-white rounded-lg bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -92,11 +84,13 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>Detail
                             </button>
-                            <button type="button" data-modal-target="delete-report-modal" data-modal-toggle="delete-report-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-800">
+                          @if(!in_array($report->status, ['in progres', 'done', 'In_Queue']))
+    <button type="button" data-modal-target="delete-report-modal-{{$report->damage_report_id}}" data-modal-toggle="delete-report-modal-{{$report->damage_report_id}}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-800">
                                 <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
                                 Delete
                             </button>
-                           @if(strtolower($report->status) === 'done')
+@endif
+                           @if(strtolower($report->status) === 'done' && is_null($report->rating))
                             <button 
                                 type="button"
                                 data-modal-target="feedback-report-modal"
@@ -185,6 +179,31 @@
                         <img src="{{ asset($report->image_path) }}" alt="Reported Facility" class="rounded-lg w-full max-h-64 object-contain border border-gray-300 dark:border-gray-600">
                     </div>
                 </div>
+                <!-- Completion Report -->
+                                    <div class="mt-6">
+                                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Completion Report</h2>
+
+                                        @if ($report->completion_photo || $report->completion_description)
+                                            <div class="grid grid-cols-1 gap-6">
+                                                <div>
+                                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Completion
+                                                        Photo</label>
+                                                    <img src="{{ asset($report->image_technician) }}" alt="Completion Photo"
+                                                        class="rounded-lg w-full max-h-64 object-contain border border-gray-300 dark:border-gray-600">
+                                                </div>
+
+                                                <div>
+                                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                                                    <textarea readonly rows="4"
+                                                        class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white input-readonly resize-none">{{ $report->completion_description }}</textarea>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">No completion report available.</p>
+                                        @endif
+                                    </div>
+                                
+
                 </div>
                 <!-- Modal footer -->
                 <div class="flex justify-end p-6 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600">
@@ -265,7 +284,8 @@
     </script>
 
     <!-- Delete Report Modal -->
-    <div id="delete-report-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 items-center justify-center hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    @foreach($reports as $report)
+    <div id="delete-report-modal-{{$report->damage_report_id}}" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 items-center justify-center hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full h-full max-w-md px-4 md:h-auto">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
@@ -279,16 +299,28 @@
                 <div class="p-6 pt-0 text-center">
                     <svg class="w-16 h-16 mx-auto text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     <h3 class="mt-5 mb-6 text-lg text-gray-500 dark:text-gray-400">Are you sure you want to delete this report?</h3>
-                    <a href="#" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2 dark:focus:ring-red-800">
-                        Yes, I'm sure
+                    <form id="delete-form-{{ $report->damage_report_id }}" method="POST" action="{{ route('reports.destroy', $report->damage_report_id) }}" class="inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2 dark:focus:ring-red-800">
+                            Yes, I'm sure
+                        </button>
+                    </form>
+
+                    <a href="#" 
+                    class="text-gray-900 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-blue-300 border border-gray-200 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700" 
+                    data-modal-hide="delete-report-modal-{{ $report->damage_report_id }}"
+
+                    No, cancel
                     </a>
-                    <a href="#" class="text-gray-900 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-blue-300 border border-gray-200 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700" data-modal-hide="delete-report-modal">
-                        No, cancel
-                    </a>
+
                 </div>
             </div>
         </div>
     </div>
+</div>
+ @endforeach
 
     <!-- Feedback Modal -->
 <!-- Feedback Modal -->

@@ -21,7 +21,7 @@ class AdminController extends Controller
         //chart
        $dailyReports = DamageReport::selectRaw("
         DATE(damage_date) as date,
-        SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as damage,
+        SUM(CASE WHEN status IN ('pending', 'In_Queue') THEN 1 ELSE 0 END) as damage,
         SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) as repaired
     ")
     ->groupBy('date')
@@ -39,6 +39,17 @@ class AdminController extends Controller
                     $chartRepaired[] = $r->repaired;
                 }
 
+            $weeklyRating = DamageReport::selectRaw("
+        WEEK(damage_date, 1) as week_number, 
+        YEAR(damage_date) as year,
+        ROUND(AVG(c1), 2) as avg_rating
+    ")
+    ->whereNotNull('c1')
+    ->groupBy('year', 'week_number')
+    ->orderByDesc('year')
+    ->orderByDesc('week_number')
+    ->first(); // Ambil minggu terakhir
+
 
 
 
@@ -55,8 +66,21 @@ class AdminController extends Controller
         $doneCount = DamageReport::where('status', 'done')->count();
         $c1_scales = Criteria::with('scales')->find(1)?->scales ?? collect();
         $total = DamageReport::count();
+        $ratings = DamageReport::whereNotNull('c1')->pluck('c1');
+$averageRating = round($ratings->avg(), 2);
+$totalRatings = $ratings->count();
+
+// Hitung distribusi bintang
+$ratingDistribution = [
+    5 => round(($ratings->whereBetween(5, [4.5, 5])->count() / $totalRatings) * 100, 0),
+    4 => round(($ratings->whereBetween(4, [3.5, 4.49])->count() / $totalRatings) * 100, 0),
+    3 => round(($ratings->whereBetween(3, [2.5, 3.49])->count() / $totalRatings) * 100, 0),
+    2 => round(($ratings->whereBetween(2, [1.5, 2.49])->count() / $totalRatings) * 100, 0),
+    1 => round(($ratings->whereBetween(1, [0.5, 1.49])->count() / $totalRatings) * 100, 0),
+];
+
         
-        return view('admin.dashboard', compact('users', 'biodata', 'pendingCount', 'inqueueCount', 'inProgressCount','doneCount','reports','c1_scales', 'chartCategories', 'chartDamage', 'chartRepaired', 'total')); // kirim variabel $users ke view
+        return view('admin.dashboard', compact('users', 'biodata', 'pendingCount', 'inqueueCount', 'inProgressCount','doneCount','reports','c1_scales', 'chartCategories', 'chartDamage', 'chartRepaired', 'total','weeklyRating','averageRating', 'totalRatings', 'ratingDistribution')); // kirim variabel $users ke view
     }
     
     
@@ -274,6 +298,8 @@ class AdminController extends Controller
 
         return back()->with('success', 'Password updated successfully.');
     }
+
+    
 
 
 

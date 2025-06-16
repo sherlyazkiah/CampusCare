@@ -16,7 +16,15 @@
                                 <tr>
                                     <th
                                         class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                        ID
+                                        No
+                                    </th>
+                                    <th
+                                        class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                        ID Report
+                                    </th>
+                                    <th
+                                        class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                        Technician
                                     </th>
                                     <th
                                         class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
@@ -42,9 +50,16 @@
                             </thead>
                             <tbody class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                                 @foreach ($reports as $report)
+                                
                                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                        <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400 ">
+                        {{ $loop->iteration }}
+                           </td>
                                         <td class="p-4 text-sm text-gray-500 dark:text-gray-400">
                                             {{ $report->damage_report_id }}
+                                        </td>
+                                        <td class="p-4 text-sm text-gray-500 dark:text-gray-400">
+                                            {{ $report->technician->username ?? '-' }}
                                         </td>
                                         <td class="p-4 text-sm text-gray-500 dark:text-gray-400">
                                             {{ $report->user->username ?? '-' }}

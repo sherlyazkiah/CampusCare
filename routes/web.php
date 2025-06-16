@@ -78,6 +78,10 @@ Route::middleware(['auth', 'authorize:admin'])->prefix('admin')->group(function 
     Route::resource('damagereport', ReportController::class);
     //Route::delete('/reports/{id}', [ReportController::class, 'destroy'])->name('reports.destroy');
     Route::delete('/reports/{id}', [ReportController::class, 'destroy'])->name('reports.destroy');
+
+    Route::get('/completed-report', [ReportController::class, 'CompletedReport'])->name('completed-report');
+    // routes/web.php
+    Route::get('/completed-report/{id}/download-pdf', [ReportController::class, 'downloadPdf'])->name('reports.downloadPdf');
     
     
 
@@ -112,6 +116,7 @@ Route::middleware(['auth', 'authorize:lecture,student'])->prefix('user')->group(
     Route::get('/biodata', [UserController::class, 'StudentBiodata'])->name('student.biodata.edit')->middleware('auth');
     Route::post('/biodata/store', [UserController::class, 'StudentStorebiodata'])->name('student.biodata.store')->middleware('auth');
 
+    Route::delete('/reports/{id}', [ReportController::class, 'destroy'])->name('reports.destroy');
     //Lecture Biodata
     Route::get('/biodata/lecture', [UserController::class, 'LectureBiodata'])->name('lecture.biodata.edit')->middleware('auth');
     Route::post('/biodata/lecture/store', [UserController::class, 'LectureStorebiodata'])->name('lecture.biodata.store')->middleware('auth');

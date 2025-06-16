@@ -87,7 +87,7 @@
                                             @endif                                   
                                         </td>
                                         <td class="p-4 text-sm text-gray-500 dark:text-gray-400">
-                                            {{ $report->created_at->format('M d, Y') }}
+                                            {{ \Carbon\Carbon::parse($report->damage_date)->format('M d, Y') }}
                                         </td>
                                         <td class="p-4 space-x-2 whitespace-nowrap">
                                             <button type="button" data-modal-target="detail-report-modal-{{ $report->damage_report_id }}"

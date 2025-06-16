@@ -120,96 +120,109 @@ if (document.getElementById("line-chart") && typeof ApexCharts !== 'undefined') 
   <div class="flex justify-center">
     <div id="rating-donut-chart" class="mb-2 min-h-[200px]"></div>
   </div>
-  <p class="text-center text-md font-medium text-gray-500 dark:text-gray-400">4.80 / 5.00</p>
-  <p class="text-center text-sm font-medium text-gray-500 dark:text-gray-400">from 25 user ratings</p>
+  <p class="text-center text-md font-medium text-gray-500 dark:text-gray-400">
+  {{ $averageRating }} / 5.00
+</p>
+<p class="text-center text-sm font-medium text-gray-500 dark:text-gray-400">
+  from {{ $totalRatings }} user ratings
+</p>
+
   <div class="pl-10">
     <div class="flex items-center mt-6">
         <a href="#" class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">5 star</a>
         <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded-sm dark:bg-gray-700">
-            <div class="h-5 bg-yellow-300 rounded-sm" style="width: 70%"></div>
+            <div class="h-5 bg-yellow-300 rounded-sm" style="width: {{ $ratingDistribution[5] ?? 0 }}%"></div>
         </div>
-        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">70%</span>
+        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ $ratingDistribution[5] ?? 0 }}%</span>
     </div>
     <div class="flex items-center mt-4">
         <a href="#" class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">4 star</a>
         <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded-sm dark:bg-gray-700">
-            <div class="h-5 bg-yellow-300 rounded-sm" style="width: 17%"></div>
+            <div class="h-5 bg-yellow-300 rounded-sm" style="width: {{ $ratingDistribution[4] ?? 0 }}%"></div>
         </div>
-        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">17%</span>
+        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ $ratingDistribution[4] ?? 0 }}%</span>
     </div>
     <div class="flex items-center mt-4">
         <a href="#" class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">3 star</a>
         <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded-sm dark:bg-gray-700">
-            <div class="h-5 bg-yellow-300 rounded-sm" style="width: 8%"></div>
+           <div class="h-5 bg-yellow-300 rounded-sm" style="width: {{ $ratingDistribution[3] ?? 0 }}%"></div>
         </div>
-        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">8%</span>
+        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ $ratingDistribution[3] ?? 0 }}%</span>
     </div>
     <div class="flex items-center mt-4">
         <a href="#" class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">2 star</a>
         <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded-sm dark:bg-gray-700">
-            <div class="h-5 bg-yellow-300 rounded-sm" style="width: 4%"></div>
+            <div class="h-5 bg-yellow-300 rounded-sm" style="width: {{ $ratingDistribution[2] ?? 0 }}%"></div>
         </div>
-        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">4%</span>
+        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ $ratingDistribution[2] ?? 0 }}%</span>
     </div>
     <div class="flex items-center mt-4">
         <a href="#" class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">1 star</a>
         <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded-sm dark:bg-gray-700">
-            <div class="h-5 bg-yellow-300 rounded-sm" style="width: 1%"></div>
+            <div class="h-5 bg-yellow-300 rounded-sm" style="width: {{ $ratingDistribution[1] ?? 0 }}%"></div>
         </div>
-        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">1%</span>
+        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ $ratingDistribution[1] ?? 0 }}%</span>
     </div>
   </div>
 </div>
 
 <script>
-// Rating Donut Chart - Showing only average rating (4.80 out of 5)
-const ratingChartOptions = {
-  series: [4.80, 0.20], // 4.80 out of 5 (remaining is 0.20)
-  colors: ["#F59E0B", "#E5E7EB"], // Yellow for rating, gray for remaining
-  chart: {
-    height: 200,
-    type: "donut",
-    fontFamily: "Inter, sans-serif",
-  },
-  plotOptions: {
-    pie: {
-      donut: {
-        size: '65%',
-        labels: {
-          show: true,
-          total: {
-            show: true,
-            label: 'Avg Rating',
-            formatter: function () {
-              return '4.80';
+  document.addEventListener("DOMContentLoaded", function () {
+    const avgRating = {{ number_format($weeklyRating->avg_rating ?? 0, 2) }};
+    const remaining = (5 - avgRating).toFixed(2);
+
+    const ratingChartOptions = {
+      series: [avgRating, parseFloat(remaining)],
+      colors: ["#F59E0B", "#E5E7EB"], // Kuning & abu-abu
+      chart: {
+        height: 200,
+        type: "donut",
+        fontFamily: "Inter, sans-serif",
+      },
+      plotOptions: {
+        pie: {
+          donut: {
+            size: '65%',
+            labels: {
+              show: true,
+              total: {
+                show: true,
+                label: 'Avg Rating',
+                formatter: function () {
+                  return avgRating.toFixed(2);
+                }
+              }
             }
           }
         }
-      }
-    }
-  },
-  labels: ["Rating", ""], // Empty label for the remaining part
-  dataLabels: {
-    enabled: false,
-  },
-  legend: {
-    show: false // Hide legend since we only show average
-  },
-  responsive: [{
-    breakpoint: 480,
-    options: {
-      chart: {
-        width: 200
-      }
-    }
-  }]
-};
+      },
+      labels: ["Rating", ""],
+      dataLabels: {
+        enabled: false,
+      },
+      legend: {
+        show: false
+      },
+      responsive: [{
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 200
+          }
+        }
+      }]
+    };
 
-if (document.getElementById("rating-donut-chart") && typeof ApexCharts !== 'undefined') {
-  const ratingChart = new ApexCharts(document.getElementById("rating-donut-chart"), ratingChartOptions);
-  ratingChart.render();
-}
+    if (document.getElementById("rating-donut-chart") && typeof ApexCharts !== 'undefined') {
+      const ratingChart = new ApexCharts(
+        document.getElementById("rating-donut-chart"),
+        ratingChartOptions
+      );
+      ratingChart.render();
+    }
+  });
 </script>
+
 </div>
 
 <!-- Table -->

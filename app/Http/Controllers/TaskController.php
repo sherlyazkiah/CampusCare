@@ -15,16 +15,27 @@ class TaskController extends Controller
     public function index()
     {
         $loggedInUserId = Auth::id();
+        $hasNewReport = DamageReport::where('status', 'In Progress')
+            ->where('technician_id', $loggedInUserId)
+            ->exists();
+
+        // 🔔 Kirim session flash hanya jika ada laporan baru
+        if ($hasNewReport) {
+            session()->flash('show_toast', true);
+        }
+        $taskCount = DamageReport::where('status', 'In Progress')->where('technician_id', $loggedInUserId)->count();
+        $processCount = DamageReport::where('status', 'In Progress')->where('technician_id', $loggedInUserId)->count();
+        $doneCount = DamageReport::where('status', 'Done')->where('technician_id', $loggedInUserId)->count();
         $c1_scales = Criteria::with('scales')->find(1)?->scales ?? collect();
+
         $reports = DamageReport::with([
-            'user',       // reporter
-            'role',       // reporter role (e.g. Student/Technician)
+            'user',
+            'role',
             'facility',
             'floor',
             'room'
-        ])
-            ->whereNotNull('technician_id')
-            ->where('status', 'In Progress')
+        ])->where('status', 'In Progress')
+            ->where('technician_id', $loggedInUserId)
             ->orderBy('damage_report_id', 'asc')
             ->get();
 

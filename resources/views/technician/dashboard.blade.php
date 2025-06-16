@@ -52,29 +52,23 @@
                 class="w-1/2 h-40 object-contain object-center hidden md:block" />
         </div>
 
-        <div class="grid w-full grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-3">
-            <!-- Card 1 -->
-            <div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
-                <div class="text-center min-w-[150px] flex-1">
-                    <h5 class="mb-1 leading-none text-2xl font-bold text-red-600 pb-1">{{ $taskCount }}</h5>
-                    <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Task</p>
-                </div>
-            </div>
-            <!-- Card 2 -->
-            <div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
-                <div class="text-center min-w-[150px] flex-1">
-                    <h5 class="mb-1 leading-none text-2xl font-bold text-yellow-400 pb-1">{{ $processCount }}</h5>
-                    <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Progress</p>
-                </div>
-            </div>
-            <!-- Card 3 -->
-            <div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
-                <div class="text-center min-w-[150px] flex-1">
-                    <h5 class="mb-1 leading-none text-2xl font-bold text-green-600 pb-1">{{ $doneCount }}</h5>
-                    <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Complete</p>
-                </div>
-            </div>
+       <div class="grid w-full grid-cols-1 gap-4 lg:grid-cols-2 justify-center">
+    <!-- Card 1 -->
+    <div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
+        <div class="text-center min-w-[150px] flex-1">
+            <h5 class="mb-1 leading-none text-2xl font-bold text-yellow-400 pb-1">{{ $processCount }}</h5>
+            <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Progress</p>
         </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
+        <div class="text-center min-w-[150px] flex-1">
+            <h5 class="mb-1 leading-none text-2xl font-bold text-green-600 pb-1">{{ $doneCount }}</h5>
+            <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Complete</p>
+        </div>
+    </div>
+</div>
 
         <!-- Table -->
         <div
@@ -101,7 +95,7 @@
                                         </th>
                                         <th
                                             class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                            Reporter
+                                            Technician
                                         </th>
                                         <th
                                             class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
@@ -142,7 +136,7 @@
                                                     class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md border border-orange-100 dark:bg-gray-700 dark:border-orange-300 dark:text-orange-300">{{ $report->status ?? '-' }}</span>
                                             </td>
                                             <td class="p-4 text-sm text-gray-500 dark:text-gray-400">
-                                                {{ $report->created_at->format('M d, Y') }}
+                                               {{ \Carbon\Carbon::parse($report->damage_date)->format('M d, Y') }}
                                             </td>
                                         </tr>
                                     @endforeach

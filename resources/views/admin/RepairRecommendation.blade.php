@@ -119,11 +119,7 @@
     <div class="flex justify-end space-x-4 mb-6">
     <a href="{{ route('repair.pdf') }}" target="_blank"
     class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded shadow">
-    PDF
-    </a>
-    <a href="{{ route('repair.excel') }}"
-    class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded shadow">
-    Excel
+    Export PDF
     </a>
     </div>
 
